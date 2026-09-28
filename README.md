@@ -33,10 +33,6 @@
   - [Laya](https://github.com/NandhaKishorM/laya): reported the score position bias of the multilingual checkpoint ([#131](https://github.com/NandhaKishorM/laya/issues/131)), added a label-free regression check for it ([#259](https://github.com/NandhaKishorM/laya/pull/259), merged), and extended that check to non-English inputs ([#650](https://github.com/NandhaKishorM/laya/pull/650)).
   - [kev](https://github.com/jaredpalmer/kev) and [lev](https://github.com/Abhinavexists/lev): measured score-question order sensitivity with the same checks ([kev#161](https://github.com/jaredpalmer/kev/issues/161), [lev#1](https://github.com/Abhinavexists/lev/issues/1)).
 
-## Writing
-
-- [I didn't fix the bug: contributing to a 20k-star ML repo by measuring it](https://dev.to/genelab_999/i-didnt-fix-the-bug-contributing-to-a-20k-star-ml-repo-by-measuring-it-1lg7) (dev.to)
-- [Jev 系 OSS「Laya」は日本語で使えるのか。300 件測ったら、順序尺度が「選択肢の位置」で壊れていた](https://zenn.dev/genelab_999/articles/533144853290a7) (Zenn, Japanese)
 
 ## Stack
 
