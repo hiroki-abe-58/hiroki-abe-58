@@ -3,6 +3,7 @@
 **Generative AI, in Japanese, on your own machine.**
 
 [![Hugging Face](https://img.shields.io/badge/Hugging%20Face-GeneLab-FFD21E?logo=huggingface&logoColor=black)](https://huggingface.co/GeneLab)
+[![PyPI](https://img.shields.io/pypi/v/sokudan?logo=pypi&logoColor=white&label=PyPI%20sokudan)](https://pypi.org/project/sokudan/)
 [![Qiita](https://img.shields.io/badge/Qiita-GeneLab__999-55C500?logo=qiita&logoColor=white)](https://qiita.com/GeneLab_999)
 [![Zenn](https://img.shields.io/badge/Zenn-genelab__999-3EA8FF?logo=zenn&logoColor=white)](https://zenn.dev/genelab_999)
 [![note](https://img.shields.io/badge/note-genelab__999-41C9B4)](https://note.com/genelab_999)
@@ -28,7 +29,7 @@
 
 ## Featured: decision models and measurement
 
-- **[sokudan](https://github.com/hiroki-abe-58/sokudan)** ([model](https://huggingface.co/GeneLab/sokudan-ja-310m)): A Japanese System One decision model (314.6M, ModernBERT-ja, Apache-2.0). It returns typed choice, score and bool answers with probabilities in one forward pass, with no generated text. v0.2 is a weight average of eight seeds. One run of it on its own 300-item `bench_ja` gives choice accuracy 0.880, score RPS 0.075 and bool AUROC 0.844.
+- **[sokudan](https://github.com/hiroki-abe-58/sokudan)**: `pip install sokudan` (v0.2.1, Python 3.11). A Japanese System One decision model (314.6M, ModernBERT-ja, Apache-2.0). It returns typed choice, score and bool answers with probabilities in one forward pass, with no generated text. The weights are v0.2's, a weight average of eight seeds, and one run of it on its own 300-item `bench_ja` gives choice accuracy 0.880, score RPS 0.075 and bool AUROC 0.844. `bool` answers are calibrated by default with one temperature shipped with the weights, and `choice` and `score` stay raw. `sokudan serve` runs a `/v1/systemone`-compatible server. ([model](https://huggingface.co/GeneLab/sokudan-ja-310m), [PyPI](https://pypi.org/project/sokudan/))
 - **Contributions to other open decision models**, measured rather than argued:
   - [Laya](https://github.com/NandhaKishorM/laya): reported the score position bias of the multilingual checkpoint ([#131](https://github.com/NandhaKishorM/laya/issues/131)), added a label-free regression check for it ([#259](https://github.com/NandhaKishorM/laya/pull/259), merged), and extended that check to non-English inputs ([#650](https://github.com/NandhaKishorM/laya/pull/650)).
   - [kev](https://github.com/jaredpalmer/kev) and [lev](https://github.com/Abhinavexists/lev): measured score-question order sensitivity with the same checks ([kev#161](https://github.com/jaredpalmer/kev/issues/161), [lev#1](https://github.com/Abhinavexists/lev/issues/1)).
