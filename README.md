@@ -18,7 +18,7 @@
 
 ## About me
 
-- I build generative AI tools that run on your own hardware: Japanese text-to-speech, ComfyUI nodes, and Windows setups for RTX 5090 (Blackwell) GPUs and Apple Silicon Macs.
+- I build generative AI tools that run on your own hardware: Japanese text-to-speech, ComfyUI nodes for fast video and music generation, and Windows setups for RTX 5090 (Blackwell) GPUs and Apple Silicon Macs.
 - I also train small Japanese language models from scratch on one machine (an M1 Max, then an RTX 5090), changing one thing at a time and measuring what each change costs.
 - I measure before I claim. The numbers in my READMEs are the output of code I ran, and what I have not measured is marked as not measured.
 - Based in Tokyo. I write in Japanese and English on Zenn, Qiita, note and dev.to.
@@ -41,14 +41,27 @@
 - **[2LM-Blackwell-GAL](https://github.com/hiroki-abe-58/2LM-Blackwell-GAL)**: 6,879 conversations generated in 36.7 min, then a 7.0 s fine-tune: gal rate 0.74, keigo 0.00. A 20-condition sweep shows the breakdown boundary is a surface over conversation count × learning rate, not a single count.
 - **[3LM-MLX-GAL](https://github.com/hiroki-abe-58/3LM-MLX-GAL)**: the same 2,610 conversations in 48 s. The bits/char cost is +0.353, compared with +0.970 for 2LM. ([weights](https://huggingface.co/GeneLab/3LM-MLX-GAL))
 
-## Featured: generative AI tooling
+## Featured: text-to-speech
 
 - **[Qwen3-TTS-JP](https://github.com/hiroki-abe-58/Qwen3-TTS-JP)**: A Windows-native fork of Qwen3-TTS that runs without WSL2, Docker or FlashAttention 2. It adds a 10-language Web UI (Custom Voice, Voice Design, Voice Clone) and Whisper auto-transcription for voice-clone reference audio, with setup notes for RTX 50-series (Blackwell) GPUs.
 - **[Qwen3-TTS-Mac-GeneLab](https://github.com/hiroki-abe-58/Qwen3-TTS-Mac-GeneLab)**: Qwen3-TTS for Apple Silicon Macs. It uses an MLX + PyTorch dual engine: MLX with 8-bit/4-bit quantization for speed, and PyTorch for voice cloning. The Web UI is in 10 languages, with Whisper auto-transcription.
-- **[ComfyUI-AceMusic](https://github.com/hiroki-abe-58/ComfyUI-AceMusic)**: 15 ComfyUI custom nodes for ACE-Step music generation. They make full songs with lyrics in 19 languages, up to 240 seconds long, with cover, repaint, extend, edit and retake, and LoRA loading.
 - **[Style-BERT-VITS2-GeneLab-Blackwell](https://github.com/hiroki-abe-58/Style-BERT-VITS2-GeneLab-Blackwell)**: A fork of Style-Bert-VITS2 that runs on the GPU of an RTX 5090 (Blackwell, sm_120) natively on Windows. It uses PyTorch nightly cu128 and triton-windows, with automatic CPU/GPU fallback.
-- **[ComfyUI-Win-Blackwell](https://github.com/hiroki-abe-58/ComfyUI-Win-Blackwell)**: A one-click setup (.bat / .ps1) for Windows-native ComfyUI on RTX 50-series (sm_120) GPUs. It uses CUDA 13.0, PyTorch nightly cu130, Python 3.13 and triton-windows. It comes with 28 custom nodes and 5 image-to-video pipelines verified on an RTX 5090. The README is in 4 languages.
+
+## Featured: ComfyUI custom nodes
+
+### Fast video generation from recent papers
+
+Recent papers make video diffusion faster with few-step distillation and sparse attention. These node packs run those methods from ComfyUI on one RTX 5090 (32 GB). Each README separates what was tested on real weights from what was not. All of them are unofficial integrations, and upstream code and weights keep their own licenses.
+
+- **[ComfyUI-SparkDiffusion](https://github.com/hiroki-abe-58/ComfyUI-SparkDiffusion)**: Runs AlibabaResearch's [SparkDiffusion](https://github.com/AlibabaResearch/SparkDiffusion) on Wan2.1 / Wan2.2: RoLA sparse attention at 90–97 % sparsity, 3- or 4-step CrossDistill sampling and FP8 W8A8. The official inference code runs unmodified in its own runtime (WSL2, Linux, or Windows native as experimental). Every run checks that RoLA was used on every block and that the DiT received the exact CrossDistill timesteps, and a run that fails these checks is reported as an error, not as a result. Warm denoise is 20.0 s for 14B 720P 3-step and 1.78 s for 1.3B 480P 4-step. Without allocator tuning, the same 14B runs took 39–48 s, because VRAM went past 32 GB and the Windows driver moved it to system memory without any warning. The paper's speedup of up to 265x was not reproduced, because the 50-step dense baseline was not run. On the [Comfy Registry](https://registry.comfy.org/nodes/sparkdiffusion) as `sparkdiffusion`.
+- **[ComfyUI-LongLive-Plug](https://github.com/hiroki-abe-58/ComfyUI-LongLive-Plug)**: Applies NVlabs' [LongLive-Plug](https://github.com/NVlabs/LongLive/tree/main/LongLive-Plug) few-step and CFG LoRA adapters to ComfyUI's built-in Wan2.1-T2V-14B. Loading two LoRAs and setting `steps=4` is not enough. One node applies both adapters at the upstream weights (1.0 / 0.5) and reports coverage: 400/400 targets per adapter. The other node outputs the sampling recipe, and its 4-step FlowUniPC schedule is bit-identical on CPU to the upstream scheduler. At 832×480 with 81 frames, the 4-step run takes 59.0 s end to end, and the official 50-step CFG 5 baseline takes 943.5 s. A plain 4-step run without the adapters comes out blurred and ghosted. Quantized bases are refused instead of guessed. On the [Comfy Registry](https://registry.comfy.org/publishers/hiroki-abe-58/nodes/longlive-plug) as `longlive-plug`.
+- **[ComfyUI-MonarchRT](https://github.com/hiroki-abe-58/ComfyUI-MonarchRT)**: Runs [MonarchRT](https://github.com/Infini-AI-Lab/MonarchRT)'s Monarch-matrix attention training-free on the public Self-Forcing weights (Wan2.1-T2V-1.3B), next to a dense baseline with the same weights, prompt, seed and noise. Every self-attention call is counted: all 1,050 per video ran in the Monarch Triton kernel, with 0 dense and 0 fallback, and a job fails if any call takes another path. In a WSL2 runtime, the generator goes from 6.60 s to 4.91 s (1.34x) at about 90 % sparsity and to 4.17 s (1.58x) at about 95 %. The rollouts drift away from the dense ones pixel by pixel (PSNR 12.9 dB, SSIM 0.41), and the 95 % profile looks visibly weaker, so the README makes no claim of quality parity.
 - **[ComfyUI-NVIDIA-CMD](https://github.com/hiroki-abe-58/ComfyUI-NVIDIA-CMD)**: Unofficial ComfyUI nodes that run NVIDIA CMD on Windows native, with PyTorch SDPA and no flash-attn or WSL. CMD is a few-step causal image-to-video model distilled from Cosmos-Predict2.5-2B. The nodes cover short I2V, long rollout and camera control. The KV cache is capped at the local attention window, so long rollouts fit in 32 GB: the measured peak is 23,852 MiB and a long run takes about 267 s on an RTX 5090.
+
+### Music and setup
+
+- **[ComfyUI-AceMusic](https://github.com/hiroki-abe-58/ComfyUI-AceMusic)**: 15 ComfyUI custom nodes for ACE-Step music generation. They make full songs with lyrics in 19 languages, up to 240 seconds long, with cover, repaint, extend, edit and retake, and LoRA loading.
+- **[ComfyUI-Win-Blackwell](https://github.com/hiroki-abe-58/ComfyUI-Win-Blackwell)**: A one-click setup (.bat / .ps1) for Windows-native ComfyUI on RTX 50-series (sm_120) GPUs. It uses CUDA 13.0, PyTorch nightly cu130, Python 3.13 and triton-windows. It comes with 28 custom nodes and 5 image-to-video pipelines verified on an RTX 5090. The README is in 4 languages.
 
 ## Featured: decision models and measurement
 
@@ -61,7 +74,7 @@
 
 ## Stack
 
-Python, PyTorch, Hugging Face Transformers, MLX, SentencePiece, ComfyUI, Gradio. RTX 5090 (Blackwell) on Windows, and Apple Silicon.
+Python, PyTorch, Triton, Hugging Face Transformers, MLX, SentencePiece, ComfyUI, Gradio. RTX 5090 (Blackwell) on Windows and WSL2, and Apple Silicon.
 
 ## Support my work
 
