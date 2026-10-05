@@ -34,6 +34,21 @@
   </a>
 </p>
 
+<p align="center">
+  <a href="https://github.com/stats-organization/github-stats-extended">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/hiroki-abe-58/hiroki-abe-58/output/stats-dark.svg">
+      <img height="180" src="https://raw.githubusercontent.com/hiroki-abe-58/hiroki-abe-58/output/stats-light.svg" alt="GitHub stats">
+    </picture>
+  </a>
+  <a href="https://github.com/stats-organization/github-stats-extended">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/hiroki-abe-58/hiroki-abe-58/output/top-langs-dark.svg">
+      <img height="180" src="https://raw.githubusercontent.com/hiroki-abe-58/hiroki-abe-58/output/top-langs-light.svg" alt="Most used languages">
+    </picture>
+  </a>
+</p>
+
 ## Featured: Japanese language models, trained from scratch
 
 **1LM → 2LM → 3LM** is a series of Japanese GPT-style chat models built from zero: no pretrained base and no fine-tune of an existing LLM. Each repo ships the training code, a CLI and a web GUI. Each step changes one variable and measures it. The code is MIT, and the training data was chosen so that no ShareAlike license applies.

@@ -34,6 +34,21 @@
   </a>
 </p>
 
+<p align="center">
+  <a href="https://github.com/stats-organization/github-stats-extended">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/hiroki-abe-58/hiroki-abe-58/output/stats-dark.svg">
+      <img height="180" src="https://raw.githubusercontent.com/hiroki-abe-58/hiroki-abe-58/output/stats-light.svg" alt="GitHub の統計">
+    </picture>
+  </a>
+  <a href="https://github.com/stats-organization/github-stats-extended">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/hiroki-abe-58/hiroki-abe-58/output/top-langs-dark.svg">
+      <img height="180" src="https://raw.githubusercontent.com/hiroki-abe-58/hiroki-abe-58/output/top-langs-light.svg" alt="よく使う言語">
+    </picture>
+  </a>
+</p>
+
 ## ゼロから学習した日本語言語モデル
 
 **1LM → 2LM → 3LM** は、ゼロから作った日本語の GPT 系チャットモデルのシリーズです。事前学習済みのベースモデルも、既存 LLM のファインチューニングも使っていません。各リポジトリに学習コード、CLI、Web GUI が入っています。段階ごとに変数を 1 つだけ変えて測っています。コードは MIT で、学習データは ShareAlike ライセンスがかからないものを選びました。
