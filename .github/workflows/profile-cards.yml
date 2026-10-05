@@ -1,0 +1,91 @@
+name: Profile cards
+
+# Renders the trophies and stats cards shown in the profile README and publishes them to the `output` branch.
+# The public github-profile-trophy endpoint is disabled (HTTP 402), so every card is built here instead,
+# from public data only (the workflow's GITHUB_TOKEN cannot see private repositories).
+
+on:
+  schedule:
+    - cron: "17 18 * * *" # daily, 03:17 JST
+  workflow_dispatch:
+  push:
+    paths:
+      - .github/workflows/profile-cards.yml
+      - .github/scripts/**
+
+permissions:
+  contents: write
+
+concurrency:
+  group: profile-cards
+  cancel-in-progress: true
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: denoland/setup-deno@22d081ff2d3a40755e97629de92e3bcbfa7cf2ed # v2.0.5
+        with:
+          deno-version: v2.x
+
+      - name: Render trophies
+        env:
+          GITHUB_TOKEN1: ${{ secrets.GITHUB_TOKEN }}
+        run: >-
+          deno run --config .github/scripts/deno.json --allow-net --allow-env --allow-write
+          .github/scripts/render-trophies.ts "$GITHUB_REPOSITORY_OWNER" out
+
+      # github-stats-extended cards. light_github / dark_github match GitHub's own backgrounds.
+      - name: Render stats card (light)
+        uses: stats-organization/github-readme-stats-action@2c498845f71017821efaad14293ebc736156ef21 # v2.1.0
+        with:
+          card: stats
+          options: username=${{ github.repository_owner }}&show_icons=true&theme=light_github
+          path: out/stats-light.svg
+          token: ${{ secrets.GITHUB_TOKEN }}
+          core_version: 2.2.1
+          fail_on_error: "true"
+
+      - name: Render stats card (dark)
+        uses: stats-organization/github-readme-stats-action@2c498845f71017821efaad14293ebc736156ef21 # v2.1.0
+        with:
+          card: stats
+          options: username=${{ github.repository_owner }}&show_icons=true&theme=dark_github
+          path: out/stats-dark.svg
+          token: ${{ secrets.GITHUB_TOKEN }}
+          core_version: 2.2.1
+          fail_on_error: "true"
+
+      - name: Render top languages card (light)
+        uses: stats-organization/github-readme-stats-action@2c498845f71017821efaad14293ebc736156ef21 # v2.1.0
+        with:
+          card: top-langs
+          options: username=${{ github.repository_owner }}&layout=compact&langs_count=8&card_width=320&theme=light_github
+          path: out/top-langs-light.svg
+          token: ${{ secrets.GITHUB_TOKEN }}
+          core_version: 2.2.1
+          fail_on_error: "true"
+
+      - name: Render top languages card (dark)
+        uses: stats-organization/github-readme-stats-action@2c498845f71017821efaad14293ebc736156ef21 # v2.1.0
+        with:
+          card: top-langs
+          options: username=${{ github.repository_owner }}&layout=compact&langs_count=8&card_width=320&theme=dark_github
+          path: out/top-langs-dark.svg
+          token: ${{ secrets.GITHUB_TOKEN }}
+          core_version: 2.2.1
+          fail_on_error: "true"
+
+      - name: Publish to the output branch
+        working-directory: out
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git init -q -b output
+          git add trophy-light.svg trophy-dark.svg stats-light.svg stats-dark.svg top-langs-light.svg top-langs-dark.svg
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -q -m "Update profile cards"
+          git push -q --force "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" output
