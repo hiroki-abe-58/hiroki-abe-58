@@ -4,6 +4,8 @@
 
 **Generative AI, in Japanese, on your own machine.**
 
+*日本語: [README_ja.md](https://github.com/hiroki-abe-58/hiroki-abe-58/blob/main/README_ja.md)*
+
 [![Hugging Face](https://img.shields.io/badge/Hugging%20Face-GeneLab-FFD21E?logo=huggingface&logoColor=black)](https://huggingface.co/GeneLab)
 [![PyPI](https://img.shields.io/pypi/v/sokudan?logo=pypi&logoColor=white&label=PyPI%20sokudan)](https://pypi.org/project/sokudan/)
 [![Qiita](https://img.shields.io/badge/Qiita-GeneLab__999-55C500?logo=qiita&logoColor=white)](https://qiita.com/GeneLab_999)
