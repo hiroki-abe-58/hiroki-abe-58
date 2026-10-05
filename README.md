@@ -25,6 +25,15 @@
 - I measure before I claim. The numbers in my READMEs are the output of code I ran, and what I have not measured is marked as not measured.
 - Based in Tokyo. I write in Japanese and English on Zenn, Qiita, note and dev.to.
 
+<p align="center">
+  <a href="https://github.com/ryo-ma/github-profile-trophy">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/hiroki-abe-58/hiroki-abe-58/output/trophy-dark.svg">
+      <img src="https://raw.githubusercontent.com/hiroki-abe-58/hiroki-abe-58/output/trophy-light.svg" alt="GitHub profile trophies">
+    </picture>
+  </a>
+</p>
+
 ## Featured: Japanese language models, trained from scratch
 
 **1LM → 2LM → 3LM** is a series of Japanese GPT-style chat models built from zero: no pretrained base and no fine-tune of an existing LLM. Each repo ships the training code, a CLI and a web GUI. Each step changes one variable and measures it. The code is MIT, and the training data was chosen so that no ShareAlike license applies.
