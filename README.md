@@ -79,6 +79,38 @@ Speech-driven face video from recent papers. Both packs run the official weights
   - [kev](https://github.com/jaredpalmer/kev) and [lev](https://github.com/Abhinavexists/lev): measured score-question order sensitivity with the same checks ([kev#161](https://github.com/jaredpalmer/kev/issues/161), [lev#1](https://github.com/Abhinavexists/lev/issues/1)).
   - [Lev PR #2](https://github.com/Abhinavexists/lev/pull/2) (open): presentation checks and opt-in order averaging for Score; reversed order raises Score accuracy by 6.9 points on bench_en.
 
+## Research
+
+**DiM-2 / SSD series — exploring efficient image and video generation.**
+
+Independent research on Mamba-2 and Structured State Space Duality (SSD).
+These preprints describe architectural proposals and research directions,
+separate from the measured OSS implementations above.
+
+### DiM-2 — unified image and video diffusion
+
+**[DiM-2](https://doi.org/10.5281/zenodo.18689888)** proposes a Mamba-2-based
+architecture for image and video diffusion, with separate spatial and
+temporal modeling and SSD-based conditioning.
+
+The report covers the architecture, its theoretical motivation,
+and a proposed experimental protocol.
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18689888.svg)](https://doi.org/10.5281/zenodo.18689888)
+
+<details>
+<summary>Related preprints — six extensions of the DiM-2 / SSD research direction</summary>
+
+| Preprint | Research direction |
+|---|---|
+| **[SSD-CM](https://doi.org/10.5281/zenodo.18690580)** | Few-step generation through consistency distillation. |
+| **[SSD-Control](https://doi.org/10.5281/zenodo.18690631)** | Generation conditioned on depth, pose, and edges. |
+| **[SSD-Portrait](https://doi.org/10.5281/zenodo.18690678)** | Audio-driven portrait animation and lip synchronization. |
+| **[SSD-SR](https://doi.org/10.5281/zenodo.18697475)** | Image and video super-resolution with Mamba-2. |
+| **[SSD-Flow](https://doi.org/10.5281/zenodo.18697643)** | Image generation using flow matching with Mamba-2. |
+| **[SSD-Edit](https://doi.org/10.5281/zenodo.18697566)** | Instruction-guided image and video editing. |
+
+</details>
 
 ## Stack
 
