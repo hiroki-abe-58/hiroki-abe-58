@@ -25,6 +25,15 @@
 - 主張する前に測ります。README の数値は自分で実行したコードの出力で、測っていないものは「測定していない」と書きます。
 - 東京在住。Zenn、Qiita、note、dev.to に日本語と英語で書いています。
 
+<p align="center">
+  <a href="https://github.com/ryo-ma/github-profile-trophy">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/hiroki-abe-58/hiroki-abe-58/output/trophy-dark.svg">
+      <img src="https://raw.githubusercontent.com/hiroki-abe-58/hiroki-abe-58/output/trophy-light.svg" alt="GitHub プロフィールのトロフィー">
+    </picture>
+  </a>
+</p>
+
 ## ゼロから学習した日本語言語モデル
 
 **1LM → 2LM → 3LM** は、ゼロから作った日本語の GPT 系チャットモデルのシリーズです。事前学習済みのベースモデルも、既存 LLM のファインチューニングも使っていません。各リポジトリに学習コード、CLI、Web GUI が入っています。段階ごとに変数を 1 つだけ変えて測っています。コードは MIT で、学習データは ShareAlike ライセンスがかからないものを選びました。

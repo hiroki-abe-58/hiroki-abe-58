@@ -1,0 +1,47 @@
+name: Trophies
+
+# Renders the GitHub trophies shown in the profile README and publishes them to the `output` branch.
+# The public github-profile-trophy endpoint is disabled (HTTP 402), so the SVGs are built here instead.
+
+on:
+  schedule:
+    - cron: "17 18 * * *" # daily, 03:17 JST
+  workflow_dispatch:
+  push:
+    paths:
+      - .github/workflows/trophies.yml
+      - .github/scripts/render-trophies.ts
+
+permissions:
+  contents: write
+
+concurrency:
+  group: trophies
+  cancel-in-progress: true
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: denoland/setup-deno@22d081ff2d3a40755e97629de92e3bcbfa7cf2ed # v2.0.5
+        with:
+          deno-version: v2.x
+
+      - name: Render SVGs
+        env:
+          GITHUB_TOKEN1: ${{ secrets.GITHUB_TOKEN }}
+        run: deno run --allow-net --allow-env --allow-write .github/scripts/render-trophies.ts "$GITHUB_REPOSITORY_OWNER" out
+
+      - name: Publish to the output branch
+        working-directory: out
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git init -q -b output
+          git add trophy-light.svg trophy-dark.svg
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -q -m "Update trophies"
+          git push -q --force "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" output
