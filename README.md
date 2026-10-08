@@ -1,29 +1,247 @@
 ![Snow-covered mountain ridges above a sea of clouds at sunrise](assets/header.jpg)
 
-# GeneLab
+# GeneLab · Hiroki Abe
 
 **Generative AI, in Japanese, on your own machine.**
 
-*日本語: [README_ja.md](https://github.com/hiroki-abe-58/hiroki-abe-58/blob/main/README_ja.md)*
+AI engineer and technical consultant in Tokyo. I build local AI tools, train small Japanese language models, and turn research implementations into usable software for Windows, Linux and Apple Silicon.
 
-[![Hugging Face](https://img.shields.io/badge/Hugging%20Face-GeneLab-FFD21E?logo=huggingface&logoColor=black)](https://huggingface.co/GeneLab)
-[![PyPI](https://img.shields.io/pypi/v/sokudan?logo=pypi&logoColor=white&label=PyPI%20sokudan)](https://pypi.org/project/sokudan/)
-[![Qiita](https://img.shields.io/badge/Qiita-GeneLab__999-55C500?logo=qiita&logoColor=white)](https://qiita.com/GeneLab_999)
-[![Zenn](https://img.shields.io/badge/Zenn-genelab__999-3EA8FF?logo=zenn&logoColor=white)](https://zenn.dev/genelab_999)
-[![note](https://img.shields.io/badge/note-genelab__999-41C9B4)](https://note.com/genelab_999)
-[![Medium](https://img.shields.io/badge/Medium-@genelab__999-000000?logo=medium&logoColor=white)](https://medium.com/@genelab_999)
-[![dev.to](https://img.shields.io/badge/dev.to-genelab__999-0A0A0A?logo=devdotto&logoColor=white)](https://dev.to/genelab_999)
-[![X](https://img.shields.io/badge/X-@geneLab__999-000000?logo=x&logoColor=white)](https://x.com/geneLab_999)
-[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-genelab-FFDD00?logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/genelab)
+[日本語](README_ja.md) · [Hugging Face](https://huggingface.co/GeneLab) · [Zenn](https://zenn.dev/genelab_999) · [X](https://x.com/geneLab_999)
 
-<a href="https://www.buymeacoffee.com/genelab"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" height="40"></a>
+## Recent releases
 
-## About me
+### [sokudan](https://github.com/hiroki-abe-58/sokudan) — Japanese decisions without text generation
 
-- I build generative AI tools that run on your own hardware: Japanese text-to-speech, ComfyUI nodes for fast video and music generation, and Windows setups for RTX 5090 (Blackwell) GPUs and Apple Silicon Macs.
-- I also train small Japanese language models from scratch on one machine (an M1 Max, then an RTX 5090), changing one thing at a time and measuring what each change costs.
-- I measure before I claim. The numbers in my READMEs are the output of code I ran, and what I have not measured is marked as not measured.
-- Based in Tokyo. I write in Japanese and English on Zenn, Qiita, note and dev.to.
+A 314.6M-parameter ModernBERT-ja model that returns typed **choice, score and bool answers with probabilities in one forward pass**. Includes an HTTP server, a TypeScript SDK and a CLI; inference uses MLX on supported Apple Silicon Macs or PyTorch on CUDA / CPU.
+
+**v0.3.0 is available through five channels:** [PyPI](https://pypi.org/project/sokudan/) · [npm](https://www.npmjs.com/package/sokudan) · [Homebrew tap](https://github.com/hiroki-abe-58/sokudan/blob/main/Formula/sokudan.rb) · [Scoop bucket](https://github.com/hiroki-abe-58/sokudan/blob/main/bucket/sokudan.json) · [GHCR](https://github.com/hiroki-abe-58/sokudan/pkgs/container/sokudan).
+
+The npm package combines a CLI wrapper and a typed HTTP SDK. Homebrew and Scoop install launchers; the container targets Linux amd64 CPU. CI covers installation, SDK/server integration and container model inference. [Installation guide](https://github.com/hiroki-abe-58/sokudan/blob/main/docs/distribution.md) · [Model weights](https://huggingface.co/GeneLab/sokudan-ja-310m)
+
+### [ComfyUI-JoyAI-Video-Edit](https://github.com/hiroki-abe-58/ComfyUI-JoyAI-Video-Edit) — edit video with text instructions
+
+An unofficial integration of JoyAI-Video-Edit, with a persistent WSL2 worker, model load/unload controls, cancellation and memory guards. **v0.1.0 pre-release**, tested on Windows 11 with an RTX 5090: 840×480 landscape output, two inference steps, up to 600 input frames.
+
+Validation compares against a reference with the same low-memory placement patches; an unmodified upstream end-to-end run was resource-blocked. Production outputs are not bitwise repeatable. [Setup and validation scope](https://github.com/hiroki-abe-58/ComfyUI-JoyAI-Video-Edit#readme)
+
+## Projects
+
+I publish code, setup instructions and measured results together. Hardware, inputs, upstream differences and untested paths are documented in each project's README. ComfyUI integrations are community projects; upstream code and weights retain their own licenses.
+
+### Japanese language models · from scratch
+
+**1LM → 2LM → 3LM** explores character tokenization, subwords and modern decoder architectures on a single machine. Base models are trained from scratch; GAL variants study the trade-off between persona fine-tuning and general ability.
+
+| Series | Focus | Repositories |
+|---|---|---|
+| 1LM · 11.5M | Character-level mini-GPT | [MLX](https://github.com/hiroki-abe-58/1LM) · [Blackwell](https://github.com/hiroki-abe-58/1LM-Blackwell) |
+| 2LM · 13.81M | SentencePiece, dialogue data and fixed evaluation | [MLX](https://github.com/hiroki-abe-58/2LM-MLX) · [Blackwell](https://github.com/hiroki-abe-58/2LM-Blackwell) |
+| 3LM · 35.66M | RoPE, RMSNorm, SwiGLU and overnight pretraining | [MLX](https://github.com/hiroki-abe-58/3LM-MLX) · [Weights](https://huggingface.co/GeneLab/3LM-MLX) |
+| GAL variants | Persona data, fine-tuning and regression measurement | [2LM MLX](https://github.com/hiroki-abe-58/2LM-MLX-GAL) · [2LM Blackwell](https://github.com/hiroki-abe-58/2LM-Blackwell-GAL) · [3LM MLX](https://github.com/hiroki-abe-58/3LM-MLX-GAL) · [Weights](https://huggingface.co/GeneLab/3LM-MLX-GAL) |
+
+### Speech
+
+| Project | What it provides |
+|---|---|
+| [Qwen3-TTS-JP](https://github.com/hiroki-abe-58/Qwen3-TTS-JP) | Windows-native TTS, voice design and cloning; multilingual Web UI and Whisper transcription. |
+| [Qwen3-TTS-Mac-GeneLab](https://github.com/hiroki-abe-58/Qwen3-TTS-Mac-GeneLab) | Apple Silicon TTS with MLX / PyTorch, quantization and voice cloning. |
+| [Style-BERT-VITS2-GeneLab-Blackwell](https://github.com/hiroki-abe-58/Style-BERT-VITS2-GeneLab-Blackwell) | Windows-native Blackwell support, with CPU/GPU fallback. |
+
+### ComfyUI · video, images and music
+
+| Area | Projects | Focus |
+|---|---|---|
+| Video editing | [JoyAI-Video-Edit](https://github.com/hiroki-abe-58/ComfyUI-JoyAI-Video-Edit) | Instruction-based editing with a persistent worker. |
+| Fast video | [SparkDiffusion](https://github.com/hiroki-abe-58/ComfyUI-SparkDiffusion) · [LongLive-Plug](https://github.com/hiroki-abe-58/ComfyUI-LongLive-Plug) | Sparse attention, few-step sampling and adapter/scheduler verification. |
+| Video attention | [MonarchRT](https://github.com/hiroki-abe-58/ComfyUI-MonarchRT) | Monarch-matrix attention vs. a same-weight dense baseline. |
+| Causal video | [CausalForcing](https://github.com/hiroki-abe-58/ComfyUI-CausalForcing) · [NVIDIA-CMD](https://github.com/hiroki-abe-58/ComfyUI-NVIDIA-CMD) | Autoregressive generation, image-to-video and long rollouts. |
+| Talking heads | [LeapTalk](https://github.com/hiroki-abe-58/ComfyUI-LeapTalk) · [TBDub](https://github.com/hiroki-abe-58/ComfyUI-TBDub) | Speech-driven portraits and video redubbing. |
+| Image generation | [LoopedDiT](https://github.com/hiroki-abe-58/ComfyUI-LoopedDiT) | Pixel-space diffusion and controlled loop-depth comparisons. |
+| Image restoration | [PixRestore](https://github.com/hiroki-abe-58/ComfyUI-PixRestore) · [MiRipple](https://github.com/hiroki-abe-58/ComfyUI-MiRipple) | One-step restoration and verified local artifact repair. |
+| Music | [AceMusic](https://github.com/hiroki-abe-58/ComfyUI-AceMusic) | ACE-Step song generation, editing and LoRA support. |
+| Windows setup | [Win-Blackwell](https://github.com/hiroki-abe-58/ComfyUI-Win-Blackwell) | ComfyUI installation and tested workflows for RTX 50-series GPUs. |
+
+### Web, desktop & developer tools
+
+| Project | What it provides |
+|---|---|
+| [gassan](https://github.com/hiroki-abe-58/gassan) | React modal components built on native `<dialog>`, with accessible activation gates and explicit close reasons. |
+| [lensing](https://github.com/hiroki-abe-58/lensing) | Dependency-free JavaScript/CSS glass refraction effects using signed distance fields and Snell's law. |
+| [MermGraph](https://github.com/hiroki-abe-58/MermGraph) | A Tauri Mermaid editor with live preview and PNG/SVG export. |
+| [VMagic](https://github.com/hiroki-abe-58/VMagic) | Tauri video conversion with FFmpeg, RIFE frame interpolation and Real-ESRGAN upscaling. |
+| [aitxt](https://github.com/hiroki-abe-58/aitxt) | A Go CLI for text processing and developer workflows through OpenAI, Anthropic and Gemini APIs. |
+| [RustConv / dtx](https://github.com/hiroki-abe-58/RustConv) | A Rust CLI for converting, querying, validating and merging structured data. |
+| [imgai](https://github.com/hiroki-abe-58/imgai) · [ghstat](https://github.com/hiroki-abe-58/ghstat) | Go CLIs for batch image/EXIF processing and GitHub statistics. |
+
+## Stack
+
+**Languages & scripting**
+
+![Python](https://img.shields.io/badge/Python-1F2937?style=flat-square&logo=python&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-1F2937?style=flat-square&logo=typescript&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-1F2937?style=flat-square&logo=javascript&logoColor=white)
+![Go](https://img.shields.io/badge/Go-1F2937?style=flat-square&logo=go&logoColor=white)
+![Rust](https://img.shields.io/badge/Rust-1F2937?style=flat-square&logo=rust&logoColor=white)
+![HTML](https://img.shields.io/badge/HTML-1F2937?style=flat-square&logo=html5&logoColor=white)
+![CSS](https://img.shields.io/badge/CSS-1F2937?style=flat-square&logo=css&logoColor=white)
+![Shell](https://img.shields.io/badge/Shell-1F2937?style=flat-square&logo=gnubash&logoColor=white)
+![PowerShell](https://img.shields.io/badge/PowerShell-1F2937?style=flat-square&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI%2BPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyIiBkPSJNOCA2bC02IDYgNiA2bTgtMTJsNiA2LTYgNk0xNCAzbC00IDE4Ii8%2BPC9zdmc%2B&logoColor=white)
+
+**AI & model runtimes**
+
+![PyTorch](https://img.shields.io/badge/PyTorch-1F2937?style=flat-square&logo=pytorch&logoColor=white)
+![MLX](https://img.shields.io/badge/MLX-1F2937?style=flat-square&logo=apple&logoColor=white)
+![Transformers](https://img.shields.io/badge/Transformers-1F2937?style=flat-square&logo=huggingface&logoColor=white)
+![Diffusers](https://img.shields.io/badge/Diffusers-1F2937?style=flat-square&logo=huggingface&logoColor=white)
+![ComfyUI](https://img.shields.io/badge/ComfyUI-1F2937?style=flat-square&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI%2BPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyIiBkPSJNOCA2bC02IDYgNiA2bTgtMTJsNiA2LTYgNk0xNCAzbC00IDE4Ii8%2BPC9zdmc%2B&logoColor=white)
+![Gradio](https://img.shields.io/badge/Gradio-1F2937?style=flat-square&logo=gradio&logoColor=white)
+![CUDA](https://img.shields.io/badge/CUDA-1F2937?style=flat-square&logo=nvidia&logoColor=white)
+![Triton](https://img.shields.io/badge/Triton-1F2937?style=flat-square&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI%2BPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyIiBkPSJNOCA2bC02IDYgNiA2bTgtMTJsNiA2LTYgNk0xNCAzbC00IDE4Ii8%2BPC9zdmc%2B&logoColor=white)
+
+**Web & desktop**
+
+![React](https://img.shields.io/badge/React-1F2937?style=flat-square&logo=react&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-1F2937?style=flat-square&logo=vite&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-1F2937?style=flat-square&logo=tailwindcss&logoColor=white)
+![Tauri](https://img.shields.io/badge/Tauri-1F2937?style=flat-square&logo=tauri&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-1F2937?style=flat-square&logo=nodedotjs&logoColor=white)
+![Deno](https://img.shields.io/badge/Deno-1F2937?style=flat-square&logo=deno&logoColor=white)
+![Hono](https://img.shields.io/badge/Hono-1F2937?style=flat-square&logo=hono&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-1F2937?style=flat-square&logo=fastapi&logoColor=white)
+
+**Build, delivery & platforms**
+
+![Docker](https://img.shields.io/badge/Docker-1F2937?style=flat-square&logo=docker&logoColor=white)
+![Docker Compose](https://img.shields.io/badge/Docker%20Compose-1F2937?style=flat-square&logo=docker&logoColor=white)
+![Git](https://img.shields.io/badge/Git-1F2937?style=flat-square&logo=git&logoColor=white)
+![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-1F2937?style=flat-square&logo=githubactions&logoColor=white)
+![GHCR](https://img.shields.io/badge/GHCR-1F2937?style=flat-square&logo=github&logoColor=white)
+![PyPI](https://img.shields.io/badge/PyPI-1F2937?style=flat-square&logo=pypi&logoColor=white)
+![npm](https://img.shields.io/badge/npm-1F2937?style=flat-square&logo=npm&logoColor=white)
+![Homebrew](https://img.shields.io/badge/Homebrew-1F2937?style=flat-square&logo=homebrew&logoColor=white)
+![Scoop](https://img.shields.io/badge/Scoop-1F2937?style=flat-square&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI%2BPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyIiBkPSJNOCA2bC02IDYgNiA2bTgtMTJsNiA2LTYgNk0xNCAzbC00IDE4Ii8%2BPC9zdmc%2B&logoColor=white)
+
+<details>
+<summary>More libraries, APIs and development tools</summary>
+
+**Model tooling**
+
+![HF Hub](https://img.shields.io/badge/HF%20Hub-1F2937?style=flat-square&logo=huggingface&logoColor=white)
+![Datasets](https://img.shields.io/badge/Datasets-1F2937?style=flat-square&logo=huggingface&logoColor=white)
+![Tokenizers](https://img.shields.io/badge/Tokenizers-1F2937?style=flat-square&logo=huggingface&logoColor=white)
+![Safetensors](https://img.shields.io/badge/Safetensors-1F2937?style=flat-square&logo=huggingface&logoColor=white)
+![Accelerate](https://img.shields.io/badge/Accelerate-1F2937?style=flat-square&logo=huggingface&logoColor=white)
+![SentencePiece](https://img.shields.io/badge/SentencePiece-1F2937?style=flat-square&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI%2BPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyIiBkPSJNOCA2bC02IDYgNiA2bTgtMTJsNiA2LTYgNk0xNCAzbC00IDE4Ii8%2BPC9zdmc%2B&logoColor=white)
+![OpenCLIP](https://img.shields.io/badge/OpenCLIP-1F2937?style=flat-square&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI%2BPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyIiBkPSJNOCA2bC02IDYgNiA2bTgtMTJsNiA2LTYgNk0xNCAzbC00IDE4Ii8%2BPC9zdmc%2B&logoColor=white)
+![SageAttention](https://img.shields.io/badge/SageAttention-1F2937?style=flat-square&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI%2BPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyIiBkPSJNOCA2bC02IDYgNiA2bTgtMTJsNiA2LTYgNk0xNCAzbC00IDE4Ii8%2BPC9zdmc%2B&logoColor=white)
+![MLX Audio](https://img.shields.io/badge/MLX%20Audio-1F2937?style=flat-square&logo=apple&logoColor=white)
+![Whisper](https://img.shields.io/badge/Whisper-1F2937?style=flat-square&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI%2BPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyIiBkPSJNOCA2bC02IDYgNiA2bTgtMTJsNiA2LTYgNk0xNCAzbC00IDE4Ii8%2BPC9zdmc%2B&logoColor=white)
+
+**Scientific computing & media**
+
+![NumPy](https://img.shields.io/badge/NumPy-1F2937?style=flat-square&logo=numpy&logoColor=white)
+![SciPy](https://img.shields.io/badge/SciPy-1F2937?style=flat-square&logo=scipy&logoColor=white)
+![scikit-learn](https://img.shields.io/badge/scikit--learn-1F2937?style=flat-square&logo=scikitlearn&logoColor=white)
+![Matplotlib](https://img.shields.io/badge/Matplotlib-1F2937?style=flat-square&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI%2BPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyIiBkPSJNOCA2bC02IDYgNiA2bTgtMTJsNiA2LTYgNk0xNCAzbC00IDE4Ii8%2BPC9zdmc%2B&logoColor=white)
+![OpenCV](https://img.shields.io/badge/OpenCV-1F2937?style=flat-square&logo=opencv&logoColor=white)
+![Pillow](https://img.shields.io/badge/Pillow-1F2937?style=flat-square&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI%2BPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyIiBkPSJNOCA2bC02IDYgNiA2bTgtMTJsNiA2LTYgNk0xNCAzbC00IDE4Ii8%2BPC9zdmc%2B&logoColor=white)
+![scikit-image](https://img.shields.io/badge/scikit--image-1F2937?style=flat-square&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI%2BPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyIiBkPSJNOCA2bC02IDYgNiA2bTgtMTJsNiA2LTYgNk0xNCAzbC00IDE4Ii8%2BPC9zdmc%2B&logoColor=white)
+![timm](https://img.shields.io/badge/timm-1F2937?style=flat-square&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI%2BPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyIiBkPSJNOCA2bC02IDYgNiA2bTgtMTJsNiA2LTYgNk0xNCAzbC00IDE4Ii8%2BPC9zdmc%2B&logoColor=white)
+![torchaudio](https://img.shields.io/badge/torchaudio-1F2937?style=flat-square&logo=pytorch&logoColor=white)
+![librosa](https://img.shields.io/badge/librosa-1F2937?style=flat-square&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI%2BPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyIiBkPSJNOCA2bC02IDYgNiA2bTgtMTJsNiA2LTYgNk0xNCAzbC00IDE4Ii8%2BPC9zdmc%2B&logoColor=white)
+![SoundFile](https://img.shields.io/badge/SoundFile-1F2937?style=flat-square&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI%2BPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyIiBkPSJNOCA2bC02IDYgNiA2bTgtMTJsNiA2LTYgNk0xNCAzbC00IDE4Ii8%2BPC9zdmc%2B&logoColor=white)
+![ONNX Runtime](https://img.shields.io/badge/ONNX%20Runtime-1F2937?style=flat-square&logo=onnx&logoColor=white)
+![FFmpeg](https://img.shields.io/badge/FFmpeg-1F2937?style=flat-square&logo=ffmpeg&logoColor=white)
+![VideoToolbox](https://img.shields.io/badge/VideoToolbox-1F2937?style=flat-square&logo=apple&logoColor=white)
+![Real-ESRGAN](https://img.shields.io/badge/Real--ESRGAN-1F2937?style=flat-square&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI%2BPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyIiBkPSJNOCA2bC02IDYgNiA2bTgtMTJsNiA2LTYgNk0xNCAzbC00IDE4Ii8%2BPC9zdmc%2B&logoColor=white)
+![RIFE](https://img.shields.io/badge/RIFE-1F2937?style=flat-square&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI%2BPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyIiBkPSJNOCA2bC02IDYgNiA2bTgtMTJsNiA2LTYgNk0xNCAzbC00IDE4Ii8%2BPC9zdmc%2B&logoColor=white)
+
+**UI, graphics & services**
+
+![PostCSS](https://img.shields.io/badge/PostCSS-1F2937?style=flat-square&logo=postcss&logoColor=white)
+![Zustand](https://img.shields.io/badge/Zustand-1F2937?style=flat-square&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI%2BPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyIiBkPSJNOCA2bC02IDYgNiA2bTgtMTJsNiA2LTYgNk0xNCAzbC00IDE4Ii8%2BPC9zdmc%2B&logoColor=white)
+![React Flow](https://img.shields.io/badge/React%20Flow-1F2937?style=flat-square&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI%2BPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyIiBkPSJNOCA2bC02IDYgNiA2bTgtMTJsNiA2LTYgNk0xNCAzbC00IDE4Ii8%2BPC9zdmc%2B&logoColor=white)
+![Mermaid](https://img.shields.io/badge/Mermaid-1F2937?style=flat-square&logo=mermaid&logoColor=white)
+![Monaco Editor](https://img.shields.io/badge/Monaco%20Editor-1F2937?style=flat-square&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI%2BPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyIiBkPSJNOCA2bC02IDYgNiA2bTgtMTJsNiA2LTYgNk0xNCAzbC00IDE4Ii8%2BPC9zdmc%2B&logoColor=white)
+![PixiJS](https://img.shields.io/badge/PixiJS-1F2937?style=flat-square&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI%2BPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyIiBkPSJNOCA2bC02IDYgNiA2bTgtMTJsNiA2LTYgNk0xNCAzbC00IDE4Ii8%2BPC9zdmc%2B&logoColor=white)
+![GSAP](https://img.shields.io/badge/GSAP-1F2937?style=flat-square&logo=gsap&logoColor=white)
+![SVG](https://img.shields.io/badge/SVG-1F2937?style=flat-square&logo=svg&logoColor=white)
+![Puppeteer](https://img.shields.io/badge/Puppeteer-1F2937?style=flat-square&logo=puppeteer&logoColor=white)
+![Uvicorn](https://img.shields.io/badge/Uvicorn-1F2937?style=flat-square&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI%2BPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyIiBkPSJNOCA2bC02IDYgNiA2bTgtMTJsNiA2LTYgNk0xNCAzbC00IDE4Ii8%2BPC9zdmc%2B&logoColor=white)
+![Pydantic](https://img.shields.io/badge/Pydantic-1F2937?style=flat-square&logo=pydantic&logoColor=white)
+![HTTPX](https://img.shields.io/badge/HTTPX-1F2937?style=flat-square&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI%2BPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyIiBkPSJNOCA2bC02IDYgNiA2bTgtMTJsNiA2LTYgNk0xNCAzbC00IDE4Ii8%2BPC9zdmc%2B&logoColor=white)
+
+**CLI, APIs & native code**
+
+![Cobra](https://img.shields.io/badge/Cobra-1F2937?style=flat-square&logo=go&logoColor=white)
+![Clap](https://img.shields.io/badge/Clap-1F2937?style=flat-square&logo=rust&logoColor=white)
+![Tokio](https://img.shields.io/badge/Tokio-1F2937?style=flat-square&logo=rust&logoColor=white)
+![Serde](https://img.shields.io/badge/Serde-1F2937?style=flat-square&logo=rust&logoColor=white)
+![OpenAI API](https://img.shields.io/badge/OpenAI%20API-1F2937?style=flat-square&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI%2BPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyIiBkPSJNOCA2bC02IDYgNiA2bTgtMTJsNiA2LTYgNk0xNCAzbC00IDE4Ii8%2BPC9zdmc%2B&logoColor=white)
+![Anthropic API](https://img.shields.io/badge/Anthropic%20API-1F2937?style=flat-square&logo=anthropic&logoColor=white)
+![Gemini API](https://img.shields.io/badge/Gemini%20API-1F2937?style=flat-square&logo=googlegemini&logoColor=white)
+
+**Testing & packaging**
+
+![pytest](https://img.shields.io/badge/pytest-1F2937?style=flat-square&logo=pytest&logoColor=white)
+![Ruff](https://img.shields.io/badge/Ruff-1F2937?style=flat-square&logo=ruff&logoColor=white)
+![Vitest](https://img.shields.io/badge/Vitest-1F2937?style=flat-square&logo=vitest&logoColor=white)
+![Testing Library](https://img.shields.io/badge/Testing%20Library-1F2937?style=flat-square&logo=testinglibrary&logoColor=white)
+![ESLint](https://img.shields.io/badge/ESLint-1F2937?style=flat-square&logo=eslint&logoColor=white)
+![tsup](https://img.shields.io/badge/tsup-1F2937?style=flat-square&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI%2BPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyIiBkPSJNOCA2bC02IDYgNiA2bTgtMTJsNiA2LTYgNk0xNCAzbC00IDE4Ii8%2BPC9zdmc%2B&logoColor=white)
+![esbuild](https://img.shields.io/badge/esbuild-1F2937?style=flat-square&logo=esbuild&logoColor=white)
+![uv](https://img.shields.io/badge/uv-1F2937?style=flat-square&logo=uv&logoColor=white)
+![Hatchling](https://img.shields.io/badge/Hatchling-1F2937?style=flat-square&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI%2BPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyIiBkPSJNOCA2bC02IDYgNiA2bTgtMTJsNiA2LTYgNk0xNCAzbC00IDE4Ii8%2BPC9zdmc%2B&logoColor=white)
+![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-1F2937?style=flat-square&logo=githubpages&logoColor=white)
+
+**Operating systems**
+
+![Windows](https://img.shields.io/badge/Windows-1F2937?style=flat-square&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI%2BPHBhdGggZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyIiBkPSJNOCA2bC02IDYgNiA2bTgtMTJsNiA2LTYgNk0xNCAzbC00IDE4Ii8%2BPC9zdmc%2B&logoColor=white)
+![WSL2](https://img.shields.io/badge/WSL2-1F2937?style=flat-square&logo=linux&logoColor=white)
+![Linux](https://img.shields.io/badge/Linux-1F2937?style=flat-square&logo=linux&logoColor=white)
+![Ubuntu](https://img.shields.io/badge/Ubuntu-1F2937?style=flat-square&logo=ubuntu&logoColor=white)
+![macOS](https://img.shields.io/badge/macOS-1F2937?style=flat-square&logo=macos&logoColor=white)
+
+</details>
+
+Built across my [ML projects](https://github.com/hiroki-abe-58/sokudan), [React libraries](https://github.com/hiroki-abe-58/gassan), [desktop apps](https://github.com/hiroki-abe-58/VMagic), [web tooling](https://github.com/hiroki-abe-58/MermGraph) and [Go CLIs](https://github.com/hiroki-abe-58/aitxt). Docker Compose is also part of my everyday workflow. Main hardware: RTX 5090 (Blackwell) and Apple Silicon. Badges without a brand logo use a generic code icon.
+
+## Open-source contributions
+
+Reproducible checks for answer-order sensitivity in open decision models:
+
+- **Laya:** [score-position bias report](https://github.com/NandhaKishorM/laya/issues/131), [regression checks](https://github.com/NandhaKishorM/laya/pull/259), [non-English inputs](https://github.com/NandhaKishorM/laya/pull/650) and [choice questions](https://github.com/NandhaKishorM/laya/pull/753).
+- **kev / lev:** [kev measurements](https://github.com/jaredpalmer/kev/issues/161), [lev measurements](https://github.com/Abhinavexists/lev/issues/1) and [presentation checks / order averaging](https://github.com/Abhinavexists/lev/pull/2).
+- **Mi-Ripple:** [OpenCV runtime handling](https://github.com/miyang-ai/Mi-Ripple/pull/2), found while validating the ComfyUI integration.
+
+## Research
+
+**[DiM-2](https://doi.org/10.5281/zenodo.18689888)** explores Mamba-2 / Structured State Space Duality for image and video diffusion. These preprints present architectural proposals and experimental directions; implementation results are reported separately in the OSS repositories above.
+
+<details>
+<summary>Related DiM-2 / SSD preprints</summary>
+
+| Preprint | Direction |
+|---|---|
+| [SSD-CM](https://doi.org/10.5281/zenodo.18690580) | Few-step consistency distillation |
+| [SSD-Control](https://doi.org/10.5281/zenodo.18690631) | Depth, pose and edge conditioning |
+| [SSD-Portrait](https://doi.org/10.5281/zenodo.18690678) | Audio-driven portraits and lip synchronization |
+| [SSD-SR](https://doi.org/10.5281/zenodo.18697475) | Image and video super-resolution |
+| [SSD-Flow](https://doi.org/10.5281/zenodo.18697643) | Flow matching with Mamba-2 |
+| [SSD-Edit](https://doi.org/10.5281/zenodo.18697566) | Instruction-guided image and video editing |
+
+</details>
+
+## Writing & support
+
+I write about implementation and experiments in Japanese and English.
+
+[Zenn](https://zenn.dev/genelab_999) · [Qiita](https://qiita.com/GeneLab_999) · [note](https://note.com/genelab_999) · [Medium](https://medium.com/@genelab_999) · [dev.to](https://dev.to/genelab_999) · [X](https://x.com/geneLab_999)
+
+If these tools save you time, [a coffee helps me maintain them](https://www.buymeacoffee.com/genelab).
+
+<details>
+<summary>GitHub activity</summary>
 
 <p align="center">
   <a href="https://github.com/ryo-ma/github-profile-trophy">
@@ -49,109 +267,4 @@
   </a>
 </p>
 
-## Featured: Japanese language models, trained from scratch
-
-**1LM → 2LM → 3LM** is a series of Japanese GPT-style chat models built from zero: no pretrained base and no fine-tune of an existing LLM. Each repo ships the training code, a CLI and a web GUI. Each step changes one variable and measures it. The code is MIT, and the training data was chosen so that no ShareAlike license applies.
-
-| Step | What changes | Params | Result | Apple Silicon (MLX, M1 Max) | RTX 5090 (Windows native, PyTorch) |
-|---|---|---|---|---|---|
-| **1LM** | Character-level mini-GPT, 28,616 oasst1-ja conversations | 11.5M | best val loss 1.857 in 32 min | [1LM](https://github.com/hiroki-abe-58/1LM) | [1LM-Blackwell](https://github.com/hiroki-abe-58/1LM-Blackwell): 61.3 s, val loss 1.8677 (Mac 1.8571) |
-| **2LM** | SentencePiece subwords (vocab 8,000), 4 Apache-2.0 dialogue sets, a fixed 4-metric eval | 13.81M | bits/char 2.584 (char-level baselines: 3.282 and 2.809) | [2LM-MLX](https://github.com/hiroki-abe-58/2LM-MLX) | [2LM-Blackwell](https://github.com/hiroki-abe-58/2LM-Blackwell): 78.5 s, bits/char 2.586 |
-| **3LM** | RoPE / RMSNorm / SwiGLU, 1.2B characters of FineWeb2-ja + Aozora, crash-safe overnight pretraining | 35.66M | val loss 6.554 → 4.306 in 8.03 h, 0 restarts | [3LM-MLX](https://github.com/hiroki-abe-58/3LM-MLX) ([weights](https://huggingface.co/GeneLab/3LM-MLX)) | |
-
-3LM did not simply beat 2LM. On 2LM's own eval set it lost (bits/char 2.801 vs 2.540), and on web and Aozora text it won (3.680 vs 6.481). The README reports both results.
-
-**GAL variants** fine-tune each base model on a fictional gyaru-style chat dataset that a local Apache-2.0 LLM generated, then measure what the persona costs in general ability:
-
-- **[2LM-MLX-GAL](https://github.com/hiroki-abe-58/2LM-MLX-GAL)**: 2,610 conversations and a 40 s fine-tune. bits/char goes from 2.584 to 3.550, and topic retention from 0.733 to 0.267.
-- **[2LM-Blackwell-GAL](https://github.com/hiroki-abe-58/2LM-Blackwell-GAL)**: 6,879 conversations generated in 36.7 min, then a 7.0 s fine-tune: gal rate 0.74, keigo 0.00. A 20-condition sweep shows the breakdown boundary is a surface over conversation count × learning rate, not a single count.
-- **[3LM-MLX-GAL](https://github.com/hiroki-abe-58/3LM-MLX-GAL)**: the same 2,610 conversations in 48 s. The bits/char cost is +0.353, compared with +0.970 for 2LM. ([weights](https://huggingface.co/GeneLab/3LM-MLX-GAL))
-
-## Featured: text-to-speech
-
-- **[Qwen3-TTS-JP](https://github.com/hiroki-abe-58/Qwen3-TTS-JP)**: A Windows-native fork of Qwen3-TTS that runs without WSL2, Docker or FlashAttention 2. It adds a 10-language Web UI (Custom Voice, Voice Design, Voice Clone) and Whisper auto-transcription for voice-clone reference audio, with setup notes for RTX 50-series (Blackwell) GPUs.
-- **[Qwen3-TTS-Mac-GeneLab](https://github.com/hiroki-abe-58/Qwen3-TTS-Mac-GeneLab)**: Qwen3-TTS for Apple Silicon Macs. It uses an MLX + PyTorch dual engine: MLX with 8-bit/4-bit quantization for speed, and PyTorch for voice cloning. The Web UI is in 10 languages, with Whisper auto-transcription.
-- **[Style-BERT-VITS2-GeneLab-Blackwell](https://github.com/hiroki-abe-58/Style-BERT-VITS2-GeneLab-Blackwell)**: A fork of Style-Bert-VITS2 that runs on the GPU of an RTX 5090 (Blackwell, sm_120) natively on Windows. It uses PyTorch nightly cu128 and triton-windows, with automatic CPU/GPU fallback.
-
-## Featured: ComfyUI custom nodes
-
-### Fast video generation from recent papers
-
-Recent papers make video diffusion faster with few-step distillation and sparse attention. These node packs run those methods from ComfyUI on one RTX 5090 (32 GB). Each README separates what was tested on real weights from what was not. All of them are unofficial integrations, and upstream code and weights keep their own licenses.
-
-- **[ComfyUI-SparkDiffusion](https://github.com/hiroki-abe-58/ComfyUI-SparkDiffusion)**: Runs AlibabaResearch's [SparkDiffusion](https://github.com/AlibabaResearch/SparkDiffusion) on Wan2.1 / Wan2.2: RoLA sparse attention at 90–97 % sparsity, 3- or 4-step CrossDistill sampling and FP8 W8A8. The official inference code runs unmodified in its own runtime (WSL2, Linux, or Windows native as experimental). Every run checks that RoLA was used on every block and that the DiT received the exact CrossDistill timesteps, and a run that fails these checks is reported as an error, not as a result. Warm denoise is 20.0 s for 14B 720P 3-step and 1.78 s for 1.3B 480P 4-step. Without allocator tuning, the same 14B runs took 39–48 s, because VRAM went past 32 GB and the Windows driver moved it to system memory without any warning. The paper's speedup of up to 265x was not reproduced, because the 50-step dense baseline was not run. On the [Comfy Registry](https://registry.comfy.org/nodes/sparkdiffusion) as `sparkdiffusion`.
-- **[ComfyUI-LongLive-Plug](https://github.com/hiroki-abe-58/ComfyUI-LongLive-Plug)**: Applies NVlabs' [LongLive-Plug](https://github.com/NVlabs/LongLive/tree/main/LongLive-Plug) few-step and CFG LoRA adapters to ComfyUI's built-in Wan2.1-T2V-14B. Loading two LoRAs and setting `steps=4` is not enough. One node applies both adapters at the upstream weights (1.0 / 0.5) and reports coverage: 400/400 targets per adapter. The other node outputs the sampling recipe, and its 4-step FlowUniPC schedule is bit-identical on CPU to the upstream scheduler. At 832×480 with 81 frames, the 4-step run takes 59.0 s end to end, and the official 50-step CFG 5 baseline takes 943.5 s. A plain 4-step run without the adapters comes out blurred and ghosted. Quantized bases are refused instead of guessed. On the [Comfy Registry](https://registry.comfy.org/publishers/hiroki-abe-58/nodes/longlive-plug) as `longlive-plug`.
-- **[ComfyUI-MonarchRT](https://github.com/hiroki-abe-58/ComfyUI-MonarchRT)**: Runs [MonarchRT](https://github.com/Infini-AI-Lab/MonarchRT)'s Monarch-matrix attention training-free on the public Self-Forcing weights (Wan2.1-T2V-1.3B), next to a dense baseline with the same weights, prompt, seed and noise. Every self-attention call is counted: all 1,050 per video ran in the Monarch Triton kernel, with 0 dense and 0 fallback, and a job fails if any call takes another path. In a WSL2 runtime, the generator goes from 6.60 s to 4.91 s (1.34x) at about 90 % sparsity and to 4.17 s (1.58x) at about 95 %. The rollouts drift away from the dense ones pixel by pixel (PSNR 12.9 dB, SSIM 0.41), and the 95 % profile looks visibly weaker, so the README makes no claim of quality parity.
-- **[ComfyUI-CausalForcing](https://github.com/hiroki-abe-58/ComfyUI-CausalForcing)**: Runs the official [Causal Forcing](https://github.com/thu-ml/Causal-Forcing) checkpoints, which distil Wan2.1-T2V-1.3B into an autoregressive model that generates one latent frame at a time with a few denoising steps. It puts Causal Forcing++ frame-wise 2-step next to the Causal Forcing frame-wise 4-step baseline, for text-to-video and, with the 2-step model, image-to-video. For the same prompt and seed, the official `inference.py` and this package produce identical noise, latents and 8-bit frames for both models. The runner counts the generator calls (65 per video for 2-step, 105 for 4-step) and fails the job on a mismatch, and it refuses a partial checkpoint load where upstream falls back to `strict=False`. In a WSL2 runtime, the generator takes 7.05 s for 2-step and 10.97 s for 4-step (1.56x, or 1.32x end to end). These are not real-time or paper latency figures. The 1-step and chunk-wise models are accepted but have not been run yet.
-- **[ComfyUI-NVIDIA-CMD](https://github.com/hiroki-abe-58/ComfyUI-NVIDIA-CMD)**: Unofficial ComfyUI nodes that run NVIDIA CMD on Windows native, with PyTorch SDPA and no flash-attn or WSL. CMD is a few-step causal image-to-video model distilled from Cosmos-Predict2.5-2B. The nodes cover short I2V, long rollout and camera control. The KV cache is capped at the local attention window, so long rollouts fit in 32 GB: the measured peak is 23,852 MiB and a long run takes about 267 s on an RTX 5090.
-
-### Talking heads and dubbing
-
-Speech-driven face video from recent papers. Both packs run the official weights in a separate runtime, natively on Windows, on the same RTX 5090.
-
-- **[ComfyUI-LeapTalk](https://github.com/hiroki-abe-58/ComfyUI-LeapTalk)**: Turns one portrait and one speech clip into a 512×512, 25 fps talking-head video with [LeapTalk](https://github.com/zhangrongxiang/LeapTalk)'s official weights and 1-step recipe (one solver step per chunk), built on [SoulX-FlashHead](https://github.com/Soul-AILab/SoulX-FlashHead). For the same portrait and speech, LeapTalk's own `inference.py` and this node produce identical 8-bit frames (234/234 and 850/850), and every job checks that all 480 LoRA tensors were applied. The runtime runs natively on Windows with PyTorch SDPA. Once the models are loaded, a 28-frame chunk takes about 0.45 s, which is about 62 frames/s against 25 fps playback. In one-shot mode, about 23 s of every job is start-up. With the opt-in persistent worker (v0.2), later jobs took 6.2 s for a 9.4 s clip, compared with 36.1 s one-shot. These numbers come from one machine: under a high Windows commit charge, the memory guard refused 5 of 7 persistent jobs in the clean-install check, and the benchmarks list every attempt.
-- **[ComfyUI-TBDub](https://github.com/hiroki-abe-58/ComfyUI-TBDub)**: Redubs an existing video with new speech using [TBDub](https://github.com/TaoLiveAIGC/TBDub)'s official V1.1 Student recipe (2 steps, 512×512, 25 fps). The mouth region is regenerated to follow the new speech, and the person, pose and background stay. In `full_frame` mode, MediaPipe finds the face and the dubbed crop is pasted back into the original frames. It does not translate or synthesize speech. On the test machine, other applications already held about 70 GiB of the 93 GiB Windows commit limit, so neither the upstream default placement nor `--cpu-offload` fit under the pack's memory guard. The pack adds run-time patches instead of editing the upstream checkout, and lists them in every job report. With the DiT weights streamed layer by layer, one DiT call was bit-identical to an independent evaluation. The per-frame VAE decode is not bit-identical: it differs from the official decode by at most 4/255. With the same patches on both sides, the wrapper reproduced the official `inference.py` exactly, down to all 126 pasted 1280×720 frames of the demo. That demo (5.06 s of speech) took 98 s in the runtime, with 7.8 GiB of CUDA memory reserved at peak. These numbers come from one machine and one input, and they are not a benchmark.
-
-### Image generation and restoration
-
-- **[ComfyUI-LoopedDiT](https://github.com/hiroki-abe-58/ComfyUI-LoopedDiT)**: Runs [Looped-DiT](https://github.com/OpenSenseNova/Looped-DiT), a pixel-space text-to-image diffusion transformer that runs a shared group of blocks several times inside every denoising step. Loop depth is not the number of sampling steps. Every image uses the official 100 Euler steps with CFG 6 (200 model passes), and loop depth N only changes how many times the shared middle blocks run in each pass: 17, 22 and 32 blocks at N = 1, 2 and 4 for B/16. With the B/16 EMA checkpoint, the node's output is bit-identical to the official code, as 8-bit images and as float32 results, for all 27 images compared on an RTX 5090. A Loop Sweep node renders the same prompt, seed and initial noise at several loop depths and returns a labeled grid. Upstream pins `transformers < 5` because 5.x tokenizes trailing whitespace differently, while ComfyUI installs 5.x. The node tokenizes with the model's own `tokenizer.json` and matches 4.x on all 317 test prompts, where transformers 5.18 differs on 301. Denoising takes 7.98 s at loops 1 and 14.69 s at loops 4. A higher loop depth is not always better: in one grid, loops 2 draws two lanterns although the prompt asks for one. That is an observation by eye, not a benchmark.
-- **[ComfyUI-PixRestore](https://github.com/hiroki-abe-58/ComfyUI-PixRestore)**: Runs PixRestore-S, the released one-step model of [PixRestore](https://github.com/csslc/PixRestore) (arXiv:2608.16793). It restores noisy, blurred or JPEG-compressed 512×512 RGB images with one denoiser call, conditioned on DINOv2 features. The official one-step path is reproduced bit-exactly: for all 16 test images, the node's 8-bit output and the recorded intermediate tensors equal the unmodified official `inference.py` run in eager mode. Upstream decorates several functions with `@torch.compile`, which needs Triton, so the node runs eager. The compiled path differs in 11 % of 8-bit values on the 12 demo inputs, by at most 5/255. On an RTX 5090, a restoration takes about 0.11 s after the first prompt, with 342 MiB of CUDA memory allocated at peak. On the 12 synthetic demo images, PSNR rose in every case, but only by 0.3–0.8 dB for JPEG. Restoration is generative: noise goes away together with fine texture, and blurred edges come back with re-synthesised detail that is similar to the source but not identical. An upstream issue reports poor results in practice, and this repository did not evaluate that.
-- **[ComfyUI-MiRipple](https://github.com/hiroki-abe-58/ComfyUI-MiRipple)**: Runs the local, deterministic part of [Mi-Ripple](https://github.com/miyang-ai/Mi-Ripple) on one image: diagnosis of periodic lattice and flat-region granule artifacts, then the official notch / masked-reduction repair with the official verification. It runs on CPU with no model weights and no network, and the MIYANG regeneration API is never called. When the official result is not a verified delivery, the node returns the input unchanged and says why. On 19 inputs, every layer (outcome, diagnosis and verify JSON, every image the official code writes, every node output) matched the unmodified official package exactly, also through a real ComfyUI queue and from a clean install. None of the 512×512 lattice cases passed the official verification, so the node returned the input. The only verified delivery observed was upstream's own 384×512 test image. On a brick pattern, the official notch candidate visibly damaged the mortar, and the verification rejected it. An OpenCV that imports but cannot be used makes the upstream run fail, so the package carries one patch for that, also proposed upstream as [Mi-Ripple#2](https://github.com/miyang-ai/Mi-Ripple/pull/2) (open). A 512×512 repair takes 0.7–1.7 s on CPU.
-
-### Music and setup
-
-- **[ComfyUI-AceMusic](https://github.com/hiroki-abe-58/ComfyUI-AceMusic)**: 15 ComfyUI custom nodes for ACE-Step music generation. They make full songs with lyrics in 19 languages, up to 240 seconds long, with cover, repaint, extend, edit and retake, and LoRA loading.
-- **[ComfyUI-Win-Blackwell](https://github.com/hiroki-abe-58/ComfyUI-Win-Blackwell)**: A one-click setup (.bat / .ps1) for Windows-native ComfyUI on RTX 50-series (sm_120) GPUs. It uses CUDA 13.0, PyTorch nightly cu130, Python 3.13 and triton-windows. It comes with 28 custom nodes and 5 image-to-video pipelines verified on an RTX 5090. The README is in 4 languages.
-
-## Featured: decision models and measurement
-
-- **[sokudan](https://github.com/hiroki-abe-58/sokudan)**: `pip install sokudan` (v0.3.0, Python 3.11–3.13). A Japanese System One decision model (314.6M, ModernBERT-ja, Apache-2.0). It returns typed choice, score and bool answers with probabilities in one forward pass, with no generated text. The weights are v0.2's, a weight average of eight seeds, and one run of it on its own 300-item `bench_ja` gives choice accuracy 0.880, score RPS 0.075 and bool AUROC 0.844. `bool` answers are calibrated by default with one temperature shipped with the weights, and `choice` and `score` stay raw. `sokudan serve` runs a `/v1/systemone`-compatible server. v0.3.0: MLX backend for Apple Silicon (auto-selected on macOS 14+ arm64), torch on CUDA / CPU. ([model](https://huggingface.co/GeneLab/sokudan-ja-310m), [PyPI](https://pypi.org/project/sokudan/))
-- **Contributions to other open decision models**, measured rather than argued:
-  - [Laya](https://github.com/NandhaKishorM/laya): reported the score position bias of the multilingual checkpoint ([#131](https://github.com/NandhaKishorM/laya/issues/131)), added a label-free regression check for it ([#259](https://github.com/NandhaKishorM/laya/pull/259)), extended that check to non-English inputs ([#650](https://github.com/NandhaKishorM/laya/pull/650)) and to choice questions ([#753](https://github.com/NandhaKishorM/laya/pull/753)); #259, #650 and #753 merged.
-  - [kev](https://github.com/jaredpalmer/kev) and [lev](https://github.com/Abhinavexists/lev): measured score-question order sensitivity with the same checks ([kev#161](https://github.com/jaredpalmer/kev/issues/161), [lev#1](https://github.com/Abhinavexists/lev/issues/1)).
-  - [Lev PR #2](https://github.com/Abhinavexists/lev/pull/2) (open): presentation checks and opt-in order averaging for Score; reversed order raises Score accuracy by 6.9 points on bench_en.
-
-## Research
-
-**DiM-2 / SSD series — exploring efficient image and video generation.**
-
-Independent research on Mamba-2 and Structured State Space Duality (SSD).
-These preprints describe architectural proposals and research directions,
-separate from the measured OSS implementations above.
-
-### DiM-2 — unified image and video diffusion
-
-**[DiM-2](https://doi.org/10.5281/zenodo.18689888)** proposes a Mamba-2-based
-architecture for image and video diffusion, with separate spatial and
-temporal modeling and SSD-based conditioning.
-
-The report covers the architecture, its theoretical motivation,
-and a proposed experimental protocol.
-
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18689888.svg)](https://doi.org/10.5281/zenodo.18689888)
-
-<details>
-<summary>Related preprints — six extensions of the DiM-2 / SSD research direction</summary>
-
-| Preprint | Research direction |
-|---|---|
-| **[SSD-CM](https://doi.org/10.5281/zenodo.18690580)** | Few-step generation through consistency distillation. |
-| **[SSD-Control](https://doi.org/10.5281/zenodo.18690631)** | Generation conditioned on depth, pose, and edges. |
-| **[SSD-Portrait](https://doi.org/10.5281/zenodo.18690678)** | Audio-driven portrait animation and lip synchronization. |
-| **[SSD-SR](https://doi.org/10.5281/zenodo.18697475)** | Image and video super-resolution with Mamba-2. |
-| **[SSD-Flow](https://doi.org/10.5281/zenodo.18697643)** | Image generation using flow matching with Mamba-2. |
-| **[SSD-Edit](https://doi.org/10.5281/zenodo.18697566)** | Instruction-guided image and video editing. |
-
 </details>
-
-## Stack
-
-Python, PyTorch, Triton, Hugging Face Transformers, MLX, SentencePiece, ComfyUI, Gradio. RTX 5090 (Blackwell) on Windows and WSL2, and Apple Silicon.
-
-## Support my work
-
-If these tools save you time, a coffee helps me keep them running.
-
-<a href="https://www.buymeacoffee.com/genelab"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" height="40"></a>
-
--- GeneLab (Hiroki Abe), Tokyo
