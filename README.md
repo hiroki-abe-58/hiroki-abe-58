@@ -4,7 +4,7 @@
 
 **Generative AI, in Japanese, on your own machine.**
 
-AI engineer and technical consultant in Tokyo. I build local AI tools, train small Japanese language models, and turn research implementations into usable software for Windows, Linux and Apple Silicon.
+AI engineer and technical consultant in Tokyo. I build local AI tools, train small Japanese language models, and turn research implementations into usable software for Windows, Linux and Apple Silicon. My ComfyUI integrations are linked from the official READMEs of [LongLive-Plug](https://github.com/NVlabs/LongLive/tree/main/LongLive-Plug) (NVlabs), [SparkDiffusion](https://github.com/AlibabaResearch/SparkDiffusion) (AlibabaResearch), [LeapTalk](https://github.com/zhangrongxiang/LeapTalk) and [Causal Forcing](https://github.com/thu-ml/Causal-Forcing).
 
 [日本語](README_ja.md) · [Hugging Face](https://huggingface.co/GeneLab) · [Zenn](https://zenn.dev/genelab_999) · [X](https://x.com/geneLab_999)
 
@@ -49,17 +49,19 @@ I publish code, setup instructions and measured results together. Hardware, inpu
 
 ### ComfyUI · video, images and music
 
-| Area | Projects | Focus |
-|---|---|---|
-| Video editing | [JoyAI-Video-Edit](https://github.com/hiroki-abe-58/ComfyUI-JoyAI-Video-Edit) | Instruction-based editing with a persistent worker. |
-| Fast video | [SparkDiffusion](https://github.com/hiroki-abe-58/ComfyUI-SparkDiffusion) · [LongLive-Plug](https://github.com/hiroki-abe-58/ComfyUI-LongLive-Plug) | Sparse attention, few-step sampling and adapter/scheduler verification. |
-| Video attention | [MonarchRT](https://github.com/hiroki-abe-58/ComfyUI-MonarchRT) | Monarch-matrix attention vs. a same-weight dense baseline. |
-| Causal video | [CausalForcing](https://github.com/hiroki-abe-58/ComfyUI-CausalForcing) · [NVIDIA-CMD](https://github.com/hiroki-abe-58/ComfyUI-NVIDIA-CMD) | Autoregressive generation, image-to-video and long rollouts. |
-| Talking heads | [LeapTalk](https://github.com/hiroki-abe-58/ComfyUI-LeapTalk) · [TBDub](https://github.com/hiroki-abe-58/ComfyUI-TBDub) | Speech-driven portraits and video redubbing. |
-| Image generation | [LoopedDiT](https://github.com/hiroki-abe-58/ComfyUI-LoopedDiT) | Pixel-space diffusion and controlled loop-depth comparisons. |
-| Image restoration | [PixRestore](https://github.com/hiroki-abe-58/ComfyUI-PixRestore) · [MiRipple](https://github.com/hiroki-abe-58/ComfyUI-MiRipple) | One-step restoration and verified local artifact repair. |
-| Music | [AceMusic](https://github.com/hiroki-abe-58/ComfyUI-AceMusic) | ACE-Step song generation, editing and LoRA support. |
-| Windows setup | [Win-Blackwell](https://github.com/hiroki-abe-58/ComfyUI-Win-Blackwell) | ComfyUI installation and tested workflows for RTX 50-series GPUs. |
+In the Upstream column, each merged PR added the integration to the official README and made me a contributor to that repository.
+
+| Area | Projects | Focus | Upstream |
+|---|---|---|---|
+| Video editing | [JoyAI-Video-Edit](https://github.com/hiroki-abe-58/ComfyUI-JoyAI-Video-Edit) | Instruction-based editing with a persistent worker. | |
+| Fast video | [SparkDiffusion](https://github.com/hiroki-abe-58/ComfyUI-SparkDiffusion) · [LongLive-Plug](https://github.com/hiroki-abe-58/ComfyUI-LongLive-Plug) | Sparse attention, few-step sampling and adapter/scheduler verification. | Merged: [SparkDiffusion #17](https://github.com/AlibabaResearch/SparkDiffusion/pull/17) · [LongLive #107](https://github.com/NVlabs/LongLive/pull/107) |
+| Video attention | [MonarchRT](https://github.com/hiroki-abe-58/ComfyUI-MonarchRT) | Monarch-matrix attention vs. a same-weight dense baseline. | |
+| Causal video | [CausalForcing](https://github.com/hiroki-abe-58/ComfyUI-CausalForcing) · [NVIDIA-CMD](https://github.com/hiroki-abe-58/ComfyUI-NVIDIA-CMD) | Autoregressive generation, image-to-video and long rollouts. | Featured in the [Causal Forcing](https://github.com/thu-ml/Causal-Forcing) News |
+| Talking heads | [LeapTalk](https://github.com/hiroki-abe-58/ComfyUI-LeapTalk) · [TBDub](https://github.com/hiroki-abe-58/ComfyUI-TBDub) | Speech-driven portraits and video redubbing. | Merged: [LeapTalk #6](https://github.com/zhangrongxiang/LeapTalk/pull/6) |
+| Image generation | [LoopedDiT](https://github.com/hiroki-abe-58/ComfyUI-LoopedDiT) | Pixel-space diffusion and controlled loop-depth comparisons. | |
+| Image restoration | [PixRestore](https://github.com/hiroki-abe-58/ComfyUI-PixRestore) · [MiRipple](https://github.com/hiroki-abe-58/ComfyUI-MiRipple) | One-step restoration and verified local artifact repair. | |
+| Music | [AceMusic](https://github.com/hiroki-abe-58/ComfyUI-AceMusic) | ACE-Step song generation, editing and LoRA support. | |
+| Windows setup | [Win-Blackwell](https://github.com/hiroki-abe-58/ComfyUI-Win-Blackwell) | ComfyUI installation and tested workflows for RTX 50-series GPUs. | |
 
 ### Web, desktop & developer tools
 
@@ -208,11 +210,18 @@ Built across my [ML projects](https://github.com/hiroki-abe-58/sokudan), [React 
 
 ## Open-source contributions
 
-Reproducible checks for answer-order sensitivity in open decision models:
+**Image and video generation**
+
+- **DMAD** (distillation for fast image and video generation): [made `--low-vram` work on Windows](https://github.com/Yzmblog/DMAD/pull/6), merged and credited in the README News.
+- **SparkDiffusion, LongLive and LeapTalk:** README entries for my ComfyUI integrations, merged (see the ComfyUI table above).
+- **Mi-Ripple:** [OpenCV runtime handling](https://github.com/miyang-ai/Mi-Ripple/pull/2) (open), found while validating the ComfyUI integration.
+
+**Decision models**
+
+Reproducible checks for answer-order sensitivity:
 
 - **Laya:** [score-position bias report](https://github.com/NandhaKishorM/laya/issues/131), [regression checks](https://github.com/NandhaKishorM/laya/pull/259), [non-English inputs](https://github.com/NandhaKishorM/laya/pull/650) and [choice questions](https://github.com/NandhaKishorM/laya/pull/753).
 - **kev / lev:** [kev measurements](https://github.com/jaredpalmer/kev/issues/161), [lev measurements](https://github.com/Abhinavexists/lev/issues/1) and [presentation checks / order averaging](https://github.com/Abhinavexists/lev/pull/2).
-- **Mi-Ripple:** [OpenCV runtime handling](https://github.com/miyang-ai/Mi-Ripple/pull/2), found while validating the ComfyUI integration.
 
 ## Research
 

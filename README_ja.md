@@ -4,7 +4,7 @@
 
 **日本語の生成AIを、自分のマシンで。**
 
-東京を拠点に活動するAIエンジニア・技術コンサルタントです。ローカルAIツール、日本語言語モデルの学習、研究実装のアプリケーション化に取り組んでいます。Windows・Linux・Apple Siliconで実際に使えるところまで整え、コードと検証結果を公開しています。
+東京を拠点に活動するAIエンジニア・技術コンサルタントです。ローカルAIツール、日本語言語モデルの学習、研究実装のアプリケーション化に取り組んでいます。Windows・Linux・Apple Siliconで実際に使えるところまで整え、コードと検証結果を公開しています。ComfyUI統合は、[LongLive-Plug](https://github.com/NVlabs/LongLive/tree/main/LongLive-Plug)（NVlabs）、[SparkDiffusion](https://github.com/AlibabaResearch/SparkDiffusion)（AlibabaResearch）、[LeapTalk](https://github.com/zhangrongxiang/LeapTalk)、[Causal Forcing](https://github.com/thu-ml/Causal-Forcing)の公式READMEで紹介されています。
 
 [English](README.md) · [Hugging Face](https://huggingface.co/GeneLab) · [Zenn](https://zenn.dev/genelab_999) · [X](https://x.com/geneLab_999)
 
@@ -49,17 +49,19 @@ JoyAI-Video-Editの非公式ComfyUI統合です。WSL2の常駐ワーカー、�
 
 ### ComfyUI · 動画・画像・音楽
 
-| 分野 | プロジェクト | テーマ |
-|---|---|---|
-| 動画編集 | [JoyAI-Video-Edit](https://github.com/hiroki-abe-58/ComfyUI-JoyAI-Video-Edit) | テキスト指示による編集と常駐ワーカー。 |
-| 動画の高速生成 | [SparkDiffusion](https://github.com/hiroki-abe-58/ComfyUI-SparkDiffusion) · [LongLive-Plug](https://github.com/hiroki-abe-58/ComfyUI-LongLive-Plug) | 疎な注意機構、少ステップ推論、アダプターとスケジューラーの検証。 |
-| 動画の注意機構 | [MonarchRT](https://github.com/hiroki-abe-58/ComfyUI-MonarchRT) | 同じ重みのdense基準とMonarch行列の注意機構を比較。 |
-| 因果的な動画生成 | [CausalForcing](https://github.com/hiroki-abe-58/ComfyUI-CausalForcing) · [NVIDIA-CMD](https://github.com/hiroki-abe-58/ComfyUI-NVIDIA-CMD) | 自己回帰生成、画像からの動画生成、長尺ロールアウト。 |
-| 顔動画・吹き替え | [LeapTalk](https://github.com/hiroki-abe-58/ComfyUI-LeapTalk) · [TBDub](https://github.com/hiroki-abe-58/ComfyUI-TBDub) | 音声駆動のポートレートと動画のリダビング。 |
-| 画像生成 | [LoopedDiT](https://github.com/hiroki-abe-58/ComfyUI-LoopedDiT) | ピクセル空間の拡散モデルとループ深度の比較。 |
-| 画像復元 | [PixRestore](https://github.com/hiroki-abe-58/ComfyUI-PixRestore) · [MiRipple](https://github.com/hiroki-abe-58/ComfyUI-MiRipple) | 1ステップ復元と、検証を伴うローカルのアーティファクト修復。 |
-| 音楽 | [AceMusic](https://github.com/hiroki-abe-58/ComfyUI-AceMusic) | ACE-Stepによる楽曲生成・編集・LoRA対応。 |
-| Windows環境構築 | [Win-Blackwell](https://github.com/hiroki-abe-58/ComfyUI-Win-Blackwell) | RTX 50シリーズ向けComfyUI導入と検証済みワークフロー。 |
+「上流」列の「マージ済み」は、公式READMEにこの統合を掲載するPRがマージされ、そのリポジトリのコントリビューターになったものです。
+
+| 分野 | プロジェクト | テーマ | 上流 |
+|---|---|---|---|
+| 動画編集 | [JoyAI-Video-Edit](https://github.com/hiroki-abe-58/ComfyUI-JoyAI-Video-Edit) | テキスト指示による編集と常駐ワーカー。 | |
+| 動画の高速生成 | [SparkDiffusion](https://github.com/hiroki-abe-58/ComfyUI-SparkDiffusion) · [LongLive-Plug](https://github.com/hiroki-abe-58/ComfyUI-LongLive-Plug) | 疎な注意機構、少ステップ推論、アダプターとスケジューラーの検証。 | マージ済み：[SparkDiffusion #17](https://github.com/AlibabaResearch/SparkDiffusion/pull/17) · [LongLive #107](https://github.com/NVlabs/LongLive/pull/107) |
+| 動画の注意機構 | [MonarchRT](https://github.com/hiroki-abe-58/ComfyUI-MonarchRT) | 同じ重みのdense基準とMonarch行列の注意機構を比較。 | |
+| 因果的な動画生成 | [CausalForcing](https://github.com/hiroki-abe-58/ComfyUI-CausalForcing) · [NVIDIA-CMD](https://github.com/hiroki-abe-58/ComfyUI-NVIDIA-CMD) | 自己回帰生成、画像からの動画生成、長尺ロールアウト。 | [Causal Forcing](https://github.com/thu-ml/Causal-Forcing)のNewsで紹介 |
+| 顔動画・吹き替え | [LeapTalk](https://github.com/hiroki-abe-58/ComfyUI-LeapTalk) · [TBDub](https://github.com/hiroki-abe-58/ComfyUI-TBDub) | 音声駆動のポートレートと動画のリダビング。 | マージ済み：[LeapTalk #6](https://github.com/zhangrongxiang/LeapTalk/pull/6) |
+| 画像生成 | [LoopedDiT](https://github.com/hiroki-abe-58/ComfyUI-LoopedDiT) | ピクセル空間の拡散モデルとループ深度の比較。 | |
+| 画像復元 | [PixRestore](https://github.com/hiroki-abe-58/ComfyUI-PixRestore) · [MiRipple](https://github.com/hiroki-abe-58/ComfyUI-MiRipple) | 1ステップ復元と、検証を伴うローカルのアーティファクト修復。 | |
+| 音楽 | [AceMusic](https://github.com/hiroki-abe-58/ComfyUI-AceMusic) | ACE-Stepによる楽曲生成・編集・LoRA対応。 | |
+| Windows環境構築 | [Win-Blackwell](https://github.com/hiroki-abe-58/ComfyUI-Win-Blackwell) | RTX 50シリーズ向けComfyUI導入と検証済みワークフロー。 | |
 
 ### Web・デスクトップ・開発ツール
 
@@ -208,11 +210,18 @@ JoyAI-Video-Editの非公式ComfyUI統合です。WSL2の常駐ワーカー、�
 
 ## オープンソースへの貢献
 
+**画像・動画生成**
+
+- **DMAD**（高速な画像・動画生成のための蒸留手法）：[Windowsで`--low-vram`を使えるようにする修正](https://github.com/Yzmblog/DMAD/pull/6)がマージされ、READMEのNewsでクレジットされています。
+- **SparkDiffusion・LongLive・LeapTalk：** ComfyUI統合を紹介するREADMEへの追記がマージされました（上記ComfyUIの表を参照）。
+- **Mi-Ripple：** ComfyUI統合の検証中に見つけた[OpenCV実行時の問題への修正提案](https://github.com/miyang-ai/Mi-Ripple/pull/2)（オープン中）。
+
+**意思決定モデル**
+
 オープンな意思決定モデルの回答順序への依存を、再現可能なチェックで検証しています。
 
 - **Laya：** [スコアの位置バイアス報告](https://github.com/NandhaKishorM/laya/issues/131)、[回帰チェック](https://github.com/NandhaKishorM/laya/pull/259)、[非英語入力](https://github.com/NandhaKishorM/laya/pull/650)、[選択問題](https://github.com/NandhaKishorM/laya/pull/753)。
 - **kev / lev：** [kevでの測定](https://github.com/jaredpalmer/kev/issues/161)、[levでの測定](https://github.com/Abhinavexists/lev/issues/1)、[提示順のチェックと順序平均](https://github.com/Abhinavexists/lev/pull/2)。
-- **Mi-Ripple：** ComfyUI統合の検証中に見つけた[OpenCV実行時の問題への修正提案](https://github.com/miyang-ai/Mi-Ripple/pull/2)。
 
 ## 研究
 
