@@ -6,7 +6,7 @@
 
 AI engineer and technical consultant in Tokyo. I build local AI tools, train small Japanese language models, and turn research implementations into usable software for Windows, Linux and Apple Silicon. My ComfyUI integrations are linked from the official READMEs of [LongLive-Plug](https://github.com/NVlabs/LongLive/tree/main/LongLive-Plug) (NVlabs), [SparkDiffusion](https://github.com/AlibabaResearch/SparkDiffusion) (AlibabaResearch), [LeapTalk](https://github.com/zhangrongxiang/LeapTalk) and [Causal Forcing](https://github.com/thu-ml/Causal-Forcing).
 
-[日本語](README_ja.md) · [Hugging Face](https://huggingface.co/GeneLab) · [Zenn](https://zenn.dev/genelab_999) · [X](https://x.com/geneLab_999)
+[日本語](README_ja.md) · [简体中文](README_zh.md) · [Hugging Face](https://huggingface.co/GeneLab) · [Zenn](https://zenn.dev/genelab_999) · [X](https://x.com/geneLab_999)
 
 ## Recent releases
 
