@@ -6,7 +6,7 @@
 
 東京を拠点に活動するAIエンジニア・技術コンサルタントです。ローカルAIツール、日本語言語モデルの学習、研究実装のアプリケーション化に取り組んでいます。Windows・Linux・Apple Siliconで実際に使えるところまで整え、コードと検証結果を公開しています。ComfyUI統合は、[LongLive-Plug](https://github.com/NVlabs/LongLive/tree/main/LongLive-Plug)（NVlabs）、[SparkDiffusion](https://github.com/AlibabaResearch/SparkDiffusion)（AlibabaResearch）、[LeapTalk](https://github.com/zhangrongxiang/LeapTalk)、[Causal Forcing](https://github.com/thu-ml/Causal-Forcing)の公式READMEで紹介されています。
 
-[English](README.md) · [Hugging Face](https://huggingface.co/GeneLab) · [Zenn](https://zenn.dev/genelab_999) · [X](https://x.com/geneLab_999)
+[English](README.md) · [简体中文](README_zh.md) · [Hugging Face](https://huggingface.co/GeneLab) · [Zenn](https://zenn.dev/genelab_999) · [X](https://x.com/geneLab_999)
 
 ## 最近の公開成果
 
