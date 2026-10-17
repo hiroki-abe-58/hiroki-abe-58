@@ -10,6 +10,12 @@
 
 ## 近期发布
 
+### 新的 ComfyUI 工具 — 语音、歌声与表现力丰富的朗读
+
+**[SemBridge for ComfyUI](https://github.com/hiroki-abe-58/ComfyUI-SemBridge)**将中英文语音合成、乐谱驱动的歌声，以及说话与演唱混合生成接入 ComfyUI 标准 AUDIO 工作流。支持参考声音、乐谱预览与模型卸载；已在 Windows 11 / RTX 5090 上与官方实现进行对比验证。
+
+**[ComfyUI-drama3-small](https://github.com/hiroki-abe-58/ComfyUI-drama3-small)**提供富有表现力的日英双语语音、声音设计与克隆、语气标签、长文本分段生成和专家权重卸载。基于 [pentaCoxian 的 ComfyUI 集成](https://github.com/pentaCoxian/ComfyUI-drama3-small)，使用 Fish Audio Drama 3。
+
 ### [sokudan](https://github.com/hiroki-abe-58/sokudan) — 不生成文本的日语判断模型
 
 一个 314.6M 参数的 ModernBERT-ja 模型，**一次前向传播即可返回带概率的 choice、score 和 bool 类型化答案**。附带 HTTP 服务器、TypeScript SDK 和 CLI；在受支持的 Apple Silicon Mac 上使用 MLX 推理，在 CUDA / CPU 上使用 PyTorch 推理。
@@ -47,12 +53,16 @@ JoyAI-Video-Edit 的非官方集成，带有常驻的 WSL2 worker、模型加载
 | [Qwen3-TTS-Mac-GeneLab](https://github.com/hiroki-abe-58/Qwen3-TTS-Mac-GeneLab) | 面向 Apple Silicon 的 TTS，支持 MLX / PyTorch、量化与声音克隆。 |
 | [Style-BERT-VITS2-GeneLab-Blackwell](https://github.com/hiroki-abe-58/Style-BERT-VITS2-GeneLab-Blackwell) | Windows 原生的 Blackwell 支持，带 CPU/GPU 回退。 |
 
-### ComfyUI · 视频、图像与音乐
+### ComfyUI · 视频、图像、语音与音乐
 
 “上游”一栏中，每个已合并的 PR 都把相应集成加入了官方 README，我也因此成为该仓库的贡献者。
 
 | 领域 | 项目 | 重点 | 上游 |
 |---|---|---|---|
+| 语音与歌声 | [SemBridge](https://github.com/hiroki-abe-58/ComfyUI-SemBridge) | 中英文语音、乐谱驱动的歌唱与混合音频；标准 AUDIO 输出。 | 基于 [ASLP-lab/SemBridge](https://github.com/ASLP-lab/SemBridge) |
+| 表现力语音 | [drama3-small](https://github.com/hiroki-abe-58/ComfyUI-drama3-small) | 日英双语声音生成与克隆、语气控制和长文本生成。 | 基于 [pentaCoxian/ComfyUI-drama3-small](https://github.com/pentaCoxian/ComfyUI-drama3-small) |
+| 图像编辑 | [EditUtils](https://github.com/hiroki-abe-58/ComfyUI-EditUtils) | 多模型编辑工具，包括 Qwen-Image 2.1、FLUX.3 Klein 布局编辑与 alpha 清理。 | 基于 [lrzjason/ComfyUI-EditUtils](https://github.com/lrzjason/ComfyUI-EditUtils) |
+| 布局互操作 | [FLUX 3 LayoutKit](https://github.com/hiroki-abe-58/ComfyUI-Flux3-LayoutKit) | FLUX 3 Image Klein 的坐标转换、严格的布局表验证与预览。 | |
 | 视频编辑 | [JoyAI-Video-Edit](https://github.com/hiroki-abe-58/ComfyUI-JoyAI-Video-Edit) | 基于指令的编辑与常驻 worker。 | |
 | 快速视频生成 | [SparkDiffusion](https://github.com/hiroki-abe-58/ComfyUI-SparkDiffusion) · [LongLive-Plug](https://github.com/hiroki-abe-58/ComfyUI-LongLive-Plug) | 稀疏注意力、少步采样，以及适配器/调度器的验证。 | 已合并：[SparkDiffusion #17](https://github.com/AlibabaResearch/SparkDiffusion/pull/17) · [LongLive #107](https://github.com/NVlabs/LongLive/pull/107) |
 | 视频注意力 | [MonarchRT](https://github.com/hiroki-abe-58/ComfyUI-MonarchRT) | Monarch 矩阵注意力与相同权重的稠密基线对比。 | |

@@ -10,6 +10,12 @@ AI engineer and technical consultant in Tokyo. I build local AI tools, train sma
 
 ## Recent releases
 
+### New ComfyUI tools — speech, singing and expressive voices
+
+**[SemBridge for ComfyUI](https://github.com/hiroki-abe-58/ComfyUI-SemBridge)** brings Chinese/English speech, score-driven singing and mixed speech + singing into standard ComfyUI audio workflows. Includes reference-voice conditioning, score preview and model unload controls; verified against the official implementation on Windows 11 / RTX 5090.
+
+**[ComfyUI-drama3-small](https://github.com/hiroki-abe-58/ComfyUI-drama3-small)** provides expressive Japanese/English speech, voice design and cloning, delivery tags, long-text chunking and expert offload. Based on [pentaCoxian's integration](https://github.com/pentaCoxian/ComfyUI-drama3-small) of Fish Audio Drama 3.
+
 ### [sokudan](https://github.com/hiroki-abe-58/sokudan) — Japanese decisions without text generation
 
 A 314.6M-parameter ModernBERT-ja model that returns typed **choice, score and bool answers with probabilities in one forward pass**. Includes an HTTP server, a TypeScript SDK and a CLI; inference uses MLX on supported Apple Silicon Macs or PyTorch on CUDA / CPU.
@@ -47,12 +53,16 @@ I publish code, setup instructions and measured results together. Hardware, inpu
 | [Qwen3-TTS-Mac-GeneLab](https://github.com/hiroki-abe-58/Qwen3-TTS-Mac-GeneLab) | Apple Silicon TTS with MLX / PyTorch, quantization and voice cloning. |
 | [Style-BERT-VITS2-GeneLab-Blackwell](https://github.com/hiroki-abe-58/Style-BERT-VITS2-GeneLab-Blackwell) | Windows-native Blackwell support, with CPU/GPU fallback. |
 
-### ComfyUI · video, images and music
+### ComfyUI · video, images, speech and music
 
 In the Upstream column, each merged PR added the integration to the official README and made me a contributor to that repository.
 
 | Area | Projects | Focus | Upstream |
 |---|---|---|---|
+| Speech & singing | [SemBridge](https://github.com/hiroki-abe-58/ComfyUI-SemBridge) | Chinese/English speech, score-driven singing and mixed audio; standard AUDIO output. | Based on [ASLP-lab/SemBridge](https://github.com/ASLP-lab/SemBridge) |
+| Expressive speech | [drama3-small](https://github.com/hiroki-abe-58/ComfyUI-drama3-small) | Japanese/English voice generation and cloning, delivery control and long-text generation. | Based on [pentaCoxian/ComfyUI-drama3-small](https://github.com/pentaCoxian/ComfyUI-drama3-small) |
+| Image editing | [EditUtils](https://github.com/hiroki-abe-58/ComfyUI-EditUtils) | Multi-model editing utilities, including Qwen-Image 2.1, FLUX.3 Klein layout editing and alpha cleanup. | Based on [lrzjason/ComfyUI-EditUtils](https://github.com/lrzjason/ComfyUI-EditUtils) |
+| Layout interoperability | [FLUX 3 LayoutKit](https://github.com/hiroki-abe-58/ComfyUI-Flux3-LayoutKit) | Coordinate conversion, strict layout-table validation and previews for FLUX 3 Image Klein. | |
 | Video editing | [JoyAI-Video-Edit](https://github.com/hiroki-abe-58/ComfyUI-JoyAI-Video-Edit) | Instruction-based editing with a persistent worker. | |
 | Fast video | [SparkDiffusion](https://github.com/hiroki-abe-58/ComfyUI-SparkDiffusion) · [LongLive-Plug](https://github.com/hiroki-abe-58/ComfyUI-LongLive-Plug) | Sparse attention, few-step sampling and adapter/scheduler verification. | Merged: [SparkDiffusion #17](https://github.com/AlibabaResearch/SparkDiffusion/pull/17) · [LongLive #107](https://github.com/NVlabs/LongLive/pull/107) |
 | Video attention | [MonarchRT](https://github.com/hiroki-abe-58/ComfyUI-MonarchRT) | Monarch-matrix attention vs. a same-weight dense baseline. | |

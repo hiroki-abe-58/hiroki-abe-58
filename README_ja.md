@@ -10,6 +10,12 @@
 
 ## 最近の公開成果
 
+### 新しいComfyUIツール — 音声・歌声・表現豊かな読み上げ
+
+**[SemBridge for ComfyUI](https://github.com/hiroki-abe-58/ComfyUI-SemBridge)**は、中国語・英語の音声合成、楽譜に沿った歌声、発話と歌唱を組み合わせた音声をComfyUIの標準AUDIO形式で生成します。参照音声による声の指定、楽譜プレビュー、モデルのアンロードに対応し、Windows 11・RTX 5090で公式実装との比較を検証しています。
+
+**[ComfyUI-drama3-small](https://github.com/hiroki-abe-58/ComfyUI-drama3-small)**は、日本語・英語の表現豊かな音声生成、Voice Design・Voice Clone、話し方のタグ指定、長文の分割生成、expertオフロードに対応します。Fish Audio Drama 3を扱う[pentaCoxianのComfyUI統合](https://github.com/pentaCoxian/ComfyUI-drama3-small)をベースにしています。
+
 ### [sokudan](https://github.com/hiroki-abe-58/sokudan) — 文章を生成せず、日本語で判断するモデル
 
 ModernBERT-jaをベースにした314.6Mパラメータの意思決定モデルです。**1回のフォワードパスで、choice・score・boolの型付き回答と確率を返します。** HTTPサーバー、TypeScript SDK、CLIを提供し、対応するApple Silicon MacではMLX、CUDA / CPUではPyTorchで推論します。
@@ -47,12 +53,16 @@ JoyAI-Video-Editの非公式ComfyUI統合です。WSL2の常駐ワーカー、�
 | [Qwen3-TTS-Mac-GeneLab](https://github.com/hiroki-abe-58/Qwen3-TTS-Mac-GeneLab) | Apple Silicon向けMLX / PyTorch構成、量子化、ボイスクローン。 |
 | [Style-BERT-VITS2-GeneLab-Blackwell](https://github.com/hiroki-abe-58/Style-BERT-VITS2-GeneLab-Blackwell) | WindowsネイティブのBlackwell対応、CPU/GPUフォールバック。 |
 
-### ComfyUI · 動画・画像・音楽
+### ComfyUI · 動画・画像・音声・音楽
 
 「上流」列の「マージ済み」は、公式READMEにこの統合を掲載するPRがマージされ、そのリポジトリのコントリビューターになったものです。
 
 | 分野 | プロジェクト | テーマ | 上流 |
 |---|---|---|---|
+| 音声・歌声 | [SemBridge](https://github.com/hiroki-abe-58/ComfyUI-SemBridge) | 中国語・英語の音声合成、楽譜からの歌唱、発話と歌唱の混在。標準AUDIO出力。 | [ASLP-lab/SemBridge](https://github.com/ASLP-lab/SemBridge)を使用 |
+| 表現豊かな音声 | [drama3-small](https://github.com/hiroki-abe-58/ComfyUI-drama3-small) | 日本語・英語の声の生成・クローン、話し方の制御、長文生成。 | [pentaCoxian/ComfyUI-drama3-small](https://github.com/pentaCoxian/ComfyUI-drama3-small)がベース |
+| 画像編集 | [EditUtils](https://github.com/hiroki-abe-58/ComfyUI-EditUtils) | Qwen-Image 2.1、FLUX.3 Kleinのレイアウト編集、アルファ補正など複数モデル向けの編集ツール。 | [lrzjason/ComfyUI-EditUtils](https://github.com/lrzjason/ComfyUI-EditUtils)がベース |
+| レイアウト連携 | [FLUX 3 LayoutKit](https://github.com/hiroki-abe-58/ComfyUI-Flux3-LayoutKit) | FLUX 3 Image Klein向けの座標変換、レイアウト表の厳密な検証、プレビュー。 | |
 | 動画編集 | [JoyAI-Video-Edit](https://github.com/hiroki-abe-58/ComfyUI-JoyAI-Video-Edit) | テキスト指示による編集と常駐ワーカー。 | |
 | 動画の高速生成 | [SparkDiffusion](https://github.com/hiroki-abe-58/ComfyUI-SparkDiffusion) · [LongLive-Plug](https://github.com/hiroki-abe-58/ComfyUI-LongLive-Plug) | 疎な注意機構、少ステップ推論、アダプターとスケジューラーの検証。 | マージ済み：[SparkDiffusion #17](https://github.com/AlibabaResearch/SparkDiffusion/pull/17) · [LongLive #107](https://github.com/NVlabs/LongLive/pull/107) |
 | 動画の注意機構 | [MonarchRT](https://github.com/hiroki-abe-58/ComfyUI-MonarchRT) | 同じ重みのdense基準とMonarch行列の注意機構を比較。 | |
