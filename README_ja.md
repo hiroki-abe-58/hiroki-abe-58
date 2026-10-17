@@ -210,6 +210,10 @@ JoyAI-Video-Editの非公式ComfyUI統合です。WSL2の常駐ワーカー、�
 
 ## オープンソースへの貢献
 
+**LLM推論・再現性**
+
+- **Project Maya：** [CPUレーン有効時に、再起動後もgreedy出力を再現するための設定を文書化](https://github.com/mw00/project-maya/pull/224)し、マージされました。CPU/GPUの丸め誤差とexpert配置の影響を調査し、RTX 5090でトークン列の比較70/70組が一致する設定を検証しました。[実験・測定結果](https://github.com/hiroki-abe-58/moe-tiering-lab/tree/main/results/phase4)。
+
 **画像・動画生成**
 
 - **DMAD**（高速な画像・動画生成のための蒸留手法）：[Windowsで`--low-vram`を使えるようにする修正](https://github.com/Yzmblog/DMAD/pull/6)がマージされ、READMEのNewsでクレジットされています。

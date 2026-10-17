@@ -210,6 +210,10 @@ JoyAI-Video-Edit 的非官方集成，带有常驻的 WSL2 worker、模型加载
 
 ## 开源贡献
 
+**LLM 推理与可复现性**
+
+- **Project Maya：** [编写了启用 CPU lane 时跨重启复现贪心输出的配置文档](https://github.com/mw00/project-maya/pull/224)，已合并。研究了 CPU/GPU 舍入差异与专家分配的影响，并在 RTX 5090 上验证了使全部 70/70 组 token 序列一致的配置。[实验与测量结果](https://github.com/hiroki-abe-58/moe-tiering-lab/tree/main/results/phase4)。
+
 **图像与视频生成**
 
 - **DMAD**（用于快速图像与视频生成的蒸馏方法）：[让 `--low-vram` 可在 Windows 上使用](https://github.com/Yzmblog/DMAD/pull/6)，已合并，并在 README 的 News 中致谢。
