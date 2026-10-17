@@ -210,6 +210,10 @@ Built across my [ML projects](https://github.com/hiroki-abe-58/sokudan), [React 
 
 ## Open-source contributions
 
+**LLM inference & reproducibility**
+
+- **Project Maya:** [Documented how to reproduce greedy outputs across restarts with the CPU lane enabled](https://github.com/mw00/project-maya/pull/224) (merged). Investigated CPU/GPU rounding differences and expert placement, and validated settings that reproduced all 70/70 token-stream pairs on an RTX 5090. [Experiments and results](https://github.com/hiroki-abe-58/moe-tiering-lab/tree/main/results/phase4).
+
 **Image and video generation**
 
 - **DMAD** (distillation for fast image and video generation): [made `--low-vram` work on Windows](https://github.com/Yzmblog/DMAD/pull/6), merged and credited in the README News.
