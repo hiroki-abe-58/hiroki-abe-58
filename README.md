@@ -10,11 +10,11 @@ AI engineer and technical consultant in Tokyo. I build local AI tools, train sma
 
 ## Recent releases
 
-### New ComfyUI tools — speech, singing and expressive voices
+### New ComfyUI tools — segmentation, audio and 3D
 
-**[SemBridge for ComfyUI](https://github.com/hiroki-abe-58/ComfyUI-SemBridge)** brings Chinese/English speech, score-driven singing and mixed speech + singing into standard ComfyUI audio workflows. Includes reference-voice conditioning, score preview and model unload controls; verified against the official implementation on Windows 11 / RTX 5090.
-
-**[ComfyUI-drama3-small](https://github.com/hiroki-abe-58/ComfyUI-drama3-small)** provides expressive Japanese/English speech, voice design and cloning, delivery tags, long-text chunking and expert offload. Based on [pentaCoxian's integration](https://github.com/pentaCoxian/ComfyUI-drama3-small) of Fish Audio Drama 3.
+- **[XiaomiLens](https://github.com/hiroki-abe-58/ComfyUI-XiaomiLens):** text-driven instance segmentation with full-resolution masks and boxes. My [SDPA fallback fix](https://github.com/SeerRay-Lab/Xiaomi-Lens-0/pull/3) was merged upstream, reducing mask-decoder memory use when flash-attn is unavailable.
+- **[DBS](https://github.com/hiroki-abe-58/ComfyUI-DBS) · [VoxLock](https://github.com/hiroki-abe-58/ComfyUI-VoxLock) · [MimeticA0](https://github.com/hiroki-abe-58/ComfyUI-MimeticA0):** separate music, effects and dialogue; isolate a target speaker; generate 48 kHz stereo music from text.
+- **[S2Tok](https://github.com/hiroki-abe-58/ComfyUI-S2Tok) · [EmbeddingGemma2](https://github.com/hiroki-abe-58/ComfyUI-EmbeddingGemma2) · [SyncReward](https://github.com/hiroki-abe-58/ComfyUI-SyncReward):** reconstruct static scenes as 3D Gaussians, compare text/image/video/audio embeddings, and score audio–video alignment.
 
 ### [sokudan](https://github.com/hiroki-abe-58/sokudan) — Japanese decisions without text generation
 
@@ -53,13 +53,22 @@ I publish code, setup instructions and measured results together. Hardware, inpu
 | [Qwen3-TTS-Mac-GeneLab](https://github.com/hiroki-abe-58/Qwen3-TTS-Mac-GeneLab) | Apple Silicon TTS with MLX / PyTorch, quantization and voice cloning. |
 | [Style-BERT-VITS2-GeneLab-Blackwell](https://github.com/hiroki-abe-58/Style-BERT-VITS2-GeneLab-Blackwell) | Windows-native Blackwell support, with CPU/GPU fallback. |
 
-### ComfyUI · video, images, speech and music
+### ComfyUI · video, images, audio and 3D
 
-In the Upstream column, each merged PR added the integration to the official README and made me a contributor to that repository.
+**21 node packs published on the [ComfyUI Registry](https://registry.comfy.org/)** as of October 20, 2026, under `hiroki-abe-58`. Selected projects below cover generation, editing, analysis and 3D reconstruction.
+
+The Upstream column distinguishes merged code fixes, README listings and the projects an integration is based on.
 
 | Area | Projects | Focus | Upstream |
 |---|---|---|---|
-| Speech & singing | [SemBridge](https://github.com/hiroki-abe-58/ComfyUI-SemBridge) | Chinese/English speech, score-driven singing and mixed audio; standard AUDIO output. | Based on [ASLP-lab/SemBridge](https://github.com/ASLP-lab/SemBridge) |
+| Segmentation | [XiaomiLens](https://github.com/hiroki-abe-58/ComfyUI-XiaomiLens) | Text-guided instance masks and boxes at the original image resolution. | Merged code fix: [Xiaomi-Lens-0 #3](https://github.com/SeerRay-Lab/Xiaomi-Lens-0/pull/3) |
+| Audio separation | [DBS](https://github.com/hiroki-abe-58/ComfyUI-DBS) · [VoxLock](https://github.com/hiroki-abe-58/ComfyUI-VoxLock) | Music/effects/dialogue separation and target-speaker extraction. |  |
+| Multimodal embeddings | [EmbeddingGemma2](https://github.com/hiroki-abe-58/ComfyUI-EmbeddingGemma2) | Text, images, video and audio in a shared embedding space; similarity and selection. |  |
+| Streaming video | [DuoMatching](https://github.com/hiroki-abe-58/ComfyUI-DuoMatching) · [SGFPlus](https://github.com/hiroki-abe-58/ComfyUI-SGFPlus) | Framewise distilled generation and autoregressive video with a rolling cache. |  |
+| 3D reconstruction | [S2Tok](https://github.com/hiroki-abe-58/ComfyUI-S2Tok) | Video frames to static-scene 3D Gaussians; standard SPLAT output. |  |
+| Audio–video evaluation | [SyncReward](https://github.com/hiroki-abe-58/ComfyUI-SyncReward) | Alignment scoring and candidate selection; 1,000-clip benchmark reproduction. |  |
+| Turkish speech | [EMALightning](https://github.com/hiroki-abe-58/ComfyUI-EMALightning) · [Antalia](https://github.com/hiroki-abe-58/ComfyUI-Antalia) | 48 kHz Turkish TTS with text normalization; word timestamps with EMA Lightning. |  |
+| Speech & singing | [SemBridge](https://github.com/hiroki-abe-58/ComfyUI-SemBridge) | Chinese/English speech, score-driven singing and mixed audio; standard AUDIO output. | Merged reproducibility fix: [SemBridge #2](https://github.com/ASLP-lab/SemBridge/pull/2) |
 | Expressive speech | [drama3-small](https://github.com/hiroki-abe-58/ComfyUI-drama3-small) | Japanese/English voice generation and cloning, delivery control and long-text generation. | Based on [pentaCoxian/ComfyUI-drama3-small](https://github.com/pentaCoxian/ComfyUI-drama3-small) |
 | Image editing | [EditUtils](https://github.com/hiroki-abe-58/ComfyUI-EditUtils) | Multi-model editing utilities, including Qwen-Image 2.1, FLUX.3 Klein layout editing and alpha cleanup. | Based on [lrzjason/ComfyUI-EditUtils](https://github.com/lrzjason/ComfyUI-EditUtils) |
 | Layout interoperability | [FLUX 3 LayoutKit](https://github.com/hiroki-abe-58/ComfyUI-Flux3-LayoutKit) | Coordinate conversion, strict layout-table validation and previews for FLUX 3 Image Klein. | |
@@ -68,9 +77,9 @@ In the Upstream column, each merged PR added the integration to the official REA
 | Video attention | [MonarchRT](https://github.com/hiroki-abe-58/ComfyUI-MonarchRT) | Monarch-matrix attention vs. a same-weight dense baseline. | |
 | Causal video | [CausalForcing](https://github.com/hiroki-abe-58/ComfyUI-CausalForcing) · [NVIDIA-CMD](https://github.com/hiroki-abe-58/ComfyUI-NVIDIA-CMD) | Autoregressive generation, image-to-video and long rollouts. | Featured in the [Causal Forcing](https://github.com/thu-ml/Causal-Forcing) News |
 | Talking heads | [LeapTalk](https://github.com/hiroki-abe-58/ComfyUI-LeapTalk) · [TBDub](https://github.com/hiroki-abe-58/ComfyUI-TBDub) | Speech-driven portraits and video redubbing. | Merged: [LeapTalk #6](https://github.com/zhangrongxiang/LeapTalk/pull/6) |
-| Image generation | [LoopedDiT](https://github.com/hiroki-abe-58/ComfyUI-LoopedDiT) | Pixel-space diffusion and controlled loop-depth comparisons. | |
+| Image generation | [LoopedDiT](https://github.com/hiroki-abe-58/ComfyUI-LoopedDiT) · [ScaleRAE](https://github.com/hiroki-abe-58/ComfyUI-ScaleRAE) | Pixel-space diffusion with LoopedDiT; WebSSL-based text-to-image generation with ScaleRAE. | |
 | Image restoration | [PixRestore](https://github.com/hiroki-abe-58/ComfyUI-PixRestore) · [MiRipple](https://github.com/hiroki-abe-58/ComfyUI-MiRipple) | One-step restoration and verified local artifact repair. | |
-| Music | [AceMusic](https://github.com/hiroki-abe-58/ComfyUI-AceMusic) | ACE-Step song generation, editing and LoRA support. | |
+| Music | [AceMusic](https://github.com/hiroki-abe-58/ComfyUI-AceMusic) · [MimeticA0](https://github.com/hiroki-abe-58/ComfyUI-MimeticA0) | ACE-Step song generation/editing and 48 kHz stereo text-to-music with mimetic-a0. | |
 | Windows setup | [Win-Blackwell](https://github.com/hiroki-abe-58/ComfyUI-Win-Blackwell) | ComfyUI installation and tested workflows for RTX 50-series GPUs. | |
 
 ### Web, desktop & developer tools
@@ -219,6 +228,11 @@ In the Upstream column, each merged PR added the integration to the official REA
 Built across my [ML projects](https://github.com/hiroki-abe-58/sokudan), [React libraries](https://github.com/hiroki-abe-58/gassan), [desktop apps](https://github.com/hiroki-abe-58/VMagic), [web tooling](https://github.com/hiroki-abe-58/MermGraph) and [Go CLIs](https://github.com/hiroki-abe-58/aitxt). Docker Compose is also part of my everyday workflow. Main hardware: RTX 5090 (Blackwell) and Apple Silicon. Badges without a brand logo use a generic code icon.
 
 ## Open-source contributions
+
+**Inference fixes merged upstream**
+
+- **Xiaomi-Lens-0:** [Use SDPA when flash-attn is unavailable](https://github.com/SeerRay-Lab/Xiaomi-Lens-0/pull/3), avoiding quadratic attention-weight allocations in the mask decoder. On Windows / RTX 5090, added peak VRAM for a 3 MP mask pass fell from 18.02 GB to 2.28 GB; tokens and boxes stayed the same, with small mask-edge differences.
+- **SemBridge:** [Remove TorchScript from the codec's Snake activation](https://github.com/ASLP-lab/SemBridge/pull/2) to fix audio changing between the first generation after loading and later calls with the same request and seed. Verified repeated outputs on the tested setup.
 
 **LLM inference & reproducibility**
 

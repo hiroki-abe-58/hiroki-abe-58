@@ -10,11 +10,11 @@
 
 ## 近期发布
 
-### 新的 ComfyUI 工具 — 语音、歌声与表现力丰富的朗读
+### 新的 ComfyUI 工具 — 分割、音频处理与3D
 
-**[SemBridge for ComfyUI](https://github.com/hiroki-abe-58/ComfyUI-SemBridge)**将中英文语音合成、乐谱驱动的歌声，以及说话与演唱混合生成接入 ComfyUI 标准 AUDIO 工作流。支持参考声音、乐谱预览与模型卸载；已在 Windows 11 / RTX 5090 上与官方实现进行对比验证。
-
-**[ComfyUI-drama3-small](https://github.com/hiroki-abe-58/ComfyUI-drama3-small)**提供富有表现力的日英双语语音、声音设计与克隆、语气标签、长文本分段生成和专家权重卸载。基于 [pentaCoxian 的 ComfyUI 集成](https://github.com/pentaCoxian/ComfyUI-drama3-small)，使用 Fish Audio Drama 3。
+- **[XiaomiLens](https://github.com/hiroki-abe-58/ComfyUI-XiaomiLens)：** 用自然语言指定目标，输出原图尺寸的实例掩码和边界框。[SDPA 回退修复](https://github.com/SeerRay-Lab/Xiaomi-Lens-0/pull/3)已合并到上游，降低了无法使用 flash-attn 时掩码解码器的显存占用。
+- **[DBS](https://github.com/hiroki-abe-58/ComfyUI-DBS) · [VoxLock](https://github.com/hiroki-abe-58/ComfyUI-VoxLock) · [MimeticA0](https://github.com/hiroki-abe-58/ComfyUI-MimeticA0)：** 分离音乐、音效和对话，提取目标说话人的声音，以及从文本生成48 kHz立体声音乐。
+- **[S2Tok](https://github.com/hiroki-abe-58/ComfyUI-S2Tok) · [EmbeddingGemma2](https://github.com/hiroki-abe-58/ComfyUI-EmbeddingGemma2) · [SyncReward](https://github.com/hiroki-abe-58/ComfyUI-SyncReward)：** 静态场景的3D Gaussian重建、文本/图像/视频/音频嵌入比较，以及音视频一致性评分。
 
 ### [sokudan](https://github.com/hiroki-abe-58/sokudan) — 不生成文本的日语判断模型
 
@@ -53,13 +53,22 @@ JoyAI-Video-Edit 的非官方集成，带有常驻的 WSL2 worker、模型加载
 | [Qwen3-TTS-Mac-GeneLab](https://github.com/hiroki-abe-58/Qwen3-TTS-Mac-GeneLab) | 面向 Apple Silicon 的 TTS，支持 MLX / PyTorch、量化与声音克隆。 |
 | [Style-BERT-VITS2-GeneLab-Blackwell](https://github.com/hiroki-abe-58/Style-BERT-VITS2-GeneLab-Blackwell) | Windows 原生的 Blackwell 支持，带 CPU/GPU 回退。 |
 
-### ComfyUI · 视频、图像、语音与音乐
+### ComfyUI · 视频、图像、音频与3D
 
-“上游”一栏中，每个已合并的 PR 都把相应集成加入了官方 README，我也因此成为该仓库的贡献者。
+**已在 [ComfyUI Registry](https://registry.comfy.org/) 发布21个节点包**（截至2026年10月20日，发布者：`hiroki-abe-58`）。项目涵盖生成、编辑、分析和3D重建，以下列出主要项目。
+
+“上游”栏区分已合并的代码修复、官方README收录和集成所基于的项目。
 
 | 领域 | 项目 | 重点 | 上游 |
 |---|---|---|---|
-| 语音与歌声 | [SemBridge](https://github.com/hiroki-abe-58/ComfyUI-SemBridge) | 中英文语音、乐谱驱动的歌唱与混合音频；标准 AUDIO 输出。 | 基于 [ASLP-lab/SemBridge](https://github.com/ASLP-lab/SemBridge) |
+| 实例分割 | [XiaomiLens](https://github.com/hiroki-abe-58/ComfyUI-XiaomiLens) | 自然语言指定目标，输出原图尺寸的掩码和边界框。 | 代码修复已合并：[Xiaomi-Lens-0 #3](https://github.com/SeerRay-Lab/Xiaomi-Lens-0/pull/3) |
+| 音源分离与说话人提取 | [DBS](https://github.com/hiroki-abe-58/ComfyUI-DBS) · [VoxLock](https://github.com/hiroki-abe-58/ComfyUI-VoxLock) | 分离音乐、音效和对话，以及提取目标说话人的声音。 |  |
+| 多模态嵌入 | [EmbeddingGemma2](https://github.com/hiroki-abe-58/ComfyUI-EmbeddingGemma2) | 将文本、图像、视频和音频嵌入同一空间，进行相似度比较和候选选择。 |  |
+| 流式视频 | [DuoMatching](https://github.com/hiroki-abe-58/ComfyUI-DuoMatching) · [SGFPlus](https://github.com/hiroki-abe-58/ComfyUI-SGFPlus) | 蒸馏模型的逐帧生成，以及使用滚动缓存的自回归视频生成。 |  |
+| 3D重建 | [S2Tok](https://github.com/hiroki-abe-58/ComfyUI-S2Tok) | 从视频帧重建静态场景的3D Gaussians；标准SPLAT输出。 |  |
+| 音视频评估 | [SyncReward](https://github.com/hiroki-abe-58/ComfyUI-SyncReward) | 一致性评分与候选选择；复现官方1,000片段基准。 |  |
+| 土耳其语语音 | [EMALightning](https://github.com/hiroki-abe-58/ComfyUI-EMALightning) · [Antalia](https://github.com/hiroki-abe-58/ComfyUI-Antalia) | 带文本规范化的48 kHz TTS；EMA Lightning还提供单词时间戳。 |  |
+| 语音与歌声 | [SemBridge](https://github.com/hiroki-abe-58/ComfyUI-SemBridge) | 中英文语音、乐谱驱动的歌唱与混合音频；标准 AUDIO 输出。 | 可复现性修复已合并：[SemBridge #2](https://github.com/ASLP-lab/SemBridge/pull/2) |
 | 表现力语音 | [drama3-small](https://github.com/hiroki-abe-58/ComfyUI-drama3-small) | 日英双语声音生成与克隆、语气控制和长文本生成。 | 基于 [pentaCoxian/ComfyUI-drama3-small](https://github.com/pentaCoxian/ComfyUI-drama3-small) |
 | 图像编辑 | [EditUtils](https://github.com/hiroki-abe-58/ComfyUI-EditUtils) | 多模型编辑工具，包括 Qwen-Image 2.1、FLUX.3 Klein 布局编辑与 alpha 清理。 | 基于 [lrzjason/ComfyUI-EditUtils](https://github.com/lrzjason/ComfyUI-EditUtils) |
 | 布局互操作 | [FLUX 3 LayoutKit](https://github.com/hiroki-abe-58/ComfyUI-Flux3-LayoutKit) | FLUX 3 Image Klein 的坐标转换、严格的布局表验证与预览。 | |
@@ -68,9 +77,9 @@ JoyAI-Video-Edit 的非官方集成，带有常驻的 WSL2 worker、模型加载
 | 视频注意力 | [MonarchRT](https://github.com/hiroki-abe-58/ComfyUI-MonarchRT) | Monarch 矩阵注意力与相同权重的稠密基线对比。 | |
 | 因果视频生成 | [CausalForcing](https://github.com/hiroki-abe-58/ComfyUI-CausalForcing) · [NVIDIA-CMD](https://github.com/hiroki-abe-58/ComfyUI-NVIDIA-CMD) | 自回归生成、图生视频与长序列 rollout。 | 在 [Causal Forcing](https://github.com/thu-ml/Causal-Forcing) 的 News 中介绍 |
 | 说话人头像 | [LeapTalk](https://github.com/hiroki-abe-58/ComfyUI-LeapTalk) · [TBDub](https://github.com/hiroki-abe-58/ComfyUI-TBDub) | 语音驱动的人像视频与视频重新配音。 | 已合并：[LeapTalk #6](https://github.com/zhangrongxiang/LeapTalk/pull/6) |
-| 图像生成 | [LoopedDiT](https://github.com/hiroki-abe-58/ComfyUI-LoopedDiT) | 像素空间扩散与受控的循环深度对比。 | |
+| 图像生成 | [LoopedDiT](https://github.com/hiroki-abe-58/ComfyUI-LoopedDiT) · [ScaleRAE](https://github.com/hiroki-abe-58/ComfyUI-ScaleRAE) | LoopedDiT的像素空间扩散，以及ScaleRAE基于WebSSL的文生图。 | |
 | 图像修复 | [PixRestore](https://github.com/hiroki-abe-58/ComfyUI-PixRestore) · [MiRipple](https://github.com/hiroki-abe-58/ComfyUI-MiRipple) | 单步修复，以及经过验证的本地伪影修复。 | |
-| 音乐 | [AceMusic](https://github.com/hiroki-abe-58/ComfyUI-AceMusic) | 基于 ACE-Step 的歌曲生成、编辑与 LoRA 支持。 | |
+| 音乐 | [AceMusic](https://github.com/hiroki-abe-58/ComfyUI-AceMusic) · [MimeticA0](https://github.com/hiroki-abe-58/ComfyUI-MimeticA0) | ACE-Step歌曲生成与编辑，以及mimetic-a0的48 kHz立体声音乐生成。 | |
 | Windows 环境搭建 | [Win-Blackwell](https://github.com/hiroki-abe-58/ComfyUI-Win-Blackwell) | 面向 RTX 50 系列 GPU 的 ComfyUI 安装与经过测试的工作流。 | |
 
 ### Web、桌面与开发者工具
@@ -219,6 +228,11 @@ JoyAI-Video-Edit 的非官方集成，带有常驻的 WSL2 worker、模型加载
 以上技术用于我的 [ML 项目](https://github.com/hiroki-abe-58/sokudan)、[React 库](https://github.com/hiroki-abe-58/gassan)、[桌面应用](https://github.com/hiroki-abe-58/VMagic)、[Web 工具](https://github.com/hiroki-abe-58/MermGraph) 和 [Go CLI](https://github.com/hiroki-abe-58/aitxt)。Docker Compose 也是我日常开发流程的一部分。主要硬件：RTX 5090（Blackwell）和 Apple Silicon。没有品牌图标的徽章使用通用的代码图标。
 
 ## 开源贡献
+
+**已合并到上游的推理修复**
+
+- **Xiaomi-Lens-0：** [在 flash-attn 不可用时回退到 SDPA](https://github.com/SeerRay-Lab/Xiaomi-Lens-0/pull/3)，避免掩码解码器中注意力权重导致的二次方内存增长。在 Windows / RTX 5090 上，3 MP掩码处理新增的峰值显存从18.02 GB降至2.28 GB；token和边界框保持一致，掩码边缘存在细微差异。
+- **SemBridge：** [移除编解码器 Snake 激活函数的 TorchScript 装饰器](https://github.com/ASLP-lab/SemBridge/pull/2)，修复相同输入和seed在加载后首次生成与后续调用之间音频不一致的问题。在测试环境中验证了重复输出一致。
 
 **LLM 推理与可复现性**
 

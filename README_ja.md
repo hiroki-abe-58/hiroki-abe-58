@@ -10,11 +10,11 @@
 
 ## 最近の公開成果
 
-### 新しいComfyUIツール — 音声・歌声・表現豊かな読み上げ
+### 新しいComfyUIツール — セグメンテーション・音声処理・3D
 
-**[SemBridge for ComfyUI](https://github.com/hiroki-abe-58/ComfyUI-SemBridge)**は、中国語・英語の音声合成、楽譜に沿った歌声、発話と歌唱を組み合わせた音声をComfyUIの標準AUDIO形式で生成します。参照音声による声の指定、楽譜プレビュー、モデルのアンロードに対応し、Windows 11・RTX 5090で公式実装との比較を検証しています。
-
-**[ComfyUI-drama3-small](https://github.com/hiroki-abe-58/ComfyUI-drama3-small)**は、日本語・英語の表現豊かな音声生成、Voice Design・Voice Clone、話し方のタグ指定、長文の分割生成、expertオフロードに対応します。Fish Audio Drama 3を扱う[pentaCoxianのComfyUI統合](https://github.com/pentaCoxian/ComfyUI-drama3-small)をベースにしています。
+- **[XiaomiLens](https://github.com/hiroki-abe-58/ComfyUI-XiaomiLens)：** 自然言語で指定した対象のマスクとボックスを元画像サイズで出力。flash-attnが使えない環境でマスクデコーダーのメモリ消費を抑える[SDPAフォールバック修正](https://github.com/SeerRay-Lab/Xiaomi-Lens-0/pull/3)が上流にマージされました。
+- **[DBS](https://github.com/hiroki-abe-58/ComfyUI-DBS)・[VoxLock](https://github.com/hiroki-abe-58/ComfyUI-VoxLock)・[MimeticA0](https://github.com/hiroki-abe-58/ComfyUI-MimeticA0)：** 音楽・効果音・会話の分離、特定話者の抽出、テキストからの48 kHzステレオ音楽生成。
+- **[S2Tok](https://github.com/hiroki-abe-58/ComfyUI-S2Tok)・[EmbeddingGemma2](https://github.com/hiroki-abe-58/ComfyUI-EmbeddingGemma2)・[SyncReward](https://github.com/hiroki-abe-58/ComfyUI-SyncReward)：** 静的シーンの3D Gaussian再構築、テキスト・画像・動画・音声の埋め込み比較、映像と音声の整合性評価。
 
 ### [sokudan](https://github.com/hiroki-abe-58/sokudan) — 文章を生成せず、日本語で判断するモデル
 
@@ -53,13 +53,22 @@ JoyAI-Video-Editの非公式ComfyUI統合です。WSL2の常駐ワーカー、�
 | [Qwen3-TTS-Mac-GeneLab](https://github.com/hiroki-abe-58/Qwen3-TTS-Mac-GeneLab) | Apple Silicon向けMLX / PyTorch構成、量子化、ボイスクローン。 |
 | [Style-BERT-VITS2-GeneLab-Blackwell](https://github.com/hiroki-abe-58/Style-BERT-VITS2-GeneLab-Blackwell) | WindowsネイティブのBlackwell対応、CPU/GPUフォールバック。 |
 
-### ComfyUI · 動画・画像・音声・音楽
+### ComfyUI · 動画・画像・音声・3D
 
-「上流」列の「マージ済み」は、公式READMEにこの統合を掲載するPRがマージされ、そのリポジトリのコントリビューターになったものです。
+**[ComfyUIレジストリ](https://registry.comfy.org/)に21本のノードパックを公開**（2026年10月20日時点、パブリッシャー：`hiroki-abe-58`）。生成・編集に加え、解析や3D再構築まで扱っています。以下は主なプロジェクトです。
+
+「上流」列では、コード修正のマージ、公式READMEへの掲載、ベースにしたプロジェクトを区別しています。
 
 | 分野 | プロジェクト | テーマ | 上流 |
 |---|---|---|---|
-| 音声・歌声 | [SemBridge](https://github.com/hiroki-abe-58/ComfyUI-SemBridge) | 中国語・英語の音声合成、楽譜からの歌唱、発話と歌唱の混在。標準AUDIO出力。 | [ASLP-lab/SemBridge](https://github.com/ASLP-lab/SemBridge)を使用 |
+| セグメンテーション | [XiaomiLens](https://github.com/hiroki-abe-58/ComfyUI-XiaomiLens) | 自然言語で指定した対象のマスク・ボックスを元画像サイズで出力。 | コード修正マージ済み：[Xiaomi-Lens-0 #3](https://github.com/SeerRay-Lab/Xiaomi-Lens-0/pull/3) |
+| 音源分離・話者抽出 | [DBS](https://github.com/hiroki-abe-58/ComfyUI-DBS) · [VoxLock](https://github.com/hiroki-abe-58/ComfyUI-VoxLock) | 音楽・効果音・会話の分離と、特定話者の音声抽出。 |  |
+| マルチモーダル埋め込み | [EmbeddingGemma2](https://github.com/hiroki-abe-58/ComfyUI-EmbeddingGemma2) | テキスト・画像・動画・音声を共通空間に埋め込み、類似度比較や候補選択。 |  |
+| ストリーミング動画 | [DuoMatching](https://github.com/hiroki-abe-58/ComfyUI-DuoMatching) · [SGFPlus](https://github.com/hiroki-abe-58/ComfyUI-SGFPlus) | 蒸留モデルによるフレーム単位の生成と、rolling cacheを使う自己回帰動画生成。 |  |
+| 3D再構築 | [S2Tok](https://github.com/hiroki-abe-58/ComfyUI-S2Tok) | 動画フレームから静的シーンを3D Gaussian再構築。標準SPLAT出力。 |  |
+| 映像・音声の評価 | [SyncReward](https://github.com/hiroki-abe-58/ComfyUI-SyncReward) | 整合性スコアと候補選択。公式1,000クリップのベンチマークを再現。 |  |
+| トルコ語音声合成 | [EMALightning](https://github.com/hiroki-abe-58/ComfyUI-EMALightning) · [Antalia](https://github.com/hiroki-abe-58/ComfyUI-Antalia) | テキスト正規化付き48 kHz TTS。EMA Lightningは単語タイムスタンプにも対応。 |  |
+| 音声・歌声 | [SemBridge](https://github.com/hiroki-abe-58/ComfyUI-SemBridge) | 中国語・英語の音声合成、楽譜からの歌唱、発話と歌唱の混在。標準AUDIO出力。 | 再現性の修正マージ済み：[SemBridge #2](https://github.com/ASLP-lab/SemBridge/pull/2) |
 | 表現豊かな音声 | [drama3-small](https://github.com/hiroki-abe-58/ComfyUI-drama3-small) | 日本語・英語の声の生成・クローン、話し方の制御、長文生成。 | [pentaCoxian/ComfyUI-drama3-small](https://github.com/pentaCoxian/ComfyUI-drama3-small)がベース |
 | 画像編集 | [EditUtils](https://github.com/hiroki-abe-58/ComfyUI-EditUtils) | Qwen-Image 2.1、FLUX.3 Kleinのレイアウト編集、アルファ補正など複数モデル向けの編集ツール。 | [lrzjason/ComfyUI-EditUtils](https://github.com/lrzjason/ComfyUI-EditUtils)がベース |
 | レイアウト連携 | [FLUX 3 LayoutKit](https://github.com/hiroki-abe-58/ComfyUI-Flux3-LayoutKit) | FLUX 3 Image Klein向けの座標変換、レイアウト表の厳密な検証、プレビュー。 | |
@@ -68,9 +77,9 @@ JoyAI-Video-Editの非公式ComfyUI統合です。WSL2の常駐ワーカー、�
 | 動画の注意機構 | [MonarchRT](https://github.com/hiroki-abe-58/ComfyUI-MonarchRT) | 同じ重みのdense基準とMonarch行列の注意機構を比較。 | |
 | 因果的な動画生成 | [CausalForcing](https://github.com/hiroki-abe-58/ComfyUI-CausalForcing) · [NVIDIA-CMD](https://github.com/hiroki-abe-58/ComfyUI-NVIDIA-CMD) | 自己回帰生成、画像からの動画生成、長尺ロールアウト。 | [Causal Forcing](https://github.com/thu-ml/Causal-Forcing)のNewsで紹介 |
 | 顔動画・吹き替え | [LeapTalk](https://github.com/hiroki-abe-58/ComfyUI-LeapTalk) · [TBDub](https://github.com/hiroki-abe-58/ComfyUI-TBDub) | 音声駆動のポートレートと動画のリダビング。 | マージ済み：[LeapTalk #6](https://github.com/zhangrongxiang/LeapTalk/pull/6) |
-| 画像生成 | [LoopedDiT](https://github.com/hiroki-abe-58/ComfyUI-LoopedDiT) | ピクセル空間の拡散モデルとループ深度の比較。 | |
+| 画像生成 | [LoopedDiT](https://github.com/hiroki-abe-58/ComfyUI-LoopedDiT) · [ScaleRAE](https://github.com/hiroki-abe-58/ComfyUI-ScaleRAE) | LoopedDiTのピクセル空間拡散と、ScaleRAEのWebSSLベースのテキスト画像生成。 | |
 | 画像復元 | [PixRestore](https://github.com/hiroki-abe-58/ComfyUI-PixRestore) · [MiRipple](https://github.com/hiroki-abe-58/ComfyUI-MiRipple) | 1ステップ復元と、検証を伴うローカルのアーティファクト修復。 | |
-| 音楽 | [AceMusic](https://github.com/hiroki-abe-58/ComfyUI-AceMusic) | ACE-Stepによる楽曲生成・編集・LoRA対応。 | |
+| 音楽 | [AceMusic](https://github.com/hiroki-abe-58/ComfyUI-AceMusic) · [MimeticA0](https://github.com/hiroki-abe-58/ComfyUI-MimeticA0) | ACE-Stepの楽曲生成・編集と、mimetic-a0の48 kHzステレオ音楽生成。 | |
 | Windows環境構築 | [Win-Blackwell](https://github.com/hiroki-abe-58/ComfyUI-Win-Blackwell) | RTX 50シリーズ向けComfyUI導入と検証済みワークフロー。 | |
 
 ### Web・デスクトップ・開発ツール
@@ -219,6 +228,11 @@ JoyAI-Video-Editの非公式ComfyUI統合です。WSL2の常駐ワーカー、�
 [MLプロジェクト](https://github.com/hiroki-abe-58/sokudan)、[Reactライブラリ](https://github.com/hiroki-abe-58/gassan)、[デスクトップアプリ](https://github.com/hiroki-abe-58/VMagic)、[Webツール](https://github.com/hiroki-abe-58/MermGraph)、[Go製CLI](https://github.com/hiroki-abe-58/aitxt)で使用している技術です。Docker Composeも普段の開発で使用しています。主な検証環境はRTX 5090（Blackwell）とApple Silicon。ブランドロゴがないバッジには共通のコードアイコンを使っています。
 
 ## オープンソースへの貢献
+
+**上流にマージされた推論処理の修正**
+
+- **Xiaomi-Lens-0：** [flash-attnが使えない場合のフォールバックをSDPAに変更](https://github.com/SeerRay-Lab/Xiaomi-Lens-0/pull/3)し、マスクデコーダーでパッチ数の二乗に比例する注意重みのメモリ確保を回避。Windows・RTX 5090では、3 MPのマスク処理で追加されるピークVRAMが18.02 GBから2.28 GBに減少しました。トークンとボックスは同一で、マスク境界には小さな差があります。
+- **SemBridge：** [コーデックのSnake活性化からTorchScriptを除去](https://github.com/ASLP-lab/SemBridge/pull/2)し、同じ入力・seedでもロード直後の初回と2回目以降で音声が変わる問題を修正。検証環境で繰り返し出力の一致を確認しました。
 
 **LLM推論・再現性**
 
