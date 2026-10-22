@@ -4,11 +4,17 @@
 
 **日本語の生成AIを、自分のマシンで。**
 
-東京を拠点に活動するAIエンジニア・技術コンサルタントです。ローカルAIツール、日本語言語モデルの学習、研究実装のアプリケーション化に取り組んでいます。Windows・Linux・Apple Siliconで実際に使えるところまで整え、コードと検証結果を公開しています。ComfyUI統合は、[LongLive-Plug](https://github.com/NVlabs/LongLive/tree/main/LongLive-Plug)（NVlabs）、[SparkDiffusion](https://github.com/AlibabaResearch/SparkDiffusion)（AlibabaResearch）、[LeapTalk](https://github.com/zhangrongxiang/LeapTalk)、[Causal Forcing](https://github.com/thu-ml/Causal-Forcing)の公式READMEで紹介されています。
+東京を拠点に活動するAIエンジニア・技術コンサルタントです。ローカルAIツール、日本語言語モデルの学習、研究実装のアプリケーション化に取り組んでいます。Windows・Linux・Apple Siliconで実際に使えるところまで整え、コードと検証結果を公開しています。ComfyUI統合は、[LongLive-Plug](https://github.com/NVlabs/LongLive/tree/main/LongLive-Plug)（NVlabs）、[SparkDiffusion](https://github.com/AlibabaResearch/SparkDiffusion)（AlibabaResearch）、[LeapTalk](https://github.com/zhangrongxiang/LeapTalk)、[Causal Forcing](https://github.com/thu-ml/Causal-Forcing)、[Looped-DiT](https://github.com/OpenSenseNova/Looped-DiT)の公式READMEで紹介されています。
 
 [English](README.md) · [简体中文](README_zh.md) · [Hugging Face](https://huggingface.co/GeneLab) · [Zenn](https://zenn.dev/genelab_999) · [X](https://x.com/geneLab_999)
 
 ## 最近の公開成果
+
+### audio.cpp — 多言語の長文音声合成とComfyUI連携
+
+**[audio.cpp](https://github.com/0xShug0/audio.cpp)本体に10件のPRがマージ**（2026年10月22日時点）。Ming 3.0、Kokoro、MOSS-TTS-Nano、Irodori、FireRedTTS3、MagpieTTS、MioTTSの7系列で長文処理を改善し、日本語・中国語・韓国語の読み落としや音声の崩れを軽減しました。Mingでは言語指定の引き継ぎと、長文のVoice Designで声を保つ処理も修正しています。
+
+[ComfyUI-AudioCPP](https://github.com/0xShug0/ComfyUI-AudioCPP)には、最初の**Server・Doctor・Text to Speech**ノードを実装し、[上流にマージ](https://github.com/0xShug0/ComfyUI-AudioCPP/pull/2)されました。ローカルのaudio.cppサーバーに接続して標準AUDIOを返し、参照音声を使ったボイスクローンにも対応します。
 
 ### 新しいComfyUIツール — セグメンテーション・音声処理・3D
 
@@ -61,6 +67,9 @@ JoyAI-Video-Editの非公式ComfyUI統合です。WSL2の常駐ワーカー、�
 
 | 分野 | プロジェクト | テーマ | 上流 |
 |---|---|---|---|
+| 多言語音声合成 | [Ming 3.0 TTS](https://github.com/hiroki-abe-58/ComfyUI-Ming-3-tts) | 0.5B / Tiny 9Bのネイティブ推論、Voice Design・Clone、INT8対応。Tinyは複数話者の会話にも対応。 | |
+| 参照動画からのレンダリング | [EdenLive 5B](https://github.com/hiroki-abe-58/ComfyUI-EdenLive-5090) | 参照動画・先頭画像・プロンプトから1280×704 / 24 fpsの動画を生成。LightX2V経由でWindows・RTX 5090を検証。 | |
+| ローカルTTSサーバー | [ComfyUI-AudioCPP](https://github.com/0xShug0/ComfyUI-AudioCPP) | サーバー設定、ヘルスチェック・モデル診断、参照音声を使えるTTS。 | マージ済み：[ComfyUI-AudioCPP #2](https://github.com/0xShug0/ComfyUI-AudioCPP/pull/2) |
 | セグメンテーション | [XiaomiLens](https://github.com/hiroki-abe-58/ComfyUI-XiaomiLens) | 自然言語で指定した対象のマスク・ボックスを元画像サイズで出力。 | コード修正マージ済み：[Xiaomi-Lens-0 #3](https://github.com/SeerRay-Lab/Xiaomi-Lens-0/pull/3) |
 | 音源分離・話者抽出 | [DBS](https://github.com/hiroki-abe-58/ComfyUI-DBS) · [VoxLock](https://github.com/hiroki-abe-58/ComfyUI-VoxLock) | 音楽・効果音・会話の分離と、特定話者の音声抽出。 |  |
 | マルチモーダル埋め込み | [EmbeddingGemma2](https://github.com/hiroki-abe-58/ComfyUI-EmbeddingGemma2) | テキスト・画像・動画・音声を共通空間に埋め込み、類似度比較や候補選択。 |  |
@@ -77,7 +86,7 @@ JoyAI-Video-Editの非公式ComfyUI統合です。WSL2の常駐ワーカー、�
 | 動画の注意機構 | [MonarchRT](https://github.com/hiroki-abe-58/ComfyUI-MonarchRT) | 同じ重みのdense基準とMonarch行列の注意機構を比較。 | |
 | 因果的な動画生成 | [CausalForcing](https://github.com/hiroki-abe-58/ComfyUI-CausalForcing) · [NVIDIA-CMD](https://github.com/hiroki-abe-58/ComfyUI-NVIDIA-CMD) | 自己回帰生成、画像からの動画生成、長尺ロールアウト。 | [Causal Forcing](https://github.com/thu-ml/Causal-Forcing)のNewsで紹介 |
 | 顔動画・吹き替え | [LeapTalk](https://github.com/hiroki-abe-58/ComfyUI-LeapTalk) · [TBDub](https://github.com/hiroki-abe-58/ComfyUI-TBDub) | 音声駆動のポートレートと動画のリダビング。 | マージ済み：[LeapTalk #6](https://github.com/zhangrongxiang/LeapTalk/pull/6) |
-| 画像生成 | [LoopedDiT](https://github.com/hiroki-abe-58/ComfyUI-LoopedDiT) · [ScaleRAE](https://github.com/hiroki-abe-58/ComfyUI-ScaleRAE) | LoopedDiTのピクセル空間拡散と、ScaleRAEのWebSSLベースのテキスト画像生成。 | |
+| 画像生成 | [LoopedDiT](https://github.com/hiroki-abe-58/ComfyUI-LoopedDiT) · [ScaleRAE](https://github.com/hiroki-abe-58/ComfyUI-ScaleRAE) | LoopedDiTのピクセル空間拡散と、ScaleRAEのWebSSLベースのテキスト画像生成。 | README掲載マージ済み：[Looped-DiT #3](https://github.com/OpenSenseNova/Looped-DiT/pull/3) |
 | 画像復元 | [PixRestore](https://github.com/hiroki-abe-58/ComfyUI-PixRestore) · [MiRipple](https://github.com/hiroki-abe-58/ComfyUI-MiRipple) | 1ステップ復元と、検証を伴うローカルのアーティファクト修復。 | |
 | 音楽 | [AceMusic](https://github.com/hiroki-abe-58/ComfyUI-AceMusic) · [MimeticA0](https://github.com/hiroki-abe-58/ComfyUI-MimeticA0) | ACE-Stepの楽曲生成・編集と、mimetic-a0の48 kHzステレオ音楽生成。 | |
 | Windows環境構築 | [Win-Blackwell](https://github.com/hiroki-abe-58/ComfyUI-Win-Blackwell) | RTX 50シリーズ向けComfyUI導入と検証済みワークフロー。 | |
@@ -229,6 +238,12 @@ JoyAI-Video-Editの非公式ComfyUI統合です。WSL2の常駐ワーカー、�
 
 ## オープンソースへの貢献
 
+**audio.cpp · マージ済みPR 10件（2026年10月22日時点）**
+
+- **7系列の長文音声合成：** Ming [#1020](https://github.com/0xShug0/audio.cpp/pull/1020)、Kokoro [#1022](https://github.com/0xShug0/audio.cpp/pull/1022)、MOSS-TTS-Nano [#1025](https://github.com/0xShug0/audio.cpp/pull/1025)、Irodori [#1027](https://github.com/0xShug0/audio.cpp/pull/1027)、FireRedTTS3 [#1039](https://github.com/0xShug0/audio.cpp/pull/1039)、MagpieTTS [#1043](https://github.com/0xShug0/audio.cpp/pull/1043) / [#1044](https://github.com/0xShug0/audio.cpp/pull/1044)、MioTTS [#1046](https://github.com/0xShug0/audio.cpp/pull/1046)の分割設定を改善。Magpieは後続修正で100コードポイントに調整し、中国語・英語の混在文で起きる回帰を回避しました。Windows・RTX 5090での実音声生成、WhisperによるCER測定、再現可能な経路での出力比較を実施しています。
+- **Mingの言語指定と声の一貫性：** [#1021](https://github.com/0xShug0/audio.cpp/pull/1021)でCLI・サーバーの言語指定を引き継ぎ、[#1034](https://github.com/0xShug0/audio.cpp/pull/1034)でVoice Design・freeformの長文を分割して最初の生成音声を声の参照に再利用。検証環境では404文字の日本語Voice Designで、4 seedの平均CERが0.913から0.043に改善しました。
+- **ComfyUI連携（別リポジトリ）：** [ComfyUI-AudioCPP #2](https://github.com/0xShug0/ComfyUI-AudioCPP/pull/2)でServer・Doctor・Text to Speechノードを追加。実際のComfyUIで21ワークフローを検証し、正常に生成された音声はサーバーへの直接リクエストとサンプル単位で一致しました。
+
 **上流にマージされた推論処理の修正**
 
 - **Xiaomi-Lens-0：** [flash-attnが使えない場合のフォールバックをSDPAに変更](https://github.com/SeerRay-Lab/Xiaomi-Lens-0/pull/3)し、マスクデコーダーでパッチ数の二乗に比例する注意重みのメモリ確保を回避。Windows・RTX 5090では、3 MPのマスク処理で追加されるピークVRAMが18.02 GBから2.28 GBに減少しました。トークンとボックスは同一で、マスク境界には小さな差があります。
@@ -241,7 +256,7 @@ JoyAI-Video-Editの非公式ComfyUI統合です。WSL2の常駐ワーカー、�
 **画像・動画生成**
 
 - **DMAD**（高速な画像・動画生成のための蒸留手法）：[Windowsで`--low-vram`を使えるようにする修正](https://github.com/Yzmblog/DMAD/pull/6)がマージされ、READMEのNewsでクレジットされています。
-- **SparkDiffusion・LongLive・LeapTalk：** ComfyUI統合を紹介するREADMEへの追記がマージされました（上記ComfyUIの表を参照）。
+- **SparkDiffusion・LongLive・LeapTalk・Looped-DiT：** ComfyUI統合を紹介するREADMEへの追記がマージされました（上記ComfyUIの表を参照）。
 - **Mi-Ripple：** ComfyUI統合の検証中に見つけた[OpenCV実行時の問題への修正提案](https://github.com/miyang-ai/Mi-Ripple/pull/2)（オープン中）。
 
 **意思決定モデル**

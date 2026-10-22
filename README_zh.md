@@ -4,11 +4,17 @@
 
 **日语生成式 AI，在你自己的机器上。**
 
-常驻东京的 AI 工程师、技术顾问。我开发本地 AI 工具，训练小型日语语言模型，并把研究实现打磨成可在 Windows、Linux 和 Apple Silicon 上实际使用的软件。[LongLive-Plug](https://github.com/NVlabs/LongLive/tree/main/LongLive-Plug)（NVlabs）、[SparkDiffusion](https://github.com/AlibabaResearch/SparkDiffusion)（AlibabaResearch）、[LeapTalk](https://github.com/zhangrongxiang/LeapTalk) 和 [Causal Forcing](https://github.com/thu-ml/Causal-Forcing) 的官方 README 都链接了我开发的 ComfyUI 集成。
+常驻东京的 AI 工程师、技术顾问。我开发本地 AI 工具，训练小型日语语言模型，并把研究实现打磨成可在 Windows、Linux 和 Apple Silicon 上实际使用的软件。[LongLive-Plug](https://github.com/NVlabs/LongLive/tree/main/LongLive-Plug)（NVlabs）、[SparkDiffusion](https://github.com/AlibabaResearch/SparkDiffusion)（AlibabaResearch）、[LeapTalk](https://github.com/zhangrongxiang/LeapTalk)、[Causal Forcing](https://github.com/thu-ml/Causal-Forcing) 和 [Looped-DiT](https://github.com/OpenSenseNova/Looped-DiT) 的官方 README 都链接了我开发的 ComfyUI 集成。
 
 [English](README.md) · [日本語](README_ja.md) · [Hugging Face](https://huggingface.co/GeneLab) · [Zenn](https://zenn.dev/genelab_999) · [X](https://x.com/geneLab_999)
 
 ## 近期发布
+
+### audio.cpp — 多语言长文本语音合成与ComfyUI集成
+
+**已有10个PR合并到 [audio.cpp](https://github.com/0xShug0/audio.cpp)**（截至2026年10月22日）。改进了Ming 3.0、Kokoro、MOSS-TTS-Nano、Irodori、FireRedTTS3、MagpieTTS和MioTTS七个模型系列的长文本处理，减少日语、中文和韩语中的漏读与语音失真。还修复了Ming的语言参数传递，并保持长文本声音设计中各片段的声音一致性。
+
+为 [ComfyUI-AudioCPP](https://github.com/0xShug0/ComfyUI-AudioCPP) 实现的首批 **Server、Doctor和Text to Speech** 节点也已[合并到上游](https://github.com/0xShug0/ComfyUI-AudioCPP/pull/2)。它们连接本地audio.cpp服务器并返回标准AUDIO，支持通过参考音频进行声音克隆。
 
 ### 新的 ComfyUI 工具 — 分割、音频处理与3D
 
@@ -61,6 +67,9 @@ JoyAI-Video-Edit 的非官方集成，带有常驻的 WSL2 worker、模型加载
 
 | 领域 | 项目 | 重点 | 上游 |
 |---|---|---|---|
+| 多语言语音 | [Ming 3.0 TTS](https://github.com/hiroki-abe-58/ComfyUI-Ming-3-tts) | 原生0.5B / Tiny 9B推理、声音设计与克隆、INT8选项；Tiny支持多说话人对话。 | |
+| 参考视频渲染 | [EdenLive 5B](https://github.com/hiroki-abe-58/ComfyUI-EdenLive-5090) | 参考视频、首帧和提示词生成1280×704 / 24 fps视频；通过LightX2V，在Windows / RTX 5090验证。 | |
+| 本地TTS服务器 | [ComfyUI-AudioCPP](https://github.com/0xShug0/ComfyUI-AudioCPP) | 服务器配置、健康检查和模型诊断，以及支持参考音频的TTS。 | 已合并：[ComfyUI-AudioCPP #2](https://github.com/0xShug0/ComfyUI-AudioCPP/pull/2) |
 | 实例分割 | [XiaomiLens](https://github.com/hiroki-abe-58/ComfyUI-XiaomiLens) | 自然语言指定目标，输出原图尺寸的掩码和边界框。 | 代码修复已合并：[Xiaomi-Lens-0 #3](https://github.com/SeerRay-Lab/Xiaomi-Lens-0/pull/3) |
 | 音源分离与说话人提取 | [DBS](https://github.com/hiroki-abe-58/ComfyUI-DBS) · [VoxLock](https://github.com/hiroki-abe-58/ComfyUI-VoxLock) | 分离音乐、音效和对话，以及提取目标说话人的声音。 |  |
 | 多模态嵌入 | [EmbeddingGemma2](https://github.com/hiroki-abe-58/ComfyUI-EmbeddingGemma2) | 将文本、图像、视频和音频嵌入同一空间，进行相似度比较和候选选择。 |  |
@@ -77,7 +86,7 @@ JoyAI-Video-Edit 的非官方集成，带有常驻的 WSL2 worker、模型加载
 | 视频注意力 | [MonarchRT](https://github.com/hiroki-abe-58/ComfyUI-MonarchRT) | Monarch 矩阵注意力与相同权重的稠密基线对比。 | |
 | 因果视频生成 | [CausalForcing](https://github.com/hiroki-abe-58/ComfyUI-CausalForcing) · [NVIDIA-CMD](https://github.com/hiroki-abe-58/ComfyUI-NVIDIA-CMD) | 自回归生成、图生视频与长序列 rollout。 | 在 [Causal Forcing](https://github.com/thu-ml/Causal-Forcing) 的 News 中介绍 |
 | 说话人头像 | [LeapTalk](https://github.com/hiroki-abe-58/ComfyUI-LeapTalk) · [TBDub](https://github.com/hiroki-abe-58/ComfyUI-TBDub) | 语音驱动的人像视频与视频重新配音。 | 已合并：[LeapTalk #6](https://github.com/zhangrongxiang/LeapTalk/pull/6) |
-| 图像生成 | [LoopedDiT](https://github.com/hiroki-abe-58/ComfyUI-LoopedDiT) · [ScaleRAE](https://github.com/hiroki-abe-58/ComfyUI-ScaleRAE) | LoopedDiT的像素空间扩散，以及ScaleRAE基于WebSSL的文生图。 | |
+| 图像生成 | [LoopedDiT](https://github.com/hiroki-abe-58/ComfyUI-LoopedDiT) · [ScaleRAE](https://github.com/hiroki-abe-58/ComfyUI-ScaleRAE) | LoopedDiT的像素空间扩散，以及ScaleRAE基于WebSSL的文生图。 | README收录已合并：[Looped-DiT #3](https://github.com/OpenSenseNova/Looped-DiT/pull/3) |
 | 图像修复 | [PixRestore](https://github.com/hiroki-abe-58/ComfyUI-PixRestore) · [MiRipple](https://github.com/hiroki-abe-58/ComfyUI-MiRipple) | 单步修复，以及经过验证的本地伪影修复。 | |
 | 音乐 | [AceMusic](https://github.com/hiroki-abe-58/ComfyUI-AceMusic) · [MimeticA0](https://github.com/hiroki-abe-58/ComfyUI-MimeticA0) | ACE-Step歌曲生成与编辑，以及mimetic-a0的48 kHz立体声音乐生成。 | |
 | Windows 环境搭建 | [Win-Blackwell](https://github.com/hiroki-abe-58/ComfyUI-Win-Blackwell) | 面向 RTX 50 系列 GPU 的 ComfyUI 安装与经过测试的工作流。 | |
@@ -229,6 +238,12 @@ JoyAI-Video-Edit 的非官方集成，带有常驻的 WSL2 worker、模型加载
 
 ## 开源贡献
 
+**audio.cpp · 10个已合并PR（截至2026年10月22日）**
+
+- **七个模型系列的长文本合成：** 改进Ming [#1020](https://github.com/0xShug0/audio.cpp/pull/1020)、Kokoro [#1022](https://github.com/0xShug0/audio.cpp/pull/1022)、MOSS-TTS-Nano [#1025](https://github.com/0xShug0/audio.cpp/pull/1025)、Irodori [#1027](https://github.com/0xShug0/audio.cpp/pull/1027)、FireRedTTS3 [#1039](https://github.com/0xShug0/audio.cpp/pull/1039)、MagpieTTS [#1043](https://github.com/0xShug0/audio.cpp/pull/1043) / [#1044](https://github.com/0xShug0/audio.cpp/pull/1044)和MioTTS [#1046](https://github.com/0xShug0/audio.cpp/pull/1046)的分段设置。Magpie的后续修复改用100个码点，避免中英混合文本的回归问题。验证包括Windows / RTX 5090上的实际语音生成、Whisper CER测量，以及可复现路径的输出比较。
+- **Ming的语言参数与声音一致性：** [#1021](https://github.com/0xShug0/audio.cpp/pull/1021)传递CLI及服务器的语言设置；[#1034](https://github.com/0xShug0/audio.cpp/pull/1034)对声音设计/freeform长文本分段，并复用首段生成音频作为声音参考。在测试环境的404字符日语声音设计测试中，四个seed的平均CER从0.913降至0.043。
+- **ComfyUI集成（独立仓库）：** [ComfyUI-AudioCPP #2](https://github.com/0xShug0/ComfyUI-AudioCPP/pull/2)添加Server、Doctor和Text to Speech节点。通过21个真实ComfyUI工作流验证；成功生成的音频与直接请求服务器的结果逐样本一致。
+
 **已合并到上游的推理修复**
 
 - **Xiaomi-Lens-0：** [在 flash-attn 不可用时回退到 SDPA](https://github.com/SeerRay-Lab/Xiaomi-Lens-0/pull/3)，避免掩码解码器中注意力权重导致的二次方内存增长。在 Windows / RTX 5090 上，3 MP掩码处理新增的峰值显存从18.02 GB降至2.28 GB；token和边界框保持一致，掩码边缘存在细微差异。
@@ -241,7 +256,7 @@ JoyAI-Video-Edit 的非官方集成，带有常驻的 WSL2 worker、模型加载
 **图像与视频生成**
 
 - **DMAD**（用于快速图像与视频生成的蒸馏方法）：[让 `--low-vram` 可在 Windows 上使用](https://github.com/Yzmblog/DMAD/pull/6)，已合并，并在 README 的 News 中致谢。
-- **SparkDiffusion、LongLive 和 LeapTalk：** 为我的 ComfyUI 集成添加的 README 条目已合并（见上方 ComfyUI 表格）。
+- **SparkDiffusion、LongLive、LeapTalk 和 Looped-DiT：** 为我的 ComfyUI 集成添加的 README 条目已合并（见上方 ComfyUI 表格）。
 - **Mi-Ripple：** 在验证 ComfyUI 集成时发现问题，提交了 [OpenCV 运行时处理](https://github.com/miyang-ai/Mi-Ripple/pull/2) 的修复（待合并）。
 
 **决策模型**
