@@ -4,11 +4,17 @@
 
 **Generative AI, in Japanese, on your own machine.**
 
-AI engineer and technical consultant in Tokyo. I build local AI tools, train small Japanese language models, and turn research implementations into usable software for Windows, Linux and Apple Silicon. My ComfyUI integrations are linked from the official READMEs of [LongLive-Plug](https://github.com/NVlabs/LongLive/tree/main/LongLive-Plug) (NVlabs), [SparkDiffusion](https://github.com/AlibabaResearch/SparkDiffusion) (AlibabaResearch), [LeapTalk](https://github.com/zhangrongxiang/LeapTalk) and [Causal Forcing](https://github.com/thu-ml/Causal-Forcing).
+AI engineer and technical consultant in Tokyo. I build local AI tools, train small Japanese language models, and turn research implementations into usable software for Windows, Linux and Apple Silicon. My ComfyUI integrations are linked from the official READMEs of [LongLive-Plug](https://github.com/NVlabs/LongLive/tree/main/LongLive-Plug) (NVlabs), [SparkDiffusion](https://github.com/AlibabaResearch/SparkDiffusion) (AlibabaResearch), [LeapTalk](https://github.com/zhangrongxiang/LeapTalk), [Causal Forcing](https://github.com/thu-ml/Causal-Forcing) and [Looped-DiT](https://github.com/OpenSenseNova/Looped-DiT).
 
 [日本語](README_ja.md) · [简体中文](README_zh.md) · [Hugging Face](https://huggingface.co/GeneLab) · [Zenn](https://zenn.dev/genelab_999) · [X](https://x.com/geneLab_999)
 
 ## Recent releases
+
+### audio.cpp — long-form multilingual speech and ComfyUI integration
+
+**10 PRs merged into [audio.cpp](https://github.com/0xShug0/audio.cpp)** as of October 22, 2026. Improved long-text handling across seven TTS families—Ming 3.0, Kokoro, MOSS-TTS-Nano, Irodori, FireRedTTS3, MagpieTTS and MioTTS—to reduce dropped or garbled speech in Japanese, Chinese and Korean. Also fixed Ming's language forwarding and preserved the designed voice across long-text chunks.
+
+The first **Server, Doctor and Text to Speech** nodes for [ComfyUI-AudioCPP](https://github.com/0xShug0/ComfyUI-AudioCPP) were also [merged upstream](https://github.com/0xShug0/ComfyUI-AudioCPP/pull/2). They connect ComfyUI to a local audio.cpp server and return standard AUDIO, with optional reference audio for voice cloning.
 
 ### New ComfyUI tools — segmentation, audio and 3D
 
@@ -61,6 +67,9 @@ The Upstream column distinguishes merged code fixes, README listings and the pro
 
 | Area | Projects | Focus | Upstream |
 |---|---|---|---|
+| Multilingual speech | [Ming 3.0 TTS](https://github.com/hiroki-abe-58/ComfyUI-Ming-3-tts) | Native 0.5B / Tiny 9B inference, voice design/cloning, INT8 options and multi-speaker dialogue with Tiny. | |
+| Proxy-video rendering | [EdenLive 5B](https://github.com/hiroki-abe-58/ComfyUI-EdenLive-5090) | Reference video, first frame and prompt to 1280×704 / 24 fps output via LightX2V; tested on Windows / RTX 5090. | |
+| Local TTS server | [ComfyUI-AudioCPP](https://github.com/0xShug0/ComfyUI-AudioCPP) | Server configuration, health/model diagnostics and TTS with optional reference audio. | Merged: [ComfyUI-AudioCPP #2](https://github.com/0xShug0/ComfyUI-AudioCPP/pull/2) |
 | Segmentation | [XiaomiLens](https://github.com/hiroki-abe-58/ComfyUI-XiaomiLens) | Text-guided instance masks and boxes at the original image resolution. | Merged code fix: [Xiaomi-Lens-0 #3](https://github.com/SeerRay-Lab/Xiaomi-Lens-0/pull/3) |
 | Audio separation | [DBS](https://github.com/hiroki-abe-58/ComfyUI-DBS) · [VoxLock](https://github.com/hiroki-abe-58/ComfyUI-VoxLock) | Music/effects/dialogue separation and target-speaker extraction. |  |
 | Multimodal embeddings | [EmbeddingGemma2](https://github.com/hiroki-abe-58/ComfyUI-EmbeddingGemma2) | Text, images, video and audio in a shared embedding space; similarity and selection. |  |
@@ -77,7 +86,7 @@ The Upstream column distinguishes merged code fixes, README listings and the pro
 | Video attention | [MonarchRT](https://github.com/hiroki-abe-58/ComfyUI-MonarchRT) | Monarch-matrix attention vs. a same-weight dense baseline. | |
 | Causal video | [CausalForcing](https://github.com/hiroki-abe-58/ComfyUI-CausalForcing) · [NVIDIA-CMD](https://github.com/hiroki-abe-58/ComfyUI-NVIDIA-CMD) | Autoregressive generation, image-to-video and long rollouts. | Featured in the [Causal Forcing](https://github.com/thu-ml/Causal-Forcing) News |
 | Talking heads | [LeapTalk](https://github.com/hiroki-abe-58/ComfyUI-LeapTalk) · [TBDub](https://github.com/hiroki-abe-58/ComfyUI-TBDub) | Speech-driven portraits and video redubbing. | Merged: [LeapTalk #6](https://github.com/zhangrongxiang/LeapTalk/pull/6) |
-| Image generation | [LoopedDiT](https://github.com/hiroki-abe-58/ComfyUI-LoopedDiT) · [ScaleRAE](https://github.com/hiroki-abe-58/ComfyUI-ScaleRAE) | Pixel-space diffusion with LoopedDiT; WebSSL-based text-to-image generation with ScaleRAE. | |
+| Image generation | [LoopedDiT](https://github.com/hiroki-abe-58/ComfyUI-LoopedDiT) · [ScaleRAE](https://github.com/hiroki-abe-58/ComfyUI-ScaleRAE) | Pixel-space diffusion with LoopedDiT; WebSSL-based text-to-image generation with ScaleRAE. | Merged README listing: [Looped-DiT #3](https://github.com/OpenSenseNova/Looped-DiT/pull/3) |
 | Image restoration | [PixRestore](https://github.com/hiroki-abe-58/ComfyUI-PixRestore) · [MiRipple](https://github.com/hiroki-abe-58/ComfyUI-MiRipple) | One-step restoration and verified local artifact repair. | |
 | Music | [AceMusic](https://github.com/hiroki-abe-58/ComfyUI-AceMusic) · [MimeticA0](https://github.com/hiroki-abe-58/ComfyUI-MimeticA0) | ACE-Step song generation/editing and 48 kHz stereo text-to-music with mimetic-a0. | |
 | Windows setup | [Win-Blackwell](https://github.com/hiroki-abe-58/ComfyUI-Win-Blackwell) | ComfyUI installation and tested workflows for RTX 50-series GPUs. | |
@@ -229,6 +238,12 @@ Built across my [ML projects](https://github.com/hiroki-abe-58/sokudan), [React 
 
 ## Open-source contributions
 
+**audio.cpp · 10 merged PRs (October 22, 2026)**
+
+- **Long-text synthesis across seven model families:** language-aware defaults for Ming [#1020](https://github.com/0xShug0/audio.cpp/pull/1020), Kokoro [#1022](https://github.com/0xShug0/audio.cpp/pull/1022), MOSS-TTS-Nano [#1025](https://github.com/0xShug0/audio.cpp/pull/1025), Irodori [#1027](https://github.com/0xShug0/audio.cpp/pull/1027), FireRedTTS3 [#1039](https://github.com/0xShug0/audio.cpp/pull/1039), MagpieTTS [#1043](https://github.com/0xShug0/audio.cpp/pull/1043) / [#1044](https://github.com/0xShug0/audio.cpp/pull/1044) and MioTTS [#1046](https://github.com/0xShug0/audio.cpp/pull/1046). Magpie's follow-up uses 100 codepoints to avoid a mixed Chinese/English regression. Validation includes Windows / RTX 5090 synthesis, Whisper CER measurements and output comparisons where reproducible.
+- **Ming language and voice consistency:** [#1021](https://github.com/0xShug0/audio.cpp/pull/1021) forwards CLI/server language settings; [#1034](https://github.com/0xShug0/audio.cpp/pull/1034) splits voice-design/freeform text and reuses the first generated segment as the voice reference. On a 404-character Japanese voice-design test, mean CER fell from 0.913 to 0.043 over four seeds on the tested setup.
+- **ComfyUI integration (separate repository):** [ComfyUI-AudioCPP #2](https://github.com/0xShug0/ComfyUI-AudioCPP/pull/2) adds Server, Doctor and Text to Speech nodes. Validated through 21 real ComfyUI workflows; successful generated audio matched direct server requests sample for sample.
+
 **Inference fixes merged upstream**
 
 - **Xiaomi-Lens-0:** [Use SDPA when flash-attn is unavailable](https://github.com/SeerRay-Lab/Xiaomi-Lens-0/pull/3), avoiding quadratic attention-weight allocations in the mask decoder. On Windows / RTX 5090, added peak VRAM for a 3 MP mask pass fell from 18.02 GB to 2.28 GB; tokens and boxes stayed the same, with small mask-edge differences.
@@ -241,7 +256,7 @@ Built across my [ML projects](https://github.com/hiroki-abe-58/sokudan), [React 
 **Image and video generation**
 
 - **DMAD** (distillation for fast image and video generation): [made `--low-vram` work on Windows](https://github.com/Yzmblog/DMAD/pull/6), merged and credited in the README News.
-- **SparkDiffusion, LongLive and LeapTalk:** README entries for my ComfyUI integrations, merged (see the ComfyUI table above).
+- **SparkDiffusion, LongLive, LeapTalk and Looped-DiT:** README entries for my ComfyUI integrations, merged (see the ComfyUI table above).
 - **Mi-Ripple:** [OpenCV runtime handling](https://github.com/miyang-ai/Mi-Ripple/pull/2) (open), found while validating the ComfyUI integration.
 
 **Decision models**
