@@ -10,9 +10,13 @@
 
 ## 最近の公開成果
 
+### Looking Ahead — 画像とテキストからComfyUIで動画生成
+
+[Looking Ahead](https://github.com/hiroki-abe-58/ComfyUI-LookingAhead)は1.3BのFuture Chunk Predictionモデルを、ComfyUI既存のumT5-XXL・Wan VAEと統合。標準VIDEO / IMAGE / LATENT出力、キャンセル、モデルのアンロードに対応します。Windows・RTX 5090で、標準設定の768×432・16 fps・5秒を検証。入力を揃えたサンプラーは公式とビット一致しますが、エンドツーエンドの動画出力には差があります。
+
 ### audio.cpp — 多言語の長文音声合成とComfyUI連携
 
-**[audio.cpp](https://github.com/0xShug0/audio.cpp)本体に10件のPRがマージ**（2026年10月22日時点）。Ming 3.0、Kokoro、MOSS-TTS-Nano、Irodori、FireRedTTS3、MagpieTTS、MioTTSの7系列で長文処理を改善し、日本語・中国語・韓国語の読み落としや音声の崩れを軽減しました。Mingでは言語指定の引き継ぎと、長文のVoice Designで声を保つ処理も修正しています。
+**[audio.cpp](https://github.com/0xShug0/audio.cpp)本体に11件のPRがマージ**（2026年10月23日時点）。Ming 3.0、Kokoro、MOSS-TTS-Nano、Irodori、FireRedTTS3、MagpieTTS、MioTTSの7系列で長文処理を改善し、日本語・中国語・韓国語の読み落としや音声の崩れを軽減しました。句読点のないCJK入力の共通分割処理も修正。Mingでは言語指定の引き継ぎと、長文のVoice Designで声を保つ処理も修正しています。
 
 [ComfyUI-AudioCPP](https://github.com/0xShug0/ComfyUI-AudioCPP)には、最初の**Server・Doctor・Text to Speech**ノードを実装し、[上流にマージ](https://github.com/0xShug0/ComfyUI-AudioCPP/pull/2)されました。ローカルのaudio.cppサーバーに接続して標準AUDIOを返し、参照音声を使ったボイスクローンにも対応します。
 
@@ -67,6 +71,7 @@ JoyAI-Video-Editの非公式ComfyUI統合です。WSL2の常駐ワーカー、�
 
 | 分野 | プロジェクト | テーマ | 上流 |
 |---|---|---|---|
+| 自己回帰型の画像→動画 | [Looking Ahead](https://github.com/hiroki-abe-58/ComfyUI-LookingAhead) | 1.3BのFuture Chunk Prediction、rolling KVキャッシュ、ComfyUIのWanエンコーダーを利用。公式サンプラーとの一致を検証。 | [TencentARC/Looking-Ahead](https://github.com/TencentARC/Looking-Ahead)を使用 |
 | 多言語音声合成 | [Ming 3.0 TTS](https://github.com/hiroki-abe-58/ComfyUI-Ming-3-tts) | 0.5B / Tiny 9Bのネイティブ推論、Voice Design・Clone、INT8対応。Tinyは複数話者の会話にも対応。 | |
 | 参照動画からのレンダリング | [EdenLive 5B](https://github.com/hiroki-abe-58/ComfyUI-EdenLive-5090) | 参照動画・先頭画像・プロンプトから1280×704 / 24 fpsの動画を生成。LightX2V経由でWindows・RTX 5090を検証。 | |
 | ローカルTTSサーバー | [ComfyUI-AudioCPP](https://github.com/0xShug0/ComfyUI-AudioCPP) | サーバー設定、ヘルスチェック・モデル診断、参照音声を使えるTTS。 | マージ済み：[ComfyUI-AudioCPP #2](https://github.com/0xShug0/ComfyUI-AudioCPP/pull/2) |
@@ -238,8 +243,9 @@ JoyAI-Video-Editの非公式ComfyUI統合です。WSL2の常駐ワーカー、�
 
 ## オープンソースへの貢献
 
-**audio.cpp · マージ済みPR 10件（2026年10月22日時点）**
+**audio.cpp · マージ済みPR 11件（2026年10月23日時点）**
 
+- **句読点のないCJKテキスト：** [#1045](https://github.com/0xShug0/audio.cpp/pull/1045)で、分割上限を超える漢字・かな・ハングルの連続文字列を均等に分割。ASR・OCRなどの句読点がない入力でも上限が効くように修正しました。MagpieTTS・FireRedTTS3・MOSS-TTS-Nanoで検証し、句読点付きの回帰検証ケースはWAVがバイト単位で一致しました。
 - **7系列の長文音声合成：** Ming [#1020](https://github.com/0xShug0/audio.cpp/pull/1020)、Kokoro [#1022](https://github.com/0xShug0/audio.cpp/pull/1022)、MOSS-TTS-Nano [#1025](https://github.com/0xShug0/audio.cpp/pull/1025)、Irodori [#1027](https://github.com/0xShug0/audio.cpp/pull/1027)、FireRedTTS3 [#1039](https://github.com/0xShug0/audio.cpp/pull/1039)、MagpieTTS [#1043](https://github.com/0xShug0/audio.cpp/pull/1043) / [#1044](https://github.com/0xShug0/audio.cpp/pull/1044)、MioTTS [#1046](https://github.com/0xShug0/audio.cpp/pull/1046)の分割設定を改善。Magpieは後続修正で100コードポイントに調整し、中国語・英語の混在文で起きる回帰を回避しました。Windows・RTX 5090での実音声生成、WhisperによるCER測定、再現可能な経路での出力比較を実施しています。
 - **Mingの言語指定と声の一貫性：** [#1021](https://github.com/0xShug0/audio.cpp/pull/1021)でCLI・サーバーの言語指定を引き継ぎ、[#1034](https://github.com/0xShug0/audio.cpp/pull/1034)でVoice Design・freeformの長文を分割して最初の生成音声を声の参照に再利用。検証環境では404文字の日本語Voice Designで、4 seedの平均CERが0.913から0.043に改善しました。
 - **ComfyUI連携（別リポジトリ）：** [ComfyUI-AudioCPP #2](https://github.com/0xShug0/ComfyUI-AudioCPP/pull/2)でServer・Doctor・Text to Speechノードを追加。実際のComfyUIで21ワークフローを検証し、正常に生成された音声はサーバーへの直接リクエストとサンプル単位で一致しました。
