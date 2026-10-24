@@ -14,9 +14,11 @@ AI engineer and technical consultant in Tokyo. I build local AI tools, train sma
 
 [Looking Ahead](https://github.com/hiroki-abe-58/ComfyUI-LookingAhead) integrates the 1.3B Future Chunk Prediction model with ComfyUI's existing umT5-XXL and Wan VAE, standard VIDEO / IMAGE / LATENT outputs, cancellation and model unloading. Tested on Windows / RTX 5090 at the default 768×432, 16 fps, five seconds. The sampler matches upstream bit for bit with aligned inputs; end-to-end video outputs differ.
 
+Windows inference fixes were also [merged upstream](https://github.com/TencentARC/Looking-Ahead/pull/2): SDPA fallback when FlashAttention 4 cannot import, and direct model loading without `fcntl`.
+
 ### audio.cpp — long-form multilingual speech and ComfyUI integration
 
-**11 PRs merged into [audio.cpp](https://github.com/0xShug0/audio.cpp)** as of October 23, 2026. Improved long-text handling across seven TTS families—Ming 3.0, Kokoro, MOSS-TTS-Nano, Irodori, FireRedTTS3, MagpieTTS and MioTTS—to reduce dropped or garbled speech in Japanese, Chinese and Korean. Also fixed shared chunking for punctuation-free CJK text. Ming now receives CLI/server language settings and preserves the designed voice across long-text chunks.
+**11 PRs merged into [audio.cpp](https://github.com/0xShug0/audio.cpp)** as of October 24, 2026. Improved long-text handling across seven TTS families—Ming 3.0, Kokoro, MOSS-TTS-Nano, Irodori, FireRedTTS3, MagpieTTS and MioTTS—to reduce dropped or garbled speech in Japanese, Chinese and Korean. Also fixed shared chunking for punctuation-free CJK text. Ming now receives CLI/server language settings and preserves the designed voice across long-text chunks.
 
 The first **Server, Doctor and Text to Speech** nodes for [ComfyUI-AudioCPP](https://github.com/0xShug0/ComfyUI-AudioCPP) were also [merged upstream](https://github.com/0xShug0/ComfyUI-AudioCPP/pull/2). They connect ComfyUI to a local audio.cpp server and return standard AUDIO, with optional reference audio for voice cloning.
 
@@ -71,7 +73,7 @@ The Upstream column distinguishes merged code fixes, README listings and the pro
 
 | Area | Projects | Focus | Upstream |
 |---|---|---|---|
-| Autoregressive image-to-video | [Looking Ahead](https://github.com/hiroki-abe-58/ComfyUI-LookingAhead) | 1.3B Future Chunk Prediction, rolling KV cache and native ComfyUI Wan encoders; sampler parity verified against upstream. | Based on [TencentARC/Looking-Ahead](https://github.com/TencentARC/Looking-Ahead) |
+| Autoregressive image-to-video | [Looking Ahead](https://github.com/hiroki-abe-58/ComfyUI-LookingAhead) | 1.3B Future Chunk Prediction, rolling KV cache and native ComfyUI Wan encoders; sampler parity verified against upstream. | Code fixes merged: [Looking-Ahead #2](https://github.com/TencentARC/Looking-Ahead/pull/2) |
 | Multilingual speech | [Ming 3.0 TTS](https://github.com/hiroki-abe-58/ComfyUI-Ming-3-tts) | Native 0.5B / Tiny 9B inference, voice design/cloning, INT8 options and multi-speaker dialogue with Tiny. | |
 | Proxy-video rendering | [EdenLive 5B](https://github.com/hiroki-abe-58/ComfyUI-EdenLive-5090) | Reference video, first frame and prompt to 1280×704 / 24 fps output via LightX2V; tested on Windows / RTX 5090. | |
 | Local TTS server | [ComfyUI-AudioCPP](https://github.com/0xShug0/ComfyUI-AudioCPP) | Server configuration, health/model diagnostics and TTS with optional reference audio. | Merged: [ComfyUI-AudioCPP #2](https://github.com/0xShug0/ComfyUI-AudioCPP/pull/2) |
@@ -100,7 +102,7 @@ The Upstream column distinguishes merged code fixes, README listings and the pro
 
 | Project | What it provides |
 |---|---|
-| [gassan](https://github.com/hiroki-abe-58/gassan) | React modal components built on native `<dialog>`, with accessible activation gates and explicit close reasons. |
+| [gassan](https://github.com/hiroki-abe-58/gassan) | A React UI library for SaaS: native `<dialog>` modals, form controls, toasts, a command palette and page templates, with CJK-aware line breaking, accessibility behavior and documentation in six languages. |
 | [lensing](https://github.com/hiroki-abe-58/lensing) | Dependency-free JavaScript/CSS glass refraction effects using signed distance fields and Snell's law. |
 | [MermGraph](https://github.com/hiroki-abe-58/MermGraph) | A Tauri Mermaid editor with live preview and PNG/SVG export. |
 | [VMagic](https://github.com/hiroki-abe-58/VMagic) | Tauri video conversion with FFmpeg, RIFE frame interpolation and Real-ESRGAN upscaling. |
@@ -243,7 +245,11 @@ Built across my [ML projects](https://github.com/hiroki-abe-58/sokudan), [React 
 
 ## Open-source contributions
 
-**audio.cpp · 11 merged PRs (October 23, 2026)**
+**Looking Ahead · Windows inference**
+
+[#2](https://github.com/TencentARC/Looking-Ahead/pull/2) fixes FlashAttention 4 import failures, routes cross-attention through the SDPA fallback and loads models directly when `fcntl` is unavailable. The upstream 1.3B example completed on Windows 11 / RTX 5090: 80 frames at 768×432, with 16.4 GiB peak allocated memory. The existing FA4 path retained bit-identical decoded frames in the comparison test; SDPA outputs differ numerically.
+
+**audio.cpp · 11 merged PRs (October 24, 2026)**
 
 - **Unpunctuated CJK text:** [#1045](https://github.com/0xShug0/audio.cpp/pull/1045) splits over-budget runs of hanzi, kana and Hangul into balanced chunks, preventing punctuation-free ASR/OCR text from bypassing the chunk limit. Verified on MagpieTTS, FireRedTTS3 and MOSS-TTS-Nano; punctuated regression cases stayed byte-identical.
 - **Long-text synthesis across seven model families:** language-aware defaults for Ming [#1020](https://github.com/0xShug0/audio.cpp/pull/1020), Kokoro [#1022](https://github.com/0xShug0/audio.cpp/pull/1022), MOSS-TTS-Nano [#1025](https://github.com/0xShug0/audio.cpp/pull/1025), Irodori [#1027](https://github.com/0xShug0/audio.cpp/pull/1027), FireRedTTS3 [#1039](https://github.com/0xShug0/audio.cpp/pull/1039), MagpieTTS [#1043](https://github.com/0xShug0/audio.cpp/pull/1043) / [#1044](https://github.com/0xShug0/audio.cpp/pull/1044) and MioTTS [#1046](https://github.com/0xShug0/audio.cpp/pull/1046). Magpie's follow-up uses 100 codepoints to avoid a mixed Chinese/English regression. Validation includes Windows / RTX 5090 synthesis, Whisper CER measurements and output comparisons where reproducible.

@@ -14,9 +14,11 @@
 
 [Looking Ahead](https://github.com/hiroki-abe-58/ComfyUI-LookingAhead)将1.3B Future Chunk Prediction模型与ComfyUI已有的umT5-XXL和Wan VAE集成，提供标准VIDEO / IMAGE / LATENT输出、取消和模型卸载。在Windows / RTX 5090上验证了默认768×432、16 fps、5秒配置。对齐输入后的采样器与官方逐位一致；端到端视频输出仍有差异。
 
+Windows推理修复也已[合并到上游](https://github.com/TencentARC/Looking-Ahead/pull/2)：FlashAttention 4无法导入时回退到SDPA，并在没有`fcntl`时直接加载模型。
+
 ### audio.cpp — 多语言长文本语音合成与ComfyUI集成
 
-**已有11个PR合并到 [audio.cpp](https://github.com/0xShug0/audio.cpp)**（截至2026年10月23日）。改进了Ming 3.0、Kokoro、MOSS-TTS-Nano、Irodori、FireRedTTS3、MagpieTTS和MioTTS七个模型系列的长文本处理，减少日语、中文和韩语中的漏读与语音失真。还修复了无标点CJK文本的通用分段处理及Ming的语言参数传递，并保持长文本声音设计中各片段的声音一致性。
+**已有11个PR合并到 [audio.cpp](https://github.com/0xShug0/audio.cpp)**（截至2026年10月24日）。改进了Ming 3.0、Kokoro、MOSS-TTS-Nano、Irodori、FireRedTTS3、MagpieTTS和MioTTS七个模型系列的长文本处理，减少日语、中文和韩语中的漏读与语音失真。还修复了无标点CJK文本的通用分段处理及Ming的语言参数传递，并保持长文本声音设计中各片段的声音一致性。
 
 为 [ComfyUI-AudioCPP](https://github.com/0xShug0/ComfyUI-AudioCPP) 实现的首批 **Server、Doctor和Text to Speech** 节点也已[合并到上游](https://github.com/0xShug0/ComfyUI-AudioCPP/pull/2)。它们连接本地audio.cpp服务器并返回标准AUDIO，支持通过参考音频进行声音克隆。
 
@@ -71,7 +73,7 @@ JoyAI-Video-Edit 的非官方集成，带有常驻的 WSL2 worker、模型加载
 
 | 领域 | 项目 | 重点 | 上游 |
 |---|---|---|---|
-| 自回归图生视频 | [Looking Ahead](https://github.com/hiroki-abe-58/ComfyUI-LookingAhead) | 1.3B Future Chunk Prediction、滚动KV缓存和ComfyUI原生Wan编码器；已验证采样器与上游一致。 | 基于 [TencentARC/Looking-Ahead](https://github.com/TencentARC/Looking-Ahead) |
+| 自回归图生视频 | [Looking Ahead](https://github.com/hiroki-abe-58/ComfyUI-LookingAhead) | 1.3B Future Chunk Prediction、滚动KV缓存和ComfyUI原生Wan编码器；已验证采样器与上游一致。 | 代码修复已合并：[Looking-Ahead #2](https://github.com/TencentARC/Looking-Ahead/pull/2) |
 | 多语言语音 | [Ming 3.0 TTS](https://github.com/hiroki-abe-58/ComfyUI-Ming-3-tts) | 原生0.5B / Tiny 9B推理、声音设计与克隆、INT8选项；Tiny支持多说话人对话。 | |
 | 参考视频渲染 | [EdenLive 5B](https://github.com/hiroki-abe-58/ComfyUI-EdenLive-5090) | 参考视频、首帧和提示词生成1280×704 / 24 fps视频；通过LightX2V，在Windows / RTX 5090验证。 | |
 | 本地TTS服务器 | [ComfyUI-AudioCPP](https://github.com/0xShug0/ComfyUI-AudioCPP) | 服务器配置、健康检查和模型诊断，以及支持参考音频的TTS。 | 已合并：[ComfyUI-AudioCPP #2](https://github.com/0xShug0/ComfyUI-AudioCPP/pull/2) |
@@ -100,7 +102,7 @@ JoyAI-Video-Edit 的非官方集成，带有常驻的 WSL2 worker、模型加载
 
 | 项目 | 提供的功能 |
 |---|---|
-| [gassan](https://github.com/hiroki-abe-58/gassan) | 基于原生 `<dialog>` 的 React 模态框组件，提供无障碍的激活门控和明确的关闭原因。 |
+| [gassan](https://github.com/hiroki-abe-58/gassan) | 面向SaaS的React UI库：基于原生`<dialog>`的模态框、表单控件、Toast、命令面板和页面模板，兼顾中日韩换行与无障碍交互，提供六种语言的文档。 |
 | [lensing](https://github.com/hiroki-abe-58/lensing) | 无依赖的 JavaScript/CSS 玻璃折射效果，基于有符号距离场和斯涅尔定律。 |
 | [MermGraph](https://github.com/hiroki-abe-58/MermGraph) | 基于 Tauri 的 Mermaid 编辑器，支持实时预览和 PNG/SVG 导出。 |
 | [VMagic](https://github.com/hiroki-abe-58/VMagic) | 基于 Tauri 的视频转换工具，集成 FFmpeg、RIFE 插帧和 Real-ESRGAN 超分辨率。 |
@@ -243,7 +245,11 @@ JoyAI-Video-Edit 的非官方集成，带有常驻的 WSL2 worker、模型加载
 
 ## 开源贡献
 
-**audio.cpp · 11个已合并PR（截至2026年10月23日）**
+**Looking Ahead · Windows推理**
+
+[#2](https://github.com/TencentARC/Looking-Ahead/pull/2)修复FlashAttention 4导入失败，将cross-attention接入SDPA回退，并在没有`fcntl`时直接加载模型。官方1.3B示例在Windows 11 / RTX 5090上完成，生成768×432的80帧视频，峰值已分配显存为16.4 GiB。对比测试中，现有FA4路径的解码帧保持逐位一致；SDPA输出存在数值差异。
+
+**audio.cpp · 11个已合并PR（截至2026年10月24日）**
 
 - **无标点CJK文本：** [#1045](https://github.com/0xShug0/audio.cpp/pull/1045)将超过分段预算的汉字、假名和韩文连续文本均衡切分，修复ASR/OCR等无标点输入绕过分段限制的问题。在MagpieTTS、FireRedTTS3和MOSS-TTS-Nano上验证；带标点的回归测试WAV保持逐字节一致。
 - **七个模型系列的长文本合成：** 改进Ming [#1020](https://github.com/0xShug0/audio.cpp/pull/1020)、Kokoro [#1022](https://github.com/0xShug0/audio.cpp/pull/1022)、MOSS-TTS-Nano [#1025](https://github.com/0xShug0/audio.cpp/pull/1025)、Irodori [#1027](https://github.com/0xShug0/audio.cpp/pull/1027)、FireRedTTS3 [#1039](https://github.com/0xShug0/audio.cpp/pull/1039)、MagpieTTS [#1043](https://github.com/0xShug0/audio.cpp/pull/1043) / [#1044](https://github.com/0xShug0/audio.cpp/pull/1044)和MioTTS [#1046](https://github.com/0xShug0/audio.cpp/pull/1046)的分段设置。Magpie的后续修复改用100个码点，避免中英混合文本的回归问题。验证包括Windows / RTX 5090上的实际语音生成、Whisper CER测量，以及可复现路径的输出比较。
