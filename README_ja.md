@@ -14,9 +14,11 @@
 
 [Looking Ahead](https://github.com/hiroki-abe-58/ComfyUI-LookingAhead)は1.3BのFuture Chunk Predictionモデルを、ComfyUI既存のumT5-XXL・Wan VAEと統合。標準VIDEO / IMAGE / LATENT出力、キャンセル、モデルのアンロードに対応します。Windows・RTX 5090で、標準設定の768×432・16 fps・5秒を検証。入力を揃えたサンプラーは公式とビット一致しますが、エンドツーエンドの動画出力には差があります。
 
+Windowsでの推論を可能にする修正も[上流にマージ](https://github.com/TencentARC/Looking-Ahead/pull/2)。FlashAttention 4を読み込めない場合のSDPAへの切り替えと、`fcntl`なしでのモデル読み込みに対応しました。
+
 ### audio.cpp — 多言語の長文音声合成とComfyUI連携
 
-**[audio.cpp](https://github.com/0xShug0/audio.cpp)本体に11件のPRがマージ**（2026年10月23日時点）。Ming 3.0、Kokoro、MOSS-TTS-Nano、Irodori、FireRedTTS3、MagpieTTS、MioTTSの7系列で長文処理を改善し、日本語・中国語・韓国語の読み落としや音声の崩れを軽減しました。句読点のないCJK入力の共通分割処理も修正。Mingでは言語指定の引き継ぎと、長文のVoice Designで声を保つ処理も修正しています。
+**[audio.cpp](https://github.com/0xShug0/audio.cpp)本体に11件のPRがマージ**（2026年10月24日時点）。Ming 3.0、Kokoro、MOSS-TTS-Nano、Irodori、FireRedTTS3、MagpieTTS、MioTTSの7系列で長文処理を改善し、日本語・中国語・韓国語の読み落としや音声の崩れを軽減しました。句読点のないCJK入力の共通分割処理も修正。Mingでは言語指定の引き継ぎと、長文のVoice Designで声を保つ処理も修正しています。
 
 [ComfyUI-AudioCPP](https://github.com/0xShug0/ComfyUI-AudioCPP)には、最初の**Server・Doctor・Text to Speech**ノードを実装し、[上流にマージ](https://github.com/0xShug0/ComfyUI-AudioCPP/pull/2)されました。ローカルのaudio.cppサーバーに接続して標準AUDIOを返し、参照音声を使ったボイスクローンにも対応します。
 
@@ -71,7 +73,7 @@ JoyAI-Video-Editの非公式ComfyUI統合です。WSL2の常駐ワーカー、�
 
 | 分野 | プロジェクト | テーマ | 上流 |
 |---|---|---|---|
-| 自己回帰型の画像→動画 | [Looking Ahead](https://github.com/hiroki-abe-58/ComfyUI-LookingAhead) | 1.3BのFuture Chunk Prediction、rolling KVキャッシュ、ComfyUIのWanエンコーダーを利用。公式サンプラーとの一致を検証。 | [TencentARC/Looking-Ahead](https://github.com/TencentARC/Looking-Ahead)を使用 |
+| 自己回帰型の画像→動画 | [Looking Ahead](https://github.com/hiroki-abe-58/ComfyUI-LookingAhead) | 1.3BのFuture Chunk Prediction、rolling KVキャッシュ、ComfyUIのWanエンコーダーを利用。公式サンプラーとの一致を検証。 | コード修正マージ済み：[Looking-Ahead #2](https://github.com/TencentARC/Looking-Ahead/pull/2) |
 | 多言語音声合成 | [Ming 3.0 TTS](https://github.com/hiroki-abe-58/ComfyUI-Ming-3-tts) | 0.5B / Tiny 9Bのネイティブ推論、Voice Design・Clone、INT8対応。Tinyは複数話者の会話にも対応。 | |
 | 参照動画からのレンダリング | [EdenLive 5B](https://github.com/hiroki-abe-58/ComfyUI-EdenLive-5090) | 参照動画・先頭画像・プロンプトから1280×704 / 24 fpsの動画を生成。LightX2V経由でWindows・RTX 5090を検証。 | |
 | ローカルTTSサーバー | [ComfyUI-AudioCPP](https://github.com/0xShug0/ComfyUI-AudioCPP) | サーバー設定、ヘルスチェック・モデル診断、参照音声を使えるTTS。 | マージ済み：[ComfyUI-AudioCPP #2](https://github.com/0xShug0/ComfyUI-AudioCPP/pull/2) |
@@ -100,7 +102,7 @@ JoyAI-Video-Editの非公式ComfyUI統合です。WSL2の常駐ワーカー、�
 
 | プロジェクト | 提供するもの |
 |---|---|
-| [gassan](https://github.com/hiroki-abe-58/gassan) | ネイティブの`<dialog>`を使うReactモーダル。アクセシビリティに配慮した起動制御と、閉じた理由の明示。 |
+| [gassan](https://github.com/hiroki-abe-58/gassan) | SaaS向けReact UIライブラリ。ネイティブ`<dialog>`のモーダル、フォーム、トースト、コマンドパレット、ページテンプレートを提供。日中韓の改行とアクセシビリティに配慮し、6言語のドキュメントを公開。 |
 | [lensing](https://github.com/hiroki-abe-58/lensing) | 距離場とスネルの法則を使う、依存ライブラリ不要のJavaScript/CSSガラス屈折表現。 |
 | [MermGraph](https://github.com/hiroki-abe-58/MermGraph) | ライブプレビューとPNG/SVG出力を備えたTauri製Mermaidエディター。 |
 | [VMagic](https://github.com/hiroki-abe-58/VMagic) | FFmpeg、RIFEフレーム補間、Real-ESRGAN超解像を統合したTauri製動画変換アプリ。 |
@@ -243,7 +245,11 @@ JoyAI-Video-Editの非公式ComfyUI統合です。WSL2の常駐ワーカー、�
 
 ## オープンソースへの貢献
 
-**audio.cpp · マージ済みPR 11件（2026年10月23日時点）**
+**Looking Ahead · Windowsでの推論**
+
+[#2](https://github.com/TencentARC/Looking-Ahead/pull/2)でFlashAttention 4の読み込み失敗に対応し、cross-attentionをSDPAに切り替え、`fcntl`がない場合はモデルを直接読み込むよう修正。公式の1.3BサンプルがWindows 11・RTX 5090で完走し、768×432・80フレームを生成、ピーク割り当てメモリは16.4 GiBでした。比較テストでは既存FA4経路のデコード結果がビット一致し、SDPAの出力には数値差があります。
+
+**audio.cpp · マージ済みPR 11件（2026年10月24日時点）**
 
 - **句読点のないCJKテキスト：** [#1045](https://github.com/0xShug0/audio.cpp/pull/1045)で、分割上限を超える漢字・かな・ハングルの連続文字列を均等に分割。ASR・OCRなどの句読点がない入力でも上限が効くように修正しました。MagpieTTS・FireRedTTS3・MOSS-TTS-Nanoで検証し、句読点付きの回帰検証ケースはWAVがバイト単位で一致しました。
 - **7系列の長文音声合成：** Ming [#1020](https://github.com/0xShug0/audio.cpp/pull/1020)、Kokoro [#1022](https://github.com/0xShug0/audio.cpp/pull/1022)、MOSS-TTS-Nano [#1025](https://github.com/0xShug0/audio.cpp/pull/1025)、Irodori [#1027](https://github.com/0xShug0/audio.cpp/pull/1027)、FireRedTTS3 [#1039](https://github.com/0xShug0/audio.cpp/pull/1039)、MagpieTTS [#1043](https://github.com/0xShug0/audio.cpp/pull/1043) / [#1044](https://github.com/0xShug0/audio.cpp/pull/1044)、MioTTS [#1046](https://github.com/0xShug0/audio.cpp/pull/1046)の分割設定を改善。Magpieは後続修正で100コードポイントに調整し、中国語・英語の混在文で起きる回帰を回避しました。Windows・RTX 5090での実音声生成、WhisperによるCER測定、再現可能な経路での出力比較を実施しています。
