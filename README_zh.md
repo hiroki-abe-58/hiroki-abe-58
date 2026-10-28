@@ -10,6 +10,13 @@
 
 ## 近期发布
 
+### PathFence 与 URLFence — 用 Lean 4 证明 AI 智能体工具的访问策略
+
+- **[PathFence](https://github.com/hiroki-abe-58/pathfence)：** 按完整路径段比较 POSIX 路径与允许、拒绝的根目录，拒绝越出基准目录的相对路径。Lean 证明描述允许、拒绝和输入错误的条件，JSON CLI 让其他语言也能调用这些判定函数。[PyPI wheel](https://pypi.org/project/pathfence/) 内含 Linux、macOS 可执行文件，无需安装 Lean。
+- **[URLFence](https://github.com/hiroki-abe-58/urlfence)：** 根据主机策略检查规范形式的 HTTP(S) URL，并按基于 IANA 信息的地址策略检查解析后的 IPv4、IPv6 地址。提供 JSON CLI 及 Python、Node 示例，逐次检查重定向、固定连接到已检查的 IP，并保留 URL 主机名用于 TLS 验证。
+
+两者均为实验阶段的 **v0.1.0**。证明针对 Lean 判定函数；CLI 和集成示例通过测试验证，并非整个系统的端到端安全证明。PathFence 只做词法检查，实际文件访问还必须防止符号链接和竞态导致的越界。URLFence 的 URL 检查不解析 DNS，调用方必须检查解析后的地址并固定连接目标。两者尚未接受人工安全审查。各仓库记录了证明审计、差分测试和变异测试。
+
 ### Looking Ahead — 在ComfyUI中用图像和文本生成视频
 
 [Looking Ahead](https://github.com/hiroki-abe-58/ComfyUI-LookingAhead)将1.3B Future Chunk Prediction模型与ComfyUI已有的umT5-XXL和Wan VAE集成，提供标准VIDEO / IMAGE / LATENT输出、取消和模型卸载。在Windows / RTX 5090上验证了默认768×432、16 fps、5秒配置。对齐输入后的采样器与官方逐位一致；端到端视频输出仍有差异。
@@ -102,7 +109,7 @@ JoyAI-Video-Edit 的非官方集成，带有常驻的 WSL2 worker、模型加载
 
 | 项目 | 提供的功能 |
 |---|---|
-| [gassan](https://github.com/hiroki-abe-58/gassan) | 面向SaaS的React UI库：基于原生`<dialog>`的模态框、表单控件、Toast、命令面板和页面模板，兼顾中日韩换行与无障碍交互，提供六种语言的文档。 |
+| [gassan](https://github.com/hiroki-abe-58/gassan) | 面向SaaS的React UI库：基于原生`<dialog>`的模态框、表单控件、图表、聊天/AI助手/邮箱页面及应用外壳模板。兼顾中日韩换行与无障碍交互，提供六种语言的文档；默认分支已定义256项行为规范。 |
 | [lensing](https://github.com/hiroki-abe-58/lensing) | 无依赖的 JavaScript/CSS 玻璃折射效果，基于有符号距离场和斯涅尔定律。 |
 | [MermGraph](https://github.com/hiroki-abe-58/MermGraph) | 基于 Tauri 的 Mermaid 编辑器，支持实时预览和 PNG/SVG 导出。 |
 | [VMagic](https://github.com/hiroki-abe-58/VMagic) | 基于 Tauri 的视频转换工具，集成 FFmpeg、RIFE 插帧和 Real-ESRGAN 超分辨率。 |
@@ -114,6 +121,7 @@ JoyAI-Video-Edit 的非官方集成，带有常驻的 WSL2 worker、模型加载
 
 **语言与脚本**
 
+![Lean 4](https://img.shields.io/badge/Lean%204-1F2937?style=flat-square)
 ![Python](https://img.shields.io/badge/Python-1F2937?style=flat-square&logo=python&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-1F2937?style=flat-square&logo=typescript&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-1F2937?style=flat-square&logo=javascript&logoColor=white)
@@ -258,6 +266,7 @@ JoyAI-Video-Edit 的非官方集成，带有常驻的 WSL2 worker、模型加载
 
 **已合并到上游的推理修复**
 
+- **SparkDiffusion：** [按检查点区分 DCP 转换缓存](https://github.com/AlibabaResearch/SparkDiffusion/pull/23)，于2026年10月26日合并。避免不同训练运行因 iteration 同名而误用权重，在检查点文件变化后重新转换，并仅在转换完成后发布缓存文件。使用 CPU 上的小型真实 DCP 检查点进行了验证。
 - **Xiaomi-Lens-0：** [在 flash-attn 不可用时回退到 SDPA](https://github.com/SeerRay-Lab/Xiaomi-Lens-0/pull/3)，避免掩码解码器中注意力权重导致的二次方内存增长。在 Windows / RTX 5090 上，3 MP掩码处理新增的峰值显存从18.02 GB降至2.28 GB；token和边界框保持一致，掩码边缘存在细微差异。
 - **SemBridge：** [移除编解码器 Snake 激活函数的 TorchScript 装饰器](https://github.com/ASLP-lab/SemBridge/pull/2)，修复相同输入和seed在加载后首次生成与后续调用之间音频不一致的问题。在测试环境中验证了重复输出一致。
 

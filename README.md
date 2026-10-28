@@ -10,6 +10,13 @@ AI engineer and technical consultant in Tokyo. I build local AI tools, train sma
 
 ## Recent releases
 
+### PathFence & URLFence — Lean 4 proofs for AI-agent tool policies
+
+- **[PathFence](https://github.com/hiroki-abe-58/pathfence):** checks POSIX file paths against allowed and denied roots, comparing whole path segments and rejecting relative paths that escape the base. Lean proofs characterize the allow/deny/reject decisions; a JSON CLI exposes the checked functions to other languages. [PyPI wheels](https://pypi.org/project/pathfence/) bundle the executable for Linux and macOS, without requiring a Lean installation.
+- **[URLFence](https://github.com/hiroki-abe-58/urlfence):** checks canonical HTTP(S) URLs against host policies, and resolved IPv4/IPv6 addresses against an IANA-based address policy. Includes a JSON CLI and Python / Node examples that re-check redirects and connect to checked IP addresses while preserving the URL's host for TLS verification.
+
+Both are experimental **v0.1.0** projects. Their Lean decision functions are proven; the CLI and integration examples are tested code, not end-to-end security proofs. PathFence is a lexical check, so actual file access must also be confined against symlinks and races. URLFence's URL check does not resolve DNS; callers must check resolved addresses and pin connections. Neither project has had a human security review yet. The repositories document proof audits, differential tests and mutation tests.
+
 ### Looking Ahead — image-and-text-to-video in ComfyUI
 
 [Looking Ahead](https://github.com/hiroki-abe-58/ComfyUI-LookingAhead) integrates the 1.3B Future Chunk Prediction model with ComfyUI's existing umT5-XXL and Wan VAE, standard VIDEO / IMAGE / LATENT outputs, cancellation and model unloading. Tested on Windows / RTX 5090 at the default 768×432, 16 fps, five seconds. The sampler matches upstream bit for bit with aligned inputs; end-to-end video outputs differ.
@@ -102,7 +109,7 @@ The Upstream column distinguishes merged code fixes, README listings and the pro
 
 | Project | What it provides |
 |---|---|
-| [gassan](https://github.com/hiroki-abe-58/gassan) | A React UI library for SaaS: native `<dialog>` modals, form controls, toasts, a command palette and page templates, with CJK-aware line breaking, accessibility behavior and documentation in six languages. |
+| [gassan](https://github.com/hiroki-abe-58/gassan) | A React UI library for SaaS: native `<dialog>` modals, form controls, charts, chat/AI-assistant/mailbox pages and app-shell templates. CJK-aware line breaking, accessibility behavior and documentation in six languages; 256 specified behaviors on the default branch. |
 | [lensing](https://github.com/hiroki-abe-58/lensing) | Dependency-free JavaScript/CSS glass refraction effects using signed distance fields and Snell's law. |
 | [MermGraph](https://github.com/hiroki-abe-58/MermGraph) | A Tauri Mermaid editor with live preview and PNG/SVG export. |
 | [VMagic](https://github.com/hiroki-abe-58/VMagic) | Tauri video conversion with FFmpeg, RIFE frame interpolation and Real-ESRGAN upscaling. |
@@ -114,6 +121,7 @@ The Upstream column distinguishes merged code fixes, README listings and the pro
 
 **Languages & scripting**
 
+![Lean 4](https://img.shields.io/badge/Lean%204-1F2937?style=flat-square)
 ![Python](https://img.shields.io/badge/Python-1F2937?style=flat-square&logo=python&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-1F2937?style=flat-square&logo=typescript&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-1F2937?style=flat-square&logo=javascript&logoColor=white)
@@ -258,6 +266,7 @@ Built across my [ML projects](https://github.com/hiroki-abe-58/sokudan), [React 
 
 **Inference fixes merged upstream**
 
+- **SparkDiffusion:** [Key DCP conversion caches by the checkpoint](https://github.com/AlibabaResearch/SparkDiffusion/pull/23) (merged October 26, 2026). Prevents different runs with the same iteration name from reusing the wrong weights, invalidates the cache when checkpoint files change, and publishes converted files only after conversion completes. Verified with small real DCP checkpoints on CPU.
 - **Xiaomi-Lens-0:** [Use SDPA when flash-attn is unavailable](https://github.com/SeerRay-Lab/Xiaomi-Lens-0/pull/3), avoiding quadratic attention-weight allocations in the mask decoder. On Windows / RTX 5090, added peak VRAM for a 3 MP mask pass fell from 18.02 GB to 2.28 GB; tokens and boxes stayed the same, with small mask-edge differences.
 - **SemBridge:** [Remove TorchScript from the codec's Snake activation](https://github.com/ASLP-lab/SemBridge/pull/2) to fix audio changing between the first generation after loading and later calls with the same request and seed. Verified repeated outputs on the tested setup.
 
