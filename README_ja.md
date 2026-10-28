@@ -10,6 +10,13 @@
 
 ## 最近の公開成果
 
+### PathFence・URLFence — AIエージェントのツール利用ポリシーをLean 4で証明
+
+- **[PathFence](https://github.com/hiroki-abe-58/pathfence)：** POSIXパスを許可・拒否ディレクトリと照合し、パスの構成要素単位で比較。基準ディレクトリから脱出する相対パスを拒否します。許可・拒否・入力エラーとなる条件をLeanで証明し、JSONを返すCLIから他言語で利用できます。[PyPIのwheel](https://pypi.org/project/pathfence/)はLinux・macOS向け実行ファイルを同梱し、Leanのインストールは不要です。
+- **[URLFence](https://github.com/hiroki-abe-58/urlfence)：** 正規形のHTTP(S) URLをホストのポリシーと照合し、名前解決後のIPv4・IPv6アドレスをIANAの情報に基づくポリシーで検査。JSONを返すCLIに加え、リダイレクトごとの再検査、検査済みIPへの接続固定、URLのホスト名によるTLS検証を行うPython・Nodeの利用例を公開しています。
+
+どちらも実験段階の**v0.1.0**です。証明対象はLeanの判定関数で、CLIや利用例はテスト対象であり、システム全体の安全性を証明したものではありません。PathFenceは文字列上の判定なので、実際のファイル操作でもシンボリックリンクや競合による逸脱を防ぐ必要があります。URLFenceのURL検査自体はDNSを解決せず、呼び出し側でアドレス検査と接続先の固定が必要です。両方とも人によるセキュリティレビューは未実施。証明の監査、差分テスト、変異テストを各リポジトリに記載しています。
+
 ### Looking Ahead — 画像とテキストからComfyUIで動画生成
 
 [Looking Ahead](https://github.com/hiroki-abe-58/ComfyUI-LookingAhead)は1.3BのFuture Chunk Predictionモデルを、ComfyUI既存のumT5-XXL・Wan VAEと統合。標準VIDEO / IMAGE / LATENT出力、キャンセル、モデルのアンロードに対応します。Windows・RTX 5090で、標準設定の768×432・16 fps・5秒を検証。入力を揃えたサンプラーは公式とビット一致しますが、エンドツーエンドの動画出力には差があります。
@@ -102,7 +109,7 @@ JoyAI-Video-Editの非公式ComfyUI統合です。WSL2の常駐ワーカー、�
 
 | プロジェクト | 提供するもの |
 |---|---|
-| [gassan](https://github.com/hiroki-abe-58/gassan) | SaaS向けReact UIライブラリ。ネイティブ`<dialog>`のモーダル、フォーム、トースト、コマンドパレット、ページテンプレートを提供。日中韓の改行とアクセシビリティに配慮し、6言語のドキュメントを公開。 |
+| [gassan](https://github.com/hiroki-abe-58/gassan) | SaaS向けReact UIライブラリ。ネイティブ`<dialog>`のモーダル、フォーム、グラフ、チャット・AIアシスタント・メール画面、アプリシェルのテンプレートを提供。日中韓の改行とアクセシビリティに配慮し、6言語のドキュメントを公開。デフォルトブランチで256項目の振る舞いを仕様化。 |
 | [lensing](https://github.com/hiroki-abe-58/lensing) | 距離場とスネルの法則を使う、依存ライブラリ不要のJavaScript/CSSガラス屈折表現。 |
 | [MermGraph](https://github.com/hiroki-abe-58/MermGraph) | ライブプレビューとPNG/SVG出力を備えたTauri製Mermaidエディター。 |
 | [VMagic](https://github.com/hiroki-abe-58/VMagic) | FFmpeg、RIFEフレーム補間、Real-ESRGAN超解像を統合したTauri製動画変換アプリ。 |
@@ -114,6 +121,7 @@ JoyAI-Video-Editの非公式ComfyUI統合です。WSL2の常駐ワーカー、�
 
 **言語・スクリプト**
 
+![Lean 4](https://img.shields.io/badge/Lean%204-1F2937?style=flat-square)
 ![Python](https://img.shields.io/badge/Python-1F2937?style=flat-square&logo=python&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-1F2937?style=flat-square&logo=typescript&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-1F2937?style=flat-square&logo=javascript&logoColor=white)
@@ -258,6 +266,7 @@ JoyAI-Video-Editの非公式ComfyUI統合です。WSL2の常駐ワーカー、�
 
 **上流にマージされた推論処理の修正**
 
+- **SparkDiffusion：** [DCP変換キャッシュをチェックポイントごとに識別](https://github.com/AlibabaResearch/SparkDiffusion/pull/23)する修正が2026年10月26日にマージ。同じiteration名の別runで異なる重みを誤って再利用する問題を解消し、ファイル更新時には再変換、変換完了後にのみキャッシュを確定します。CPU上の小さな実DCPチェックポイントで検証しました。
 - **Xiaomi-Lens-0：** [flash-attnが使えない場合のフォールバックをSDPAに変更](https://github.com/SeerRay-Lab/Xiaomi-Lens-0/pull/3)し、マスクデコーダーでパッチ数の二乗に比例する注意重みのメモリ確保を回避。Windows・RTX 5090では、3 MPのマスク処理で追加されるピークVRAMが18.02 GBから2.28 GBに減少しました。トークンとボックスは同一で、マスク境界には小さな差があります。
 - **SemBridge：** [コーデックのSnake活性化からTorchScriptを除去](https://github.com/ASLP-lab/SemBridge/pull/2)し、同じ入力・seedでもロード直後の初回と2回目以降で音声が変わる問題を修正。検証環境で繰り返し出力の一致を確認しました。
 
