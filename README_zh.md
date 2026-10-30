@@ -253,9 +253,28 @@ JoyAI-Video-Edit 的非官方集成，带有常驻的 WSL2 worker、模型加载
 
 ## 开源贡献
 
+以下公开成果已于2026年10月30日核实，区分了代码合并、维护者另行修复，以及在他人PR中提供复现与验证数据的贡献。
+
+**h5i · 已合并到上游的Rust运行时修复**
+
+- [HMAC令牌有效期与回归测试 #764](https://github.com/h5i-dev/h5i/pull/764)：将溢出的TTL加法改为饱和运算，避免panic或刚签发即过期的令牌；补充认证、签名、过期与请求头处理测试。
+- [PostgreSQL模式名验证 #765](https://github.com/h5i-dev/h5i/pull/765)：在初始化前拒绝含大写字母的模式名，避免不带引号的`search_path`与带引号创建的模式不一致。使用PostgreSQL 17复现并测试。两项PR均于10月29日（UTC）合并。
+
+**ComfyUI · 在他人PR与Issue中提供独立验证**
+
+- **FP8 / dynamic VRAM — [#16941中的基准数据](https://github.com/Comfy-Org/ComfyUI/pull/16941#issuecomment-6311394958)：** 在Windows / RTX 5090上使用MOSS-Image SFT、1024²、20 steps、三个提示词验证他人的修复。warm denoise从11.02–11.03秒降至7.20–7.24秒（1.53倍），BF16输出保持像素一致。报告也记录了FP8在不同加载路径下的输出差异。PR仍开放。
+- **Ming TTS — [#17314中的复现与补丁建议](https://github.com/Comfy-Org/ComfyUI/pull/17314#issuecomment-6399281222)：** 复现纯标点段落导致重复语音或污染声音参考的问题，提供Windows / RTX 5090音频时长、Whisper转录及两处修复建议；修复后的测试用例与去掉分隔段落的文本逐采样一致。PR仍开放；我的贡献是验证和补丁建议，而非模型集成本身。
+- **Qwen-Image-2.1 — [#16879中的CUDA对照](https://github.com/Comfy-Org/ComfyUI/issues/16879#issuecomment-6309734183)：** 用同一工作流在RTX 5090上验证MPS问题。每种文本编码器放置方式内，新启动与模型常驻时的输出均像素一致，CUDA未复现故障。这是帮助缩小排查范围的数据，不是MPS修复。
+
+**Lean 4 · 可复现的缺陷报告**
+
+[Std.Http查询解析 #16021](https://github.com/leanprover/lean4/issues/16021)：将包含`=`的查询值（包括Base64填充）被拒绝的问题缩减为Lean 4.35.0的小型示例，追踪到值字符判定，并与另一位贡献者讨论表示方式。Issue仍开放；我尚未独立复测对方提出的补丁。
+
 **Looking Ahead · Windows推理**
 
 [#2](https://github.com/TencentARC/Looking-Ahead/pull/2)修复FlashAttention 4导入失败，将cross-attention接入SDPA回退，并在没有`fcntl`时直接加载模型。官方1.3B示例在Windows 11 / RTX 5090上完成，生成768×432的80帧视频，峰值已分配显存为16.4 GiB。对比测试中，现有FA4路径的解码帧保持逐位一致；SDPA输出存在数值差异。
+
+[VAE解码前释放KV缓存 #4](https://github.com/TencentARC/Looking-Ahead/pull/4)也已合并。释放正、负提示词缓存后，5B、1024×576示例可在RTX 5090上完成，峰值已分配显存为24.3 GiB。1.3B批量测试从16.7降至14.1 GiB，视频逐位一致；长时间推理路径未测试。
 
 **audio.cpp · 11个已合并PR（截至2026年10月24日）**
 
@@ -276,6 +295,7 @@ JoyAI-Video-Edit 的非官方集成，带有常驻的 WSL2 worker、模型加载
 
 **图像与视频生成**
 
+- **Wan-Alpha++：** 在[#1](https://github.com/WeChatCV/Wan-Alpha_PlusPlus/pull/1) / [#2](https://github.com/WeChatCV/Wan-Alpha_PlusPlus/pull/2)中报告并建议修复I2V启动、输入处理、无用autograd图及重复负提示词计算。维护者另行修复后，我[核对了上游`9c655d0`](https://github.com/WeChatCV/Wan-Alpha_PlusPlus/pull/1#issuecomment-6397273650)，并用CPU替身模型验证forward次数和latent一致性。两个PR均因上游已解决而关闭，并非合并。
 - **DMAD**（用于快速图像与视频生成的蒸馏方法）：[让 `--low-vram` 可在 Windows 上使用](https://github.com/Yzmblog/DMAD/pull/6)，已合并，并在 README 的 News 中致谢。
 - **SparkDiffusion、LongLive、LeapTalk 和 Looped-DiT：** 为我的 ComfyUI 集成添加的 README 条目已合并（见上方 ComfyUI 表格）。
 - **Mi-Ripple：** 在验证 ComfyUI 集成时发现问题，提交了 [OpenCV 运行时处理](https://github.com/miyang-ai/Mi-Ripple/pull/2) 的修复（待合并）。

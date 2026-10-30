@@ -253,9 +253,28 @@ JoyAI-Video-Editの非公式ComfyUI統合です。WSL2の常駐ワーカー、�
 
 ## オープンソースへの貢献
 
+2026年10月30日に確認した公開成果です。コードのマージ、メンテナーによる別途修正、他の作者のPRでの再現・検証データ提供を区別して記載しています。
+
+**h5i · Rustランタイムの修正が上流にマージ**
+
+- [HMACトークンの有効期限と回帰テスト #764](https://github.com/h5i-dev/h5i/pull/764)：TTL加算のオーバーフローを飽和演算に変更し、panicや発行直後に期限切れとなる問題を修正。認証・署名・期限・ヘッダー処理のテストも追加しました。
+- [PostgreSQLのスキーマ名検証 #765](https://github.com/h5i-dev/h5i/pull/765)：引用符なしの`search_path`と引用符付きスキーマ作成の食い違いを防ぐため、大文字を含む名前をセットアップ前に拒否。PostgreSQL 17で再現・検証しました。両PRとも10月29日（UTC）にマージ済みです。
+
+**ComfyUI · 他の作者のPR・Issueへの独立検証データ提供**
+
+- **FP8・dynamic VRAM — [#16941でのベンチマーク](https://github.com/Comfy-Org/ComfyUI/pull/16941#issuecomment-6311394958)：** 他の作者の修正をWindows・RTX 5090、MOSS-Image SFT、1024²・20 steps・3プロンプトで検証。warm denoiseは11.02〜11.03秒から7.20〜7.24秒（1.53倍）へ短縮し、BF16出力はピクセル一致。FP8は読み込み経路による出力差も報告しています。PRはオープン中です。
+- **Ming TTS — [#17314での再現と修正案](https://github.com/Comfy-Org/ComfyUI/pull/17314#issuecomment-6399281222)：** 記号だけの段落が音声の繰り返しや声の参照汚染を起こすことを再現。Windows・RTX 5090での音声長、Whisperの文字起こし、2か所の修正案を提供し、修正後の対象ケースが区切り段落を除いた入力とサンプル単位で一致することを確認しました。PRはオープン中で、私の貢献はモデル統合そのものではなく検証と修正提案です。
+- **Qwen-Image-2.1 — [#16879でのCUDA比較](https://github.com/Comfy-Org/ComfyUI/issues/16879#issuecomment-6309734183)：** MPSで報告された問題を同じワークフローでRTX 5090上から検証。テキストエンコーダーの配置ごとに、新規起動・モデル常駐時の出力はピクセル一致し、CUDAでは再現しませんでした。MPSの修正ではなく、原因の切り分けに向けたデータ提供です。
+
+**Lean 4 · 再現可能な不具合報告**
+
+[Std.Httpのクエリ解析 #16021](https://github.com/leanprover/lean4/issues/16021)：Base64のパディングなど、値に`=`を含むクエリが拒否される問題をLean 4.35.0の小さな例に切り出し、値の文字判定まで原因を追跡。他の貢献者と表現方法を議論しました。Issueはオープン中で、相手の修正案の独立した再検証は未実施です。
+
 **Looking Ahead · Windowsでの推論**
 
 [#2](https://github.com/TencentARC/Looking-Ahead/pull/2)でFlashAttention 4の読み込み失敗に対応し、cross-attentionをSDPAに切り替え、`fcntl`がない場合はモデルを直接読み込むよう修正。公式の1.3BサンプルがWindows 11・RTX 5090で完走し、768×432・80フレームを生成、ピーク割り当てメモリは16.4 GiBでした。比較テストでは既存FA4経路のデコード結果がビット一致し、SDPAの出力には数値差があります。
+
+[VAEデコード前にKVキャッシュを解放する修正 #4](https://github.com/TencentARC/Looking-Ahead/pull/4)もマージ済みです。正・負プロンプトのキャッシュを解放することで、5B・1024×576の例がRTX 5090で完走し、ピーク割り当ては24.3 GiB。1.3Bのバッチ検証では16.7から14.1 GiBへ削減し、動画はビット一致しました。長時間推論の経路は未検証です。
 
 **audio.cpp · マージ済みPR 11件（2026年10月24日時点）**
 
@@ -276,6 +295,7 @@ JoyAI-Video-Editの非公式ComfyUI統合です。WSL2の常駐ワーカー、�
 
 **画像・動画生成**
 
+- **Wan-Alpha++：** I2Vの起動・入力処理、不要なautogradグラフ、負プロンプトの重複計算を[#1](https://github.com/WeChatCV/Wan-Alpha_PlusPlus/pull/1)・[#2](https://github.com/WeChatCV/Wan-Alpha_PlusPlus/pull/2)で報告・修正提案。メンテナーが別途修正した[上流`9c655d0`を確認](https://github.com/WeChatCV/Wan-Alpha_PlusPlus/pull/1#issuecomment-6397273650)し、CPU上の代替モデルでforward回数とlatentの一致も検証しました。両PRはマージではなく、上流で解決済みとしてクローズされています。
 - **DMAD**（高速な画像・動画生成のための蒸留手法）：[Windowsで`--low-vram`を使えるようにする修正](https://github.com/Yzmblog/DMAD/pull/6)がマージされ、READMEのNewsでクレジットされています。
 - **SparkDiffusion・LongLive・LeapTalk・Looped-DiT：** ComfyUI統合を紹介するREADMEへの追記がマージされました（上記ComfyUIの表を参照）。
 - **Mi-Ripple：** ComfyUI統合の検証中に見つけた[OpenCV実行時の問題への修正提案](https://github.com/miyang-ai/Mi-Ripple/pull/2)（オープン中）。

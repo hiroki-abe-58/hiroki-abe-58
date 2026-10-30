@@ -253,9 +253,28 @@ Built across my [ML projects](https://github.com/hiroki-abe-58/sokudan), [React 
 
 ## Open-source contributions
 
+Selected public contributions, checked October 30, 2026. These include merged code, fixes adopted separately by maintainers, and reproducible validation in other authors' PRs.
+
+**h5i · Rust runtime fixes merged upstream**
+
+- [HMAC token expiry and regression tests #764](https://github.com/h5i-dev/h5i/pull/764): saturates overflowing TTL arithmetic instead of panicking or issuing an already-expired token; tests authentication, signatures, expiry and header handling.
+- [PostgreSQL schema validation #765](https://github.com/h5i-dev/h5i/pull/765): rejects mixed-case schema names before setup, avoiding a mismatch between unquoted `search_path` and quoted schema creation. Reproduced and tested with PostgreSQL 17. Both PRs were merged October 29 (UTC).
+
+**ComfyUI · independent validation in others' PRs and issues**
+
+- **FP8 / dynamic VRAM — [benchmark in #16941](https://github.com/Comfy-Org/ComfyUI/pull/16941#issuecomment-6311394958):** tested another author's fix with MOSS-Image SFT on Windows / RTX 5090, 1024², 20 steps and three prompts. Warm denoising fell from 11.02–11.03 s to 7.20–7.24 s (1.53×); BF16 output stayed pixel-identical. FP8 output differed between loading paths, which the report documents. PR still open.
+- **Ming TTS — [reproduction and proposed patch in #17314](https://github.com/Comfy-Org/ComfyUI/pull/17314#issuecomment-6399281222):** showed how punctuation-only paragraphs produce repeated speech or contaminate the voice reference. Supplied Windows / RTX 5090 audio timings, Whisper transcripts and a two-part fix; patched test cases matched the corresponding text without the scene break sample for sample. PR still open; I contributed validation and a patch proposal, not the model integration.
+- **Qwen-Image-2.1 — [CUDA comparison in #16879](https://github.com/Comfy-Org/ComfyUI/issues/16879#issuecomment-6309734183):** checked the reported MPS issue with the same workflow on RTX 5090. Fresh-server and resident-model runs were pixel-identical within each text-encoder placement; the MPS failure did not reproduce on CUDA. This narrows the investigation rather than claiming an MPS fix.
+
+**Lean 4 · reproducible bug report**
+
+[Std.Http query parsing #16021](https://github.com/leanprover/lean4/issues/16021): reduced rejection of query values containing `=` (including Base64 padding) to a small Lean 4.35.0 example, traced it to the value-character predicate, and discussed representation choices with another contributor. Issue open; their proposed patch has not been independently re-tested by me.
+
 **Looking Ahead · Windows inference**
 
 [#2](https://github.com/TencentARC/Looking-Ahead/pull/2) fixes FlashAttention 4 import failures, routes cross-attention through the SDPA fallback and loads models directly when `fcntl` is unavailable. The upstream 1.3B example completed on Windows 11 / RTX 5090: 80 frames at 768×432, with 16.4 GiB peak allocated memory. The existing FA4 path retained bit-identical decoded frames in the comparison test; SDPA outputs differ numerically.
+
+[KV-cache release before VAE decoding #4](https://github.com/TencentARC/Looking-Ahead/pull/4) was also merged. Releasing the positive/negative caches let the 5B 1024×576 example finish on RTX 5090 at 24.3 GiB peak allocated memory. The 1.3B batch test dropped from 16.7 to 14.1 GiB with bit-identical videos; the long-inference path was not tested.
 
 **audio.cpp · 11 merged PRs (October 24, 2026)**
 
@@ -276,6 +295,7 @@ Built across my [ML projects](https://github.com/hiroki-abe-58/sokudan), [React 
 
 **Image and video generation**
 
+- **Wan-Alpha++:** reported and proposed fixes for I2V startup, input handling, an unnecessary autograd graph and duplicate negative-prompt forwards in [#1](https://github.com/WeChatCV/Wan-Alpha_PlusPlus/pull/1) / [#2](https://github.com/WeChatCV/Wan-Alpha_PlusPlus/pull/2). The maintainer fixed them separately; I [verified upstream `9c655d0`](https://github.com/WeChatCV/Wan-Alpha_PlusPlus/pull/1#issuecomment-6397273650), including CPU stand-in forward counts and latent parity. Both PRs closed as superseded, not merged.
 - **DMAD** (distillation for fast image and video generation): [made `--low-vram` work on Windows](https://github.com/Yzmblog/DMAD/pull/6), merged and credited in the README News.
 - **SparkDiffusion, LongLive, LeapTalk and Looped-DiT:** README entries for my ComfyUI integrations, merged (see the ComfyUI table above).
 - **Mi-Ripple:** [OpenCV runtime handling](https://github.com/miyang-ai/Mi-Ripple/pull/2) (open), found while validating the ComfyUI integration.
