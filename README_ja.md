@@ -253,7 +253,28 @@ JoyAI-Video-Editの非公式ComfyUI統合です。WSL2の常駐ワーカー、�
 
 ## オープンソースへの貢献
 
-2026年10月30日に確認した公開成果です。コードのマージ、メンテナーによる別途修正、他の作者のPRでの再現・検証データ提供を区別して記載しています。
+2026年11月4日に確認した公開成果です。コードのマージ、メンテナーによる別途修正、他の作者のPRでの再現・検証データ提供を区別して記載しています。
+
+**Leanツール · lean-lsp-mcpに2件の修正がマージ**
+
+- [Unicode識別子 #235](https://github.com/oOo0oOo/lean-lsp-mcp/pull/235)：`lean_verify`で有効なLean名を受け付け、`lean_minimal_hypotheses`の名前境界を修正。文字クラスを全コードポイントでLean 4.34.1と照合し、インジェクション入力の拒否も維持しました。
+- [証明プロファイル #236](https://github.com/oOo0oOo/lean-lsp-mcp/pull/236)：証明スニペットの抽出、スコープの再現、宣言境界、元ファイルの行番号を修正。単体テストと実際のLeanコードで検証しました。同一ファイル内の依存宣言には制約が残ります。両PRとも10月31日（UTC）にマージ済みです。
+
+**Nyxis · 公開リリースに採用された修正**
+
+- [リプレイテスト #23](https://github.com/NyxFoundation/nyxis/pull/23)：v0.1.7に収録。モデル側の拒否とPostgreSQLの事前検査を分けて検証し、74ケースを確認しました。
+- [監査ドキュメント #30](https://github.com/NyxFoundation/nyxis/pull/30)：v0.1.9に収録。アプリ監査が実際に拒否する内部モジュールのimport範囲を明確化しました。
+- [アクショングループの階層 #24](https://github.com/NyxFoundation/nyxis/pull/24)と[outboxの応答処理 #28](https://github.com/NyxFoundation/nyxis/pull/28)：[v0.1.10](https://github.com/NyxFoundation/nyxis/releases/tag/v0.1.10)に収録。アクションの祖先を推移的に計算し、バイナリや大きな応答本文による誤った配送リトライを修正しました。各PRはメンテナーが別途取り込み、公開版への収録を明記してクローズしています。
+
+**実行状態の可視化とComfyUI互換性**
+
+- **RustXNG：** [休止エンジンの表示 #35](https://github.com/sahenjp/RustXNG/pull/35)で、統計・メトリクスに休止状態と残り時間を追加。作者情報を保持してマージ済みの[#43](https://github.com/sahenjp/RustXNG/pull/43)へ採用され、#35自体は未マージでクローズされました。
+- **Impact Pack：** [Switch入力の遅延評価 #1248](https://github.com/ltdrdata/ComfyUI-Impact-Pack/pull/1248)でComfyUIのコールスタック変更を特定し、修正案とv0.39.2・v0.42.1の実サーバー検証を提供。[メンテナーが貢献を確認](https://github.com/ltdrdata/ComfyUI-Impact-Pack/pull/1248#issuecomment-6543873051)し、コールスタック依存をなくす別実装で解決しました。
+- **ComfyUIの動画サンプリング：** [フレーム数の修正 #17154](https://github.com/Comfy-Org/ComfyUI/pull/17154)で空のdemuxer flush packetを除外し、WebM・MKVの過剰カウントと均等サンプリングの失敗に対応。実動画と回帰ケースで検証済み、PRはオープン中です。
+
+**MiniMax H3 / TensorFold · RTX 5090の測定結果がマージ**
+
+[ベンチマークとgit checkout対応 #3](https://github.com/jayleaton/minimax-h3-tensorfold-rtx/pull/3)でRTX 5090・ComfyUI v0.42.1の測定結果と`COMFYUI_PYTHON`オプションを追加。1344×768・5秒、Turbo・sparse attention・INT8 video VAEを用いたwarm実行は、stock＋CK attentionが43.3秒、engineが37.2秒でした。同等設定で報告した優位性は1.10〜1.17倍で、測定条件に限定した結果です。
 
 **h5i · Rustランタイムの修正が上流にマージ**
 
@@ -262,7 +283,7 @@ JoyAI-Video-Editの非公式ComfyUI統合です。WSL2の常駐ワーカー、�
 
 **ComfyUI · 他の作者のPR・Issueへの独立検証データ提供**
 
-- **FP8・dynamic VRAM — [#16941でのベンチマーク](https://github.com/Comfy-Org/ComfyUI/pull/16941#issuecomment-6311394958)：** 他の作者の修正をWindows・RTX 5090、MOSS-Image SFT、1024²・20 steps・3プロンプトで検証。warm denoiseは11.02〜11.03秒から7.20〜7.24秒（1.53倍）へ短縮し、BF16出力はピクセル一致。FP8は読み込み経路による出力差も報告しています。PRはオープン中です。
+- **FP8・dynamic VRAM — [#16941でのベンチマーク](https://github.com/Comfy-Org/ComfyUI/pull/16941#issuecomment-6311394958)：** 他の作者の修正をWindows・RTX 5090、MOSS-Image SFT、1024²・20 steps・3プロンプトで検証。warm denoiseは11.02〜11.03秒から7.20〜7.24秒（1.53倍）へ短縮し、BF16出力はピクセル一致。FP8は読み込み経路による出力差も報告しています。PRは11月2日（UTC）にマージ済みで、私の貢献は独立ベンチマークです。
 - **Ming TTS — [#17314での再現と修正案](https://github.com/Comfy-Org/ComfyUI/pull/17314#issuecomment-6399281222)：** 記号だけの段落が音声の繰り返しや声の参照汚染を起こすことを再現。Windows・RTX 5090での音声長、Whisperの文字起こし、2か所の修正案を提供し、修正後の対象ケースが区切り段落を除いた入力とサンプル単位で一致することを確認しました。PRはオープン中で、私の貢献はモデル統合そのものではなく検証と修正提案です。
 - **Qwen-Image-2.1 — [#16879でのCUDA比較](https://github.com/Comfy-Org/ComfyUI/issues/16879#issuecomment-6309734183)：** MPSで報告された問題を同じワークフローでRTX 5090上から検証。テキストエンコーダーの配置ごとに、新規起動・モデル常駐時の出力はピクセル一致し、CUDAでは再現しませんでした。MPSの修正ではなく、原因の切り分けに向けたデータ提供です。
 

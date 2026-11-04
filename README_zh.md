@@ -253,7 +253,28 @@ JoyAI-Video-Edit 的非官方集成，带有常驻的 WSL2 worker、模型加载
 
 ## 开源贡献
 
-以下公开成果已于2026年10月30日核实，区分了代码合并、维护者另行修复，以及在他人PR中提供复现与验证数据的贡献。
+以下公开成果已于2026年11月4日核实，区分了代码合并、维护者另行修复，以及在他人PR中提供复现与验证数据的贡献。
+
+**Lean工具 · lean-lsp-mcp已合并两项修复**
+
+- [Unicode标识符 #235](https://github.com/oOo0oOo/lean-lsp-mcp/pull/235)：让`lean_verify`接受有效的Lean名称，并修复`lean_minimal_hypotheses`的名称边界。字符类别在全部码点上与Lean 4.34.1一致，仍拒绝注入输入。
+- [证明性能分析 #236](https://github.com/oOo0oOo/lean-lsp-mcp/pull/236)：修复证明片段提取、作用域重建、声明边界和源代码行号。通过单元测试及真实Lean示例验证；同文件依赖仍有限制。两项PR均于10月31日（UTC）合并。
+
+**Nyxis · 已纳入公开版本的修复**
+
+- [重放测试 #23](https://github.com/NyxFoundation/nyxis/pull/23)：纳入v0.1.7，分别验证模型层拒绝与PostgreSQL预检查，共74个用例。
+- [审计文档 #30](https://github.com/NyxFoundation/nyxis/pull/30)：纳入v0.1.9，明确应用审计实际拒绝哪些内部模块导入。
+- [动作组层级 #24](https://github.com/NyxFoundation/nyxis/pull/24)与[outbox响应处理 #28](https://github.com/NyxFoundation/nyxis/pull/28)：纳入[v0.1.10](https://github.com/NyxFoundation/nyxis/releases/tag/v0.1.10)，计算动作祖先的传递闭包，避免二进制或过大响应体导致错误的投递重试。维护者另行整合，并注明公开版本后关闭PR。
+
+**运行状态可视化与ComfyUI兼容性**
+
+- **RustXNG：** [休眠引擎显示 #35](https://github.com/sahenjp/RustXNG/pull/35)在统计与指标中加入休眠状态和剩余时间。维护者保留作者信息，将其纳入已合并的[#43](https://github.com/sahenjp/RustXNG/pull/43)；#35本身关闭但未合并。
+- **Impact Pack：** [Switch输入惰性求值 #1248](https://github.com/ltdrdata/ComfyUI-Impact-Pack/pull/1248)定位ComfyUI调用栈变化，提供修复与v0.39.2 / v0.42.1真实服务器兼容性验证。[维护者确认贡献](https://github.com/ltdrdata/ComfyUI-Impact-Pack/pull/1248#issuecomment-6543873051)，并以消除调用栈依赖的另一实现解决问题。
+- **ComfyUI视频采样：** [帧数修复 #17154](https://github.com/Comfy-Org/ComfyUI/pull/17154)跳过空demuxer flush packet，防止WebM/MKV多计帧数及均匀采样失败。已用真实视频与回归用例验证，PR仍开放。
+
+**MiniMax H3 / TensorFold · 已合并RTX 5090测量结果**
+
+[基准结果与git checkout支持 #3](https://github.com/jayleaton/minimax-h3-tensorfold-rtx/pull/3)加入RTX 5090 / ComfyUI v0.42.1测量数据及`COMFYUI_PYTHON`选项。1344×768、5秒，启用Turbo、sparse attention和INT8 video VAE的warm运行中，stock＋CK attention为43.3秒，engine为37.2秒。同等设置下报告的优势为1.10–1.17倍，仅代表该测量条件。
 
 **h5i · 已合并到上游的Rust运行时修复**
 
@@ -262,7 +283,7 @@ JoyAI-Video-Edit 的非官方集成，带有常驻的 WSL2 worker、模型加载
 
 **ComfyUI · 在他人PR与Issue中提供独立验证**
 
-- **FP8 / dynamic VRAM — [#16941中的基准数据](https://github.com/Comfy-Org/ComfyUI/pull/16941#issuecomment-6311394958)：** 在Windows / RTX 5090上使用MOSS-Image SFT、1024²、20 steps、三个提示词验证他人的修复。warm denoise从11.02–11.03秒降至7.20–7.24秒（1.53倍），BF16输出保持像素一致。报告也记录了FP8在不同加载路径下的输出差异。PR仍开放。
+- **FP8 / dynamic VRAM — [#16941中的基准数据](https://github.com/Comfy-Org/ComfyUI/pull/16941#issuecomment-6311394958)：** 在Windows / RTX 5090上使用MOSS-Image SFT、1024²、20 steps、三个提示词验证他人的修复。warm denoise从11.02–11.03秒降至7.20–7.24秒（1.53倍），BF16输出保持像素一致。报告也记录了FP8在不同加载路径下的输出差异。PR于11月2日（UTC）合并；我的贡献是独立基准验证。
 - **Ming TTS — [#17314中的复现与补丁建议](https://github.com/Comfy-Org/ComfyUI/pull/17314#issuecomment-6399281222)：** 复现纯标点段落导致重复语音或污染声音参考的问题，提供Windows / RTX 5090音频时长、Whisper转录及两处修复建议；修复后的测试用例与去掉分隔段落的文本逐采样一致。PR仍开放；我的贡献是验证和补丁建议，而非模型集成本身。
 - **Qwen-Image-2.1 — [#16879中的CUDA对照](https://github.com/Comfy-Org/ComfyUI/issues/16879#issuecomment-6309734183)：** 用同一工作流在RTX 5090上验证MPS问题。每种文本编码器放置方式内，新启动与模型常驻时的输出均像素一致，CUDA未复现故障。这是帮助缩小排查范围的数据，不是MPS修复。
 
