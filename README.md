@@ -253,7 +253,28 @@ Built across my [ML projects](https://github.com/hiroki-abe-58/sokudan), [React 
 
 ## Open-source contributions
 
-Selected public contributions, checked October 30, 2026. These include merged code, fixes adopted separately by maintainers, and reproducible validation in other authors' PRs.
+Selected public contributions, checked November 4, 2026. These include merged code, fixes adopted separately by maintainers, and reproducible validation in other authors' PRs.
+
+**Lean tooling · two fixes merged into lean-lsp-mcp**
+
+- [Unicode identifiers #235](https://github.com/oOo0oOo/lean-lsp-mcp/pull/235): accepts valid Lean names in `lean_verify` and fixes name boundaries in `lean_minimal_hypotheses`. Character classes matched Lean 4.34.1 across every code point; injection attempts remain rejected.
+- [Proof profiling #236](https://github.com/oOo0oOo/lean-lsp-mcp/pull/236): fixes extracted proof snippets, scope replay, declaration boundaries and source-line reporting. Validated with unit tests and real Lean examples; same-file dependencies remain a limitation. Both PRs merged October 31 (UTC).
+
+**Nyxis · fixes incorporated in public releases**
+
+- [Replay tests #23](https://github.com/NyxFoundation/nyxis/pull/23) shipped in v0.1.7: separates model-level rejection from PostgreSQL preflight checks, with 74 replay cases.
+- [Audit documentation #30](https://github.com/NyxFoundation/nyxis/pull/30) shipped in v0.1.9: clarifies which internal imports the application audit actually rejects.
+- [Action-group hierarchy #24](https://github.com/NyxFoundation/nyxis/pull/24) and [outbox response handling #28](https://github.com/NyxFoundation/nyxis/pull/28) shipped in [v0.1.10](https://github.com/NyxFoundation/nyxis/releases/tag/v0.1.10): computes transitive action ancestors and prevents binary or oversized response bodies from causing erroneous delivery retries. The maintainer incorporated these separately and closed the PRs with release confirmations.
+
+**Runtime diagnostics and ComfyUI compatibility**
+
+- **RustXNG:** [resting-engine visibility #35](https://github.com/sahenjp/RustXNG/pull/35) adds resting state and remaining time to statistics and metrics. The maintainer preserved authorship when incorporating it into merged [#43](https://github.com/sahenjp/RustXNG/pull/43); #35 itself closed without merging.
+- **Impact Pack:** [lazy Switch inputs #1248](https://github.com/ltdrdata/ComfyUI-Impact-Pack/pull/1248) diagnoses a ComfyUI call-stack change and provides a fix plus real-server compatibility checks on v0.39.2 / v0.42.1. The maintainer [confirmed the contribution](https://github.com/ltdrdata/ComfyUI-Impact-Pack/pull/1248#issuecomment-6543873051) and superseded it with an implementation that removes the call-stack dependency.
+- **ComfyUI video sampling:** [frame-count correction #17154](https://github.com/Comfy-Org/ComfyUI/pull/17154) skips empty demuxer flush packets to prevent WebM/MKV overcounts and uniform-sampling failures. Reproduced with real videos and regression cases; PR open.
+
+**MiniMax H3 / TensorFold · merged RTX 5090 measurements**
+
+[Benchmark results and git-checkout support #3](https://github.com/jayleaton/minimax-h3-tensorfold-rtx/pull/3) adds RTX 5090 / ComfyUI v0.42.1 measurements and a `COMFYUI_PYTHON` option. At 1344×768 / 5 seconds, warm runs with Turbo, sparse attention and INT8 video VAE took 43.3 s with stock + CK attention versus 37.2 s with the engine. The reported advantage with equivalent settings was 1.10–1.17×; these are configuration-specific measurements, not a general speedup claim.
 
 **h5i · Rust runtime fixes merged upstream**
 
@@ -262,7 +283,7 @@ Selected public contributions, checked October 30, 2026. These include merged co
 
 **ComfyUI · independent validation in others' PRs and issues**
 
-- **FP8 / dynamic VRAM — [benchmark in #16941](https://github.com/Comfy-Org/ComfyUI/pull/16941#issuecomment-6311394958):** tested another author's fix with MOSS-Image SFT on Windows / RTX 5090, 1024², 20 steps and three prompts. Warm denoising fell from 11.02–11.03 s to 7.20–7.24 s (1.53×); BF16 output stayed pixel-identical. FP8 output differed between loading paths, which the report documents. PR still open.
+- **FP8 / dynamic VRAM — [benchmark in #16941](https://github.com/Comfy-Org/ComfyUI/pull/16941#issuecomment-6311394958):** tested another author's fix with MOSS-Image SFT on Windows / RTX 5090, 1024², 20 steps and three prompts. Warm denoising fell from 11.02–11.03 s to 7.20–7.24 s (1.53×); BF16 output stayed pixel-identical. FP8 output differed between loading paths, which the report documents. PR merged November 2 (UTC); my contribution was the independent benchmark.
 - **Ming TTS — [reproduction and proposed patch in #17314](https://github.com/Comfy-Org/ComfyUI/pull/17314#issuecomment-6399281222):** showed how punctuation-only paragraphs produce repeated speech or contaminate the voice reference. Supplied Windows / RTX 5090 audio timings, Whisper transcripts and a two-part fix; patched test cases matched the corresponding text without the scene break sample for sample. PR still open; I contributed validation and a patch proposal, not the model integration.
 - **Qwen-Image-2.1 — [CUDA comparison in #16879](https://github.com/Comfy-Org/ComfyUI/issues/16879#issuecomment-6309734183):** checked the reported MPS issue with the same workflow on RTX 5090. Fresh-server and resident-model runs were pixel-identical within each text-encoder placement; the MPS failure did not reproduce on CUDA. This narrows the investigation rather than claiming an MPS fix.
 
